@@ -1,0 +1,6 @@
+# Row terms. One per line. @IDs and "quoted phrases" are used as written.
+BRCA1
+TP53
+EGFR
+KRAS
+APOE

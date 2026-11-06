@@ -1,0 +1,5 @@
+# Column terms. These are exact entity IDs so that relation mode can use them.
+@DISEASE_Breast_Neoplasms
+@DISEASE_Alzheimer_Disease
+@DISEASE_Melanoma
+"DNA repair"
