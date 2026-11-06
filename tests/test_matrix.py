@@ -1,5 +1,7 @@
 """Tests for building a matrix, including runs that end early."""
 
+import threading
+
 import pytest
 from conftest import FakeApi
 
@@ -117,19 +119,47 @@ def test_inferred_zero_says_it_was_not_asked(make_client):
     assert "not asked" in matrix.cells[0, 0].note
 
 
+class HeldApi(FakeApi):
+    """Holds requests past a limit until the run stops.
+
+    The fake answers instantly, so without this a whole run can finish before the
+    main thread reacts to its first answer. Real requests take seconds.
+    """
+
+    def __init__(self, *args, answer_first):
+        super().__init__(*args)
+        self.answer_first = answer_first
+        self.stopped = threading.Event()
+
+    def __call__(self, request):
+        if len([q for q in self.searches() if " AND " in q]) >= self.answer_first:
+            assert self.stopped.wait(timeout=10), "the run never stopped"
+        return super().__call__(request)
+
+    def watch(self, client):
+        stop = client.stop
+
+        def stop_and_release():
+            stop()
+            self.stopped.set()
+
+        client.stop = stop_and_release
+        return client
+
+
 def test_interrupt_keeps_answers_and_marks_the_rest(make_client):
     names = [f"@R{i}" for i in range(40)]
     counts = {"@C": 5} | {n: 5 for n in names} | {f"{n} AND @C": 1 for n in names}
+    api = HeldApi(counts, answer_first=5)
 
     def interrupt(done, total):
         raise KeyboardInterrupt
 
-    matrix = build_matrix(
-        make_client(FakeApi(counts)), names, ["@C"], workers=1, progress=interrupt
-    )
+    client = api.watch(make_client(api))
+    matrix = build_matrix(client, names, ["@C"], workers=1, progress=interrupt)
     assert matrix.stopped == INTERRUPTED
     known = [c for c in matrix.cells.values() if c.count is not None]
-    assert known and len(known) < 40
+    assert 1 <= len(known) <= 6
     assert {c.error for c in matrix.failed} == {NOT_FINISHED}
 
 
@@ -137,10 +167,11 @@ def test_long_outage_stops_the_run_instead_of_failing_every_cell(make_client):
     names = [f"@R{i}" for i in range(100)]
     failures = {f"{n} AND @C": [503] * 5 for n in names}
     counts = {"@C": 5} | {n: 5 for n in names}
-    api = FakeApi(counts, failures)
-    matrix = build_matrix(make_client(api, patience=0), names, ["@C"], workers=2)
+    api = HeldApi(counts, failures, answer_first=10)
+    client = api.watch(make_client(api, patience=0))
+    matrix = build_matrix(client, names, ["@C"], workers=2)
     assert "in a row failed" in matrix.stopped
-    assert len([q for q in api.searches() if " AND " in q]) < 100
+    assert len([q for q in api.searches() if " AND " in q]) <= 12
 
 
 def test_one_rejected_cell_is_not_an_outage(make_client):
