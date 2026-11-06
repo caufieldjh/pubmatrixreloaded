@@ -191,7 +191,7 @@ def build_matrix(
 
     pool = ThreadPoolExecutor(max_workers=workers)
     try:
-        prepared = pool.map(lambda key: _prepare_term(*key, client), keys)
+        prepared = pool.map(lambda key: _prepare_term(key[0], key[1], client), keys)
         terms = dict(zip(keys, prepared))
         matrix = Matrix(
             [terms[k] for k in row_keys], [terms[k] for k in col_keys], relation, started=started

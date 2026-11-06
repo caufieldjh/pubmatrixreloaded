@@ -111,7 +111,16 @@ def _matrix_sheet(sheet: Worksheet, matrix: Matrix) -> bool:
 def _terms_sheet(sheet: Worksheet, matrix: Matrix) -> None:
     _header_row(
         sheet,
-        ["Role", "Input", "Read as", "Entity type", "Query", "Documents alone", "Pairs with hits", "Note"],
+        [
+            "Role",
+            "Input",
+            "Read as",
+            "Entity type",
+            "Query",
+            "Documents alone",
+            "Pairs with hits",
+            "Note",
+        ],
     )
 
     def write(row: int, role: str, term: Term, hits: int) -> None:
@@ -157,10 +166,22 @@ def _cells_sheet(sheet: Worksheet, matrix: Matrix) -> None:
 
 def _run_sheet(sheet: Worksheet, info: dict, linked: bool) -> None:
     rows = list(info.items())
-    rows.append(("counts", "PubTator3 documents (PubMed abstracts and PMC full text), not PubMed hits"))
-    rows.append(("blank cells", "No value is known; see the Note column on the Cells sheet. Blank is not zero."))
+    rows.append(
+        ("counts", "PubTator3 documents (PubMed abstracts and PMC full text), not PubMed hits")
+    )
+    rows.append(
+        (
+            "blank cells",
+            "No value is known; see the Note column on the Cells sheet. Blank is not zero.",
+        )
+    )
     if not linked:
-        rows.append(("links", "Too many cells for Excel hyperlinks; see the Link column on the Cells sheet."))
+        rows.append(
+            (
+                "links",
+                "Too many cells for Excel hyperlinks; see the Link column on the Cells sheet.",
+            )
+        )
     for row, (key, value) in enumerate(rows, start=1):
         _put_text(sheet, row, 1, key).font = BOLD
         _put_text(sheet, row, 2, value)

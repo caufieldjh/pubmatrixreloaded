@@ -1,3 +1,5 @@
+"""Tests for the quiet hours window."""
+
 from datetime import datetime
 from zoneinfo import ZoneInfo
 

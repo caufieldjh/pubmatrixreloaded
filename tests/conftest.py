@@ -1,3 +1,5 @@
+"""Shared test fixtures, including a stand-in for the PubTator3 API."""
+
 import json
 from urllib.parse import parse_qs, urlparse
 
@@ -8,22 +10,42 @@ from pubmatrix.client import PubTatorClient
 
 ENTITIES = {
     "BRCA1": [
-        {"_id": "@GENE_BRCA1", "biotype": "gene", "name": "BRCA1",
-         "match": "Matched on name <m>BRCA1</m>"},
+        {
+            "_id": "@GENE_BRCA1",
+            "biotype": "gene",
+            "name": "BRCA1",
+            "match": "Matched on name <m>BRCA1</m>",
+        },
     ],
     "p53": [
-        {"_id": "@GENE_TP53", "biotype": "gene", "name": "TP53",
-         "match": "Matched on synonyms <m>P53</m>"},
+        {
+            "_id": "@GENE_TP53",
+            "biotype": "gene",
+            "name": "TP53",
+            "match": "Matched on synonyms <m>P53</m>",
+        },
     ],
     "PFOA": [
-        {"_id": "@CHEMICAL_perfluorooctanoic_acid", "biotype": "chemical",
-         "name": "perfluorooctanoic acid", "match": "Matched on synonyms <m>PFOA cpd</m>"},
-        {"_id": "@GENE_PFOA", "biotype": "gene", "name": "pfoA",
-         "match": "Matched on name <m>pfoA</m>"},
+        {
+            "_id": "@CHEMICAL_perfluorooctanoic_acid",
+            "biotype": "chemical",
+            "name": "perfluorooctanoic acid",
+            "match": "Matched on synonyms <m>PFOA cpd</m>",
+        },
+        {
+            "_id": "@GENE_PFOA",
+            "biotype": "gene",
+            "name": "pfoA",
+            "match": "Matched on name <m>pfoA</m>",
+        },
     ],
     "apoptosis": [
-        {"_id": "@DISEASE_Malformations", "biotype": "disease",
-         "name": "Malformations of Cortical Development", "match": "Multiple matches"},
+        {
+            "_id": "@DISEASE_Malformations",
+            "biotype": "disease",
+            "name": "Malformations of Cortical Development",
+            "match": "Multiple matches",
+        },
     ],
 }
 
@@ -59,8 +81,6 @@ class FakeApi:
 def make_client():
     def build(api, **kwargs):
         kwargs.setdefault("rate", 100000)
-        return PubTatorClient(
-            transport=httpx.MockTransport(api), sleep=lambda _: None, **kwargs
-        )
+        return PubTatorClient(transport=httpx.MockTransport(api), sleep=lambda _: None, **kwargs)
 
     return build

@@ -1,10 +1,12 @@
+"""Tests for the output files and the command line."""
+
 import csv
 import json
 
+from conftest import FakeApi
 from openpyxl import load_workbook
 
 import pubmatrix.excel
-from conftest import FakeApi
 from pubmatrix.cli import main
 from pubmatrix.matrix import build_matrix
 from pubmatrix.output import HEAT_STEPS, heat_step, render_html, write_all
@@ -84,7 +86,13 @@ def test_excel_matrix_has_counts_links_and_blanks(make_client, tmp_path):
     book = workbook_for(make_client, tmp_path, api, ["@A"], ["@B", "@Typo"])
     assert book.sheetnames == ["Matrix", "Terms", "Cells", "Run"]
     sheet = book["Matrix"]
-    assert [c.value for c in sheet[1]] == ["Term", "Documents alone", "Modifiers with hits", "@B", "@Typo"]
+    assert [c.value for c in sheet[1]] == [
+        "Term",
+        "Documents alone",
+        "Modifiers with hits",
+        "@B",
+        "@Typo",
+    ]
     assert [c.value for c in sheet[2]] == ["@A", 5, 1, 3, None]
     assert "pubtator3/docsum" in sheet["D2"].hyperlink.target
     assert sheet.freeze_panes == "D2"

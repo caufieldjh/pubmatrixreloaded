@@ -44,9 +44,7 @@ def _parser() -> argparse.ArgumentParser:
         description="Pairwise literature matrices from PubTator3.",
     )
     parser.add_argument("--version", action="version", version=__version__)
-    parser.add_argument(
-        "--cache", type=Path, help=f"cache file (default: {default_cache_path()})"
-    )
+    parser.add_argument("--cache", type=Path, help=f"cache file (default: {default_cache_path()})")
     parser.add_argument(
         "--refresh", action="store_true", help="ignore cached answers and ask again"
     )
@@ -54,7 +52,9 @@ def _parser() -> argparse.ArgumentParser:
 
     run = commands.add_parser("run", help="build a matrix")
     run.add_argument("-t", "--term", action="append", default=[], help="row term (repeatable)")
-    run.add_argument("-m", "--modifier", action="append", default=[], help="column term (repeatable)")
+    run.add_argument(
+        "-m", "--modifier", action="append", default=[], help="column term (repeatable)"
+    )
     run.add_argument("-T", "--terms-file", help="row terms, one per line")
     run.add_argument("-M", "--modifiers-file", help="column terms, one per line")
     run.add_argument(
@@ -66,7 +66,9 @@ def _parser() -> argparse.ArgumentParser:
         help="count extracted relations instead of co-occurrence (default type: ANY)",
     )
     run.add_argument("--terms-type", choices=CONCEPTS, help="only look row terms up as this type")
-    run.add_argument("--modifiers-type", choices=CONCEPTS, help="only look column terms up as this type")
+    run.add_argument(
+        "--modifiers-type", choices=CONCEPTS, help="only look column terms up as this type"
+    )
     run.add_argument(
         "--quiet-hours",
         action="store_true",
@@ -116,7 +118,12 @@ class _Progress:
 
     def __call__(self, done: int, total: int) -> None:
         if self._live:
-            print(f"\r  {done}/{total} cells", end="\n" if done == total else "", file=sys.stderr, flush=True)
+            print(
+                f"\r  {done}/{total} cells",
+                end="\n" if done == total else "",
+                file=sys.stderr,
+                flush=True,
+            )
         elif done == total or time.monotonic() - self._last >= PROGRESS_LOG_SECONDS:
             self._last = time.monotonic()
             _log(f"{datetime.now():%Y-%m-%d %H:%M} {done}/{total} cells")

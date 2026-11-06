@@ -155,9 +155,7 @@ class PubTatorClient:
             raise PubTatorError(f"search response has no count for {text!r}")
         return self._store(key, data["count"])
 
-    def autocomplete(
-        self, query: str, limit: int = 5, concept: str | None = None
-    ) -> list[dict]:
+    def autocomplete(self, query: str, limit: int = 5, concept: str | None = None) -> list[dict]:
         """Return PubTator3's candidate entities for a term, best first.
 
         `concept` limits candidates to one type, such as "CHEMICAL".
