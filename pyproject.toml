@@ -1,11 +1,11 @@
 [project]
 name = "pubmatrix-reloaded"
-version = "0.1.0"
+version = "0.2.0"
 description = "PubMatrix rebuilt on PubTator3: pairwise literature matrices from two term lists."
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [{ name = "J. Harry Caufield", email = "jhc@lbl.gov" }]
-dependencies = ["httpx>=0.27"]
+dependencies = ["httpx>=0.27", "openpyxl>=3.1", "tzdata"]
 
 [project.scripts]
 pubmatrix = "pubmatrix.cli:main"

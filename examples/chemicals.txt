@@ -1,0 +1,10 @@
+# A short version of "here are the chemicals we care about".
+# Run with --terms-type chemical so that names cannot resolve to genes.
+atrazine
+bisphenol A
+benzo[a]pyrene
+PFOA | perfluorooctanoic acid
+17β-estradiol
+di(2-ethylhexyl) phthalate
+glyphosate
+nonexistium chloride

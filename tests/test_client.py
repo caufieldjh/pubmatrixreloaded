@@ -4,7 +4,17 @@ import httpx
 import pytest
 
 from conftest import FakeApi
-from pubmatrix.client import Cache, PubTatorClient, PubTatorError, QueryError, RateLimiter
+from datetime import datetime, timedelta, timezone
+
+from pubmatrix.client import (
+    Cache,
+    PubTatorClient,
+    PubTatorError,
+    QueryError,
+    RateLimiter,
+    Stopped,
+)
+from pubmatrix.schedule import QuietHours
 
 
 def test_retries_rate_limit_and_server_errors(make_client):
@@ -16,7 +26,7 @@ def test_retries_rate_limit_and_server_errors(make_client):
 def test_gives_up_after_retries(make_client):
     api = FakeApi(failures={"x": [500] * 10})
     with pytest.raises(PubTatorError, match="HTTP 500"):
-        make_client(api, retries=2).count("x")
+        make_client(api, patience=6).count("x")
     assert len(api.searches()) == 3
 
 
@@ -74,7 +84,7 @@ def test_refresh_bypasses_but_updates_cache(make_client, tmp_path):
 
 def test_stale_cache_entries_expire(tmp_path):
     cache = Cache(tmp_path / "c.sqlite", ttl=-1)
-    cache.put("k", 1)
+    cache.put("k", 1, time.time())
     assert cache.get("k") is None
 
 
@@ -91,3 +101,70 @@ def test_rate_limiter_spaces_requests():
     for _ in range(4):
         limiter.wait()
     assert time.monotonic() - start >= 3 / 50 * 0.9
+
+
+def test_fetch_count_reports_when_the_answer_was_given(make_client, tmp_path):
+    cache = Cache(tmp_path / "c.sqlite")
+    client = make_client(FakeApi({"x": 7}), cache=cache)
+    count, retrieved = client.fetch_count("x")
+    assert count == 7
+    assert make_client(FakeApi(), cache=cache).fetch_count("x") == (7, retrieved)
+
+
+class Clock:
+    """A clock that only moves when something sleeps."""
+
+    def __init__(self, start):
+        self.time = start
+        self.naps = []
+
+    def now(self):
+        return self.time
+
+    def sleep(self, seconds):
+        self.naps.append(seconds)
+        self.time += timedelta(seconds=seconds)
+
+
+# Friday 2026-11-06 at 13:00 Eastern, which is closed.
+FRIDAY_AFTERNOON = datetime(2026, 11, 6, 18, 0, tzinfo=timezone.utc)
+
+
+def test_requests_wait_for_quiet_hours(make_client):
+    clock = Clock(FRIDAY_AFTERNOON)
+    announced = []
+    api = FakeApi({"x": 7})
+    client = PubTatorClient(
+        transport=httpx.MockTransport(api),
+        rate=100000,
+        window=QuietHours(),
+        on_pause=announced.append,
+        sleep=clock.sleep,
+        now=clock.now,
+    )
+    assert client.count("x") == 7
+    assert sum(clock.naps) == 8 * 3600
+    assert len(announced) == 1
+
+
+def test_cached_answers_do_not_wait_for_quiet_hours(tmp_path):
+    cache = Cache(tmp_path / "c.sqlite")
+    cache.put("count:x", 7, time.time())
+    clock = Clock(FRIDAY_AFTERNOON)
+    client = PubTatorClient(cache, window=QuietHours(), sleep=clock.sleep, now=clock.now)
+    assert client.count("x") == 7
+    assert clock.naps == []
+
+
+def test_stop_ends_a_long_pause_at_once():
+    client = PubTatorClient(window=QuietHours(), now=lambda: FRIDAY_AFTERNOON)
+    client.stop()
+    start = time.monotonic()
+    with pytest.raises(Stopped):
+        client.count("x")
+    assert time.monotonic() - start < 1
+
+
+def test_quiet_hours_can_outlast_an_outage(make_client):
+    api = FakeApi({"x": 7}, {"x": [503] * 30})
+    assert make_client(api, patience=3600).count("x") == 7

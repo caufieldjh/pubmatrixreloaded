@@ -47,3 +47,37 @@ def test_read_term_file_skips_comments_and_blanks(tmp_path):
     path = tmp_path / "t.txt"
     path.write_text("# note\n\nBRCA1\n  TP53  \n")
     assert read_term_file(str(path)) == ["BRCA1", "TP53"]
+
+
+def test_exact_match_can_be_the_wrong_type_without_a_concept(make_client):
+    assert resolve_term("PFOA", make_client(FakeApi())).query == "@GENE_PFOA"
+
+
+def test_concept_filter_keeps_lookup_to_one_type(make_client):
+    term = resolve_term("PFOA", make_client(FakeApi()), "chemical")
+    assert (term.kind, term.query) == ("text", '"PFOA"')
+    assert term.suggestion == "@CHEMICAL_perfluorooctanoic_acid"
+
+
+def test_synonyms_become_one_or_group(make_client):
+    term = resolve_term("Ames test | BRCA1 | @GENE_X", make_client(FakeApi()))
+    assert term.kind == "synonyms"
+    assert term.query == '("Ames test" OR @GENE_BRCA1 OR @GENE_X)'
+    assert term.label == "Ames test"
+
+
+def test_stray_quotes_are_refused_not_flattened(make_client):
+    term = resolve_term('"Ames test" OR "Ames assay"', make_client(FakeApi()))
+    assert "stray quote" in term.problem
+
+
+def test_greek_letters_are_spelled_out_in_phrases(make_client):
+    term = resolve_term("17β-estradiol", make_client(FakeApi()))
+    assert term.query == '"17beta-estradiol"'
+    assert term.label == "17β-estradiol"
+
+
+def test_text_with_no_documents_gets_a_note(make_client):
+    term = resolve_term('"xyzzy"', make_client(FakeApi()))
+    term.total = 0
+    assert "check the spelling" in term.note

@@ -1,0 +1,5 @@
+# Each line is one column. "a | b" counts documents using either wording.
+Ames test | Ames assay | Salmonella mutagenicity
+micronucleus assay | micronucleus test
+comet assay
+zebrafish embryo toxicity

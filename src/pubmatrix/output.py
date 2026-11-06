@@ -4,15 +4,17 @@ from __future__ import annotations
 
 import csv
 import json
-import math
+import sys
 from datetime import datetime, timezone
 from html import escape
 from pathlib import Path
 
-from .matrix import Matrix
+from . import __version__
+from .client import API_BASE
+from .excel import fits_in_excel, write_excel
+from .matrix import HEAT_STEPS, Matrix, heat_step
 from .terms import Term
 
-HEAT_STEPS = 6
 
 
 def write_csv(matrix: Matrix, path: Path) -> None:
@@ -34,16 +36,29 @@ def _term_dict(term: Term) -> dict:
         "biotype": term.biotype,
         "suggestion": term.suggestion,
         "total": term.total,
-        "problem": term.problem,
+        "note": term.note,
     }
 
 
-def to_dict(matrix: Matrix) -> dict:
+def run_info(matrix: Matrix, command: str | None = None) -> dict:
+    """What it takes to trace a result back to how it was made."""
     return {
-        "generated": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "source": "PubTator3",
+        "tool": f"pubmatrix-reloaded {__version__}",
+        "command": command,
+        "source": f"PubTator3 ({API_BASE})",
         "mode": "relation" if matrix.relation else "co-occurrence",
         "relation": matrix.relation,
+        "started": matrix.started,
+        "finished": matrix.finished,
+        "status": f"partial: {matrix.stopped}" if matrix.stopped else "complete",
+        "cells": len(matrix.cells),
+        "cells_without_value": len(matrix.failed),
+    }
+
+
+def to_dict(matrix: Matrix, command: str | None = None) -> dict:
+    return {
+        "run": run_info(matrix, command),
         "rows": [_term_dict(t) for t in matrix.rows],
         "columns": [_term_dict(t) for t in matrix.cols],
         "cells": [
@@ -53,28 +68,18 @@ def to_dict(matrix: Matrix) -> dict:
                 "count": cell.count,
                 "query": cell.query,
                 "link": cell.link,
+                "retrieved": cell.retrieved,
                 "error": cell.error,
+                "note": cell.note,
             }
             for (i, j), cell in matrix.cells.items()
         ],
     }
 
 
-def write_json(matrix: Matrix, path: Path) -> None:
-    path.write_text(json.dumps(to_dict(matrix), indent=2) + "\n", encoding="utf-8")
-
-
-def heat_step(count: int, low: int, high: int) -> int:
-    """Map a positive count to steps 1..HEAT_STEPS, log-scaled from low to high.
-
-    Counts span orders of magnitude, so a linear scale would leave all but the
-    largest cell looking empty. Anchoring at the smallest count keeps the steps
-    useful when every count is large.
-    """
-    if high <= low:
-        return HEAT_STEPS // 2
-    fraction = math.log(count / low) / math.log(high / low)
-    return 1 + min(HEAT_STEPS - 1, int(HEAT_STEPS * fraction))
+def write_json(matrix: Matrix, path: Path, command: str | None = None) -> None:
+    text = json.dumps(to_dict(matrix, command), indent=2, ensure_ascii=False)
+    path.write_text(text + "\n", encoding="utf-8")
 
 
 def _header(term: Term) -> str:
@@ -103,16 +108,11 @@ def _terms_table(matrix: Matrix) -> str:
         if term.raw in seen:
             continue
         seen.add(term.raw)
-        note = term.problem or (
-            f"No exact entity match. Closest: {term.suggestion}"
-            if term.suggestion
-            else ""
-        )
         total = "" if term.total is None else f"{term.total:,}"
         rows.append(
             f"<tr><td>{escape(term.raw)}</td><td>{escape(term.kind)}</td>"
             f"<td><code>{escape(term.query)}</code></td>"
-            f'<td class="num">{total}</td><td>{escape(note)}</td></tr>'
+            f'<td class="num">{total}</td><td>{escape(term.note)}</td></tr>'
         )
     return "\n".join(rows)
 
@@ -170,6 +170,7 @@ td.h6 { background: var(--h6); color: var(--ink-high); }
   text-align: left; vertical-align: top; }
 #terms .num { text-align: right; font-variant-numeric: tabular-nums; }
 code { font-size: 13px; }
+.partial { color: var(--ink); font-weight: 600; }
 """
 
 _SCRIPT = """
@@ -221,6 +222,12 @@ def render_html(matrix: Matrix) -> str:
         f'<i style="background: var(--h{n})"></i>' for n in range(1, HEAT_STEPS + 1)
     )
     generated = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    partial = (
+        f'<p class="partial">Partial result: {len(matrix.failed):,} of '
+        f"{len(matrix.cells):,} cells have no value. Run the same command again to continue.</p>"
+        if matrix.stopped
+        else ""
+    )
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -233,6 +240,7 @@ def render_html(matrix: Matrix) -> str:
 <main>
 <h1>PubMatrix Reloaded</h1>
 <p>{mode}, from PubTator3 (PubMed abstracts and PMC full text). Generated {generated}.</p>
+{partial}
 <p>Select a count to open those documents in PubTator3. Select a column heading to sort.
 — means no value is known; hover for the reason.</p>
 <div class="scroll">
@@ -264,11 +272,19 @@ def write_html(matrix: Matrix, path: Path) -> None:
     path.write_text(render_html(matrix), encoding="utf-8")
 
 
-def write_all(matrix: Matrix, prefix: str) -> list[Path]:
+def write_all(matrix: Matrix, prefix: str, command: str | None = None) -> list[Path]:
     base = Path(prefix)
     base.parent.mkdir(parents=True, exist_ok=True)
-    paths = [base.with_name(base.name + ext) for ext in (".csv", ".json", ".html")]
-    write_csv(matrix, paths[0])
-    write_json(matrix, paths[1])
-    write_html(matrix, paths[2])
+    csv_path, json_path, html_path, xlsx_path = (
+        base.with_name(base.name + ext) for ext in (".csv", ".json", ".html", ".xlsx")
+    )
+    write_csv(matrix, csv_path)
+    write_json(matrix, json_path, command)
+    write_html(matrix, html_path)
+    paths = [csv_path, json_path, html_path]
+    if fits_in_excel(matrix):
+        write_excel(matrix, xlsx_path, run_info(matrix, command))
+        paths.append(xlsx_path)
+    else:
+        print("This matrix is too large for Excel; skipping the .xlsx file.", file=sys.stderr)
     return paths

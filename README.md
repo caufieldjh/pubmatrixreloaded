@@ -7,7 +7,11 @@ A rebuild of [PubMatrix](https://pmc.ncbi.nlm.nih.gov/articles/PMC317283/)
 Give it two lists of terms. It counts the literature for every pair and returns
 a matrix in which each count links to the documents behind it.
 
-This is a first prototype: a command line tool that writes files.
+It is built for the job the original was loved for: "here are 1000 chemicals we
+care about; how many were tested in these 8 assays?" Start it at the end of the
+day and read the spreadsheet in the morning.
+
+This is an early prototype: a command line tool that writes files.
 
 ## Install and run
 
@@ -18,13 +22,14 @@ uv sync
 uv run pubmatrix run -T examples/genes.txt -M examples/diseases.txt -o output/demo
 ```
 
-This writes three files:
+This writes four files:
 
 | File | Contents |
 |---|---|
+| `output/demo.xlsx` | Excel workbook; see [the workbook](#the-workbook) |
 | `output/demo.html` | Sortable heatmap table; each count links to PubTator3 |
 | `output/demo.csv` | Plain grid for spreadsheets and clustering tools |
-| `output/demo.json` | Everything: term readings, queries, links, and errors |
+| `output/demo.json` | Everything: run details, term readings, queries, links, retrieval times, and errors |
 
 Terms can also go on the command line:
 
@@ -33,7 +38,54 @@ uv run pubmatrix run -t BRCA1 -t TP53 -m @DISEASE_Breast_Neoplasms -m "DNA repai
 ```
 
 Exit status is 0 when every cell has a value, 1 when the files were written but
-some cells have none, and 2 for bad input.
+some cells have none, 2 for bad input, and 130 when the run was stopped by hand.
+
+## A large overnight run
+
+```sh
+nohup uv run pubmatrix run \
+  -T examples/chemicals.txt -M examples/assays.txt \
+  --terms-type chemical --quiet-hours -o output/screen > screen.log 2>&1 &
+```
+
+`--quiet-hours` sends requests only on weekends and from 9 PM to 5 AM US Eastern
+on weekdays, and waits otherwise. Started at 5 PM, it sits idle until 9 PM. Use
+`tail screen.log` to check on it; it logs a progress line each minute. Files are
+written when the run ends.
+
+There is no fixed limit on list sizes. Live runs averaged about 2 requests per
+second, so expect these sending times, not counting any wait for quiet hours:
+
+| Matrix | Requests, at most | Time |
+|---|---|---|
+| 1000 chemicals by 8 assays | 10,016 | about 1.4 hours |
+| 200 by 200 | 40,800 | about 5.7 hours |
+
+Unlike the original, this runs on your own computer, so the computer has to stay
+on and awake until it finishes.
+
+**Stopping and continuing.** Ctrl-C or `kill` stops the run right away and writes
+partial files, with unfinished cells blank and labeled. Run the same command
+again to continue: every answer is saved as it arrives. If morning comes and the
+run is unfinished, stop it to get what it has, then start it again.
+
+**Outages.** A request retries for up to five minutes, or an hour with
+`--quiet-hours`. If requests keep failing past that, the run stops and writes
+partial files instead of marking every remaining cell as failed.
+
+## The workbook
+
+| Sheet | Contents |
+|---|---|
+| Matrix | Counts with heat shading and a link on each. "Modifiers with hits" gives, for each term, how many modifiers it appears with. Filters and frozen headers are on. |
+| Terms | How each input was read, its entity type, its query, its documents alone, and any warning |
+| Cells | One row per pair: count, exact query, link, the time PubTator3 gave the answer, and why a cell is blank |
+| Run | Tool version, the full command, start and end times, and whether the run finished |
+
+Together these are the trail from a number back to its source. Counts change as
+PubTator3 updates, and a resumed run can span days, so each cell keeps its own
+retrieval time. Above 65,530 cells, Excel's hyperlink limit applies, so the links
+stay on the Cells sheet as text.
 
 ## Co-occurrence and relations
 
@@ -57,6 +109,7 @@ Relation direction does not change the count.
 | `@GENE_BRCA1` | That entity ID, as written |
 | `"DNA repair"` | That exact phrase, with no entity lookup |
 | `p53` | The entity with that exact name or synonym (`@GENE_TP53`), otherwise a phrase |
+| `Ames test \| Ames assay` | Documents with either; each part is read by the rules above |
 
 Lookup is deliberately strict. PubTator3's autocomplete always offers something:
 for `apoptosis` it offers a cortical malformation. So `breast cancer` stays a
@@ -67,8 +120,20 @@ prints how it read each term and the closest entity. To see the candidates:
 uv run pubmatrix resolve "breast cancer" p53
 ```
 
-Relation searches need entities on both sides, so give an `@` ID for any term
-that stayed a phrase.
+Relation searches need a single entity on both sides, so give an `@` ID for any
+term that stayed a phrase.
+
+**Tell it what kind of list you have.** An exact match can be the wrong kind of
+thing: `PFOA` on its own resolves to the bacterial gene *pfoA*. `--terms-type` and
+`--modifiers-type` (`chemical`, `disease`, `gene`, or `variant`) limit lookup to one
+type, and `resolve --type` does the same. Always use this for chemical lists. The
+output shows the entity type of every term, so a stray gene is easy to find.
+
+**Phrases are literal.** Use `|` to list the wordings of an assay or the synonyms
+of a chemical, since a phrase finds only its own wording. Greek letters are spelled
+out for you, because `"17β-estradiol"` finds 22 documents and `"17beta-estradiol"`
+finds 28,538. A CAS number works only as literal text in documents, so prefer
+names. A phrase with no documents at all gets a spelling warning in the Terms sheet.
 
 ## Reading the numbers
 
@@ -90,22 +155,25 @@ Other things to know:
 - Gene entities cover all species (`@GENE_BRCA1` is described as "All Species").
 - As in the original, there is no significance test. Large counts partly reflect
   how common each term is, so compare against the "docs alone" figures.
-- Parenthesized OR groups such as `(@GENE_A OR @GENE_B) AND @DISEASE_C` get HTTP
-  400 from PubTator3, and so do IDs like `@DISEASE_MESH:D001943`. These cells show
-  the error.
+- PubTator3 answers HTTP 400 when a group made only of `@` IDs meets a lone `@` ID,
+  as in `(@GENE_A OR @GENE_B) AND @DISEASE_C`. Adding a phrase to either side
+  avoids it. IDs like `@DISEASE_MESH:D001943` get a 400 in any pair. These cells
+  show the error.
 - The relation types `convert` and `bind` appear in PubTator3's site code, but
   every query tried for them returned zero, so they are not offered.
 
 ## Speed and caching
 
 PubTator3 asks for no more than three requests per second, and the client holds to
-that across all threads. A matrix takes about one request per cell plus two per
-term in the worst case, so 100 by 10 terms should take about seven minutes.
+that across all threads, retries included. The quiet hours are NCBI's published
+advice for E-utilities; PubTator3 states only the rate, so applying them here is a
+courtesy rather than a stated requirement.
 
 Answers are cached for 30 days in `~/.cache/pubmatrix/cache.sqlite`, so a rerun
-is near instant and an interrupted run picks up where it stopped. Use `--refresh`
-to ask again, or `--cache PATH` for another location. Both go before `run`.
-Failures are never cached.
+is near instant and does not wait for quiet hours. Use `--refresh` to ask again, or
+`--cache PATH` for another location. Both go before `run`. A stopped `--refresh`
+run starts over if resumed with `--refresh`; resume it without. Failures are never
+cached.
 
 ## Compared with the original
 
@@ -114,12 +182,15 @@ Failures are never cached.
 | Source | PubMed hit counts | PubTator3 concepts over abstracts and full text |
 | Term handling | No curation; any PubMed string | Exact entity lookup, phrase fallback |
 | Cell | `A AND B` count | Same, or a typed relation count |
-| Limit | 100 terms by 10 modifiers | None set; paced at 3 requests per second |
-| Output | Linked HTML table | Linked HTML, CSV, JSON |
+| Limit | 100 terms by 10 modifiers in the 2003 paper | None set; paced at 3 requests per second |
+| Off-peak running | On the server | `--quiet-hours`, on your own computer |
+| Output | Linked HTML table; Excel in later use | Excel, linked HTML, CSV, JSON |
+| Traceability | Stored searches | Exact query and retrieval time for every cell |
 | Saved searches | Shared server archive | Local cache and output files only |
 | Interface | Web form | Command line |
 
-Not rebuilt yet: the web form and the shared archive of searches and term lists.
+Not rebuilt yet: the web form, the server that runs jobs for you, and the shared
+archive of searches and term lists.
 
 ## Development
 
