@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Browser search proof</title></head>
+<body>
+<p id="status">Starting DuckDB.</p>
+<script type="module">
+// Runs a term-by-term matrix in the browser from Parquet files. The test harness
+// drives window.proof; this page has no interface of its own.
+const params = new URLSearchParams(location.search);
+const duckdbUrl = params.get('duckdb') ?? 'node_modules/@duckdb/duckdb-wasm/dist/';
+const dataUrl = new URL(params.get('data') ?? 'data/', location.href).href;
+
+// The package's browser module imports apache-arrow by bare name, so it needs bundling.
+const duckdb = await import(new URL(params.get('bundle') ?? 'bundle/duckdb.mjs', location.href).href);
+const started = performance.now();
+const base = new URL(duckdbUrl, location.href).href;
+const worker = new Worker(`${base}duckdb-browser-eh.worker.js`);
+const db = new duckdb.AsyncDuckDB(new duckdb.VoidLogger(), worker);
+await db.instantiate(`${base}duckdb-eh.wasm`);
+// Left to its defaults, this build downloads whole files instead of reading ranges.
+await db.open({
+  filesystem: { reliableHeadRequests: true, allowFullHTTPReads: false, forceFullHTTPReads: false },
+});
+const shards = await (await fetch(`${dataUrl}shards.json`)).json();
+await db.registerFileURL('relations.parquet', `${dataUrl}relations.parquet`, duckdb.DuckDBDataProtocol.HTTP, false);
+for (const name of Object.keys(shards)) {
+  await db.registerFileURL(`${name}.parquet`, `${dataUrl}${name}.parquet`, duckdb.DuckDBDataProtocol.HTTP, false);
+}
+const registered = new Set();
+
+// Finds the small file that holds an entity, from the first entity of each file.
+async function shardFile(name, id) {
+  const starts = shards[name];
+  let low = 0;
+  let high = starts.length - 1;
+  while (low < high) {
+    const middle = Math.ceil((low + high) / 2);
+    if (starts[middle] <= id) low = middle;
+    else high = middle - 1;
+  }
+  const file = `${name}-${String(low).padStart(3, '0')}.parquet`;
+  if (!registered.has(file)) {
+    registered.add(file);
+    const url = `${dataUrl}${name}/${String(low).padStart(3, '0')}.parquet`;
+    await db.registerFileURL(file, url, duckdb.DuckDBDataProtocol.HTTP, false);
+  }
+  return file;
+}
+const conn = await db.connect();
+// A file's metadata is about 1 MB here. Without this it is parsed again for every term.
+await conn.query('SET parquet_metadata_cache = true');
+const startupMs = performance.now() - started;
+const quote = (value) => `'${value.replaceAll("'", "''")}'`;
+
+async function load(table, file, ids, strategy) {
+  await conn.query(`CREATE OR REPLACE TEMP TABLE ${table} (concept VARCHAR, pmid INTEGER)`);
+  if (strategy === 'in') {
+    await conn.query(`INSERT INTO ${table} SELECT concept, pmid FROM '${file}.parquet'
+                      WHERE concept IN (${ids.map(quote).join(',')})`);
+    return;
+  }
+  for (const id of ids) {
+    const source = strategy === 'shard' ? await shardFile(file, id) : `${file}.parquet`;
+    await conn.query(`INSERT INTO ${table} SELECT concept, pmid FROM '${source}'
+                      WHERE concept = ${quote(id)}`);
+  }
+}
+
+async function matrix({ rowFile, rows, colFile, cols, strategy = 'each' }) {
+  const begin = performance.now();
+  await load('r', rowFile, rows, strategy);
+  const loaded = performance.now();
+  await load('c', colFile, cols, strategy);
+  const both = performance.now();
+  const result = await conn.query(`SELECT r.concept AS a, c.concept AS b, count(*)::INTEGER AS n
+                                   FROM r JOIN c USING (pmid) GROUP BY 1, 2`);
+  const cells = result.toArray().map((row) => [row.a, row.b, row.n]);
+  const size = await conn.query('SELECT (SELECT count(*) FROM r)::INTEGER AS r, (SELECT count(*) FROM c)::INTEGER AS c');
+  const [counts] = size.toArray();
+  return {
+    cells,
+    rowsRead: counts.r,
+    colsRead: counts.c,
+    ms: { rows: loaded - begin, cols: both - loaded, join: performance.now() - both },
+  };
+}
+
+async function relations({ pairs, type }) {
+  const begin = performance.now();
+  const out = [];
+  for (const [a, b] of pairs) {
+    const typeTest = type ? ` AND type = ${quote(type)}` : '';
+    const result = await conn.query(`SELECT coalesce(sum(n), 0)::INTEGER AS n FROM 'relations.parquet'
+                                     WHERE a = ${quote(a)} AND b = ${quote(b)}${typeTest}`);
+    out.push([a, b, result.toArray()[0].n]);
+  }
+  return { cells: out, ms: performance.now() - begin };
+}
+
+window.proof = { startupMs, matrix, relations };
+document.getElementById('status').textContent = 'Ready.';
+</script>
+</body>
+</html>
