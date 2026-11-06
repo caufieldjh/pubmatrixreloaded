@@ -1,0 +1,460 @@
+{
+  "run": {
+    "tool": "pubmatrix-reloaded 0.2.0",
+    "command": "pubmatrix run -T examples/chemicals.txt -M examples/assays.txt --terms-type chemical -o output/example",
+    "source": "PubTator3 (https://www.ncbi.nlm.nih.gov/research/pubtator3-api)",
+    "mode": "co-occurrence",
+    "relation": null,
+    "started": "2026-11-06T19:12:50+00:00",
+    "finished": "2026-11-06T19:12:50+00:00",
+    "status": "complete",
+    "cells": 32,
+    "cells_without_value": 0
+  },
+  "rows": [
+    {
+      "input": "atrazine",
+      "kind": "entity",
+      "query": "@CHEMICAL_Atrazine",
+      "name": "Atrazine",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 9536,
+      "note": ""
+    },
+    {
+      "input": "bisphenol A",
+      "kind": "entity",
+      "query": "@CHEMICAL_bisphenol_A",
+      "name": "bisphenol A",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 27122,
+      "note": ""
+    },
+    {
+      "input": "benzo[a]pyrene",
+      "kind": "text",
+      "query": "\"benzo[a]pyrene\"",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 22858,
+      "note": ""
+    },
+    {
+      "input": "PFOA | perfluorooctanoic acid",
+      "kind": "synonyms",
+      "query": "(\"PFOA\" OR @CHEMICAL_perfluorooctanoic_acid)",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 10411,
+      "note": ""
+    },
+    {
+      "input": "17β-estradiol",
+      "kind": "text",
+      "query": "\"17beta-estradiol\"",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 28538,
+      "note": ""
+    },
+    {
+      "input": "di(2-ethylhexyl) phthalate",
+      "kind": "text",
+      "query": "\"di(2-ethylhexyl) phthalate\"",
+      "name": null,
+      "biotype": null,
+      "suggestion": "@CHEMICAL_Diethylhexyl_Phthalate",
+      "total": 6412,
+      "note": "No exact entity match; closest is @CHEMICAL_Diethylhexyl_Phthalate"
+    },
+    {
+      "input": "glyphosate",
+      "kind": "entity",
+      "query": "@CHEMICAL_glyphosate",
+      "name": "glyphosate",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 11106,
+      "note": ""
+    },
+    {
+      "input": "nonexistium chloride",
+      "kind": "text",
+      "query": "\"nonexistium chloride\"",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 0,
+      "note": "No documents for this phrase; check the spelling"
+    }
+  ],
+  "columns": [
+    {
+      "input": "Ames test | Ames assay | Salmonella mutagenicity",
+      "kind": "synonyms",
+      "query": "(\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 7510,
+      "note": ""
+    },
+    {
+      "input": "micronucleus assay | micronucleus test",
+      "kind": "synonyms",
+      "query": "(\"micronucleus assay\" OR \"micronucleus test\")",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 9050,
+      "note": ""
+    },
+    {
+      "input": "comet assay",
+      "kind": "text",
+      "query": "\"comet assay\"",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 20971,
+      "note": ""
+    },
+    {
+      "input": "zebrafish embryo toxicity",
+      "kind": "text",
+      "query": "\"zebrafish embryo toxicity\"",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 29,
+      "note": ""
+    }
+  ],
+  "cells": [
+    {
+      "row": "atrazine",
+      "column": "Ames test",
+      "count": 16,
+      "query": "@CHEMICAL_Atrazine AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Atrazine%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": "2026-11-06T19:12:13+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "atrazine",
+      "column": "micronucleus assay",
+      "count": 40,
+      "query": "@CHEMICAL_Atrazine AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Atrazine%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": "2026-11-06T19:12:15+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "atrazine",
+      "column": "comet assay",
+      "count": 81,
+      "query": "@CHEMICAL_Atrazine AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Atrazine%20AND%20%22comet%20assay%22",
+      "retrieved": "2026-11-06T19:12:13+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "atrazine",
+      "column": "zebrafish embryo toxicity",
+      "count": 0,
+      "query": "@CHEMICAL_Atrazine AND \"zebrafish embryo toxicity\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Atrazine%20AND%20%22zebrafish%20embryo%20toxicity%22",
+      "retrieved": "2026-11-06T19:12:14+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "bisphenol A",
+      "column": "Ames test",
+      "count": 71,
+      "query": "@CHEMICAL_bisphenol_A AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_bisphenol_A%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": "2026-11-06T19:12:14+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "bisphenol A",
+      "column": "micronucleus assay",
+      "count": 84,
+      "query": "@CHEMICAL_bisphenol_A AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_bisphenol_A%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": "2026-11-06T19:12:14+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "bisphenol A",
+      "column": "comet assay",
+      "count": 228,
+      "query": "@CHEMICAL_bisphenol_A AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_bisphenol_A%20AND%20%22comet%20assay%22",
+      "retrieved": "2026-11-06T19:12:15+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "bisphenol A",
+      "column": "zebrafish embryo toxicity",
+      "count": 1,
+      "query": "@CHEMICAL_bisphenol_A AND \"zebrafish embryo toxicity\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_bisphenol_A%20AND%20%22zebrafish%20embryo%20toxicity%22",
+      "retrieved": "2026-11-06T19:12:15+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "benzo[a]pyrene",
+      "column": "Ames test",
+      "count": 628,
+      "query": "\"benzo[a]pyrene\" AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%22benzo%5Ba%5Dpyrene%22%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": "2026-11-06T19:12:17+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "benzo[a]pyrene",
+      "column": "micronucleus assay",
+      "count": 500,
+      "query": "\"benzo[a]pyrene\" AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%22benzo%5Ba%5Dpyrene%22%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": "2026-11-06T19:12:16+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "benzo[a]pyrene",
+      "column": "comet assay",
+      "count": 744,
+      "query": "\"benzo[a]pyrene\" AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%22benzo%5Ba%5Dpyrene%22%20AND%20%22comet%20assay%22",
+      "retrieved": "2026-11-06T19:12:17+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "benzo[a]pyrene",
+      "column": "zebrafish embryo toxicity",
+      "count": 0,
+      "query": "\"benzo[a]pyrene\" AND \"zebrafish embryo toxicity\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%22benzo%5Ba%5Dpyrene%22%20AND%20%22zebrafish%20embryo%20toxicity%22",
+      "retrieved": "2026-11-06T19:12:17+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PFOA",
+      "column": "Ames test",
+      "count": 17,
+      "query": "(\"PFOA\" OR @CHEMICAL_perfluorooctanoic_acid) AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%28%22PFOA%22%20OR%20%40CHEMICAL_perfluorooctanoic_acid%29%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": "2026-11-06T19:12:17+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PFOA",
+      "column": "micronucleus assay",
+      "count": 16,
+      "query": "(\"PFOA\" OR @CHEMICAL_perfluorooctanoic_acid) AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%28%22PFOA%22%20OR%20%40CHEMICAL_perfluorooctanoic_acid%29%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": "2026-11-06T19:12:17+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PFOA",
+      "column": "comet assay",
+      "count": 45,
+      "query": "(\"PFOA\" OR @CHEMICAL_perfluorooctanoic_acid) AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%28%22PFOA%22%20OR%20%40CHEMICAL_perfluorooctanoic_acid%29%20AND%20%22comet%20assay%22",
+      "retrieved": "2026-11-06T19:12:18+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PFOA",
+      "column": "zebrafish embryo toxicity",
+      "count": 0,
+      "query": "(\"PFOA\" OR @CHEMICAL_perfluorooctanoic_acid) AND \"zebrafish embryo toxicity\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%28%22PFOA%22%20OR%20%40CHEMICAL_perfluorooctanoic_acid%29%20AND%20%22zebrafish%20embryo%20toxicity%22",
+      "retrieved": "2026-11-06T19:12:18+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "17β-estradiol",
+      "column": "Ames test",
+      "count": 45,
+      "query": "\"17beta-estradiol\" AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%2217beta-estradiol%22%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": "2026-11-06T19:12:18+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "17β-estradiol",
+      "column": "micronucleus assay",
+      "count": 46,
+      "query": "\"17beta-estradiol\" AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%2217beta-estradiol%22%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": "2026-11-06T19:12:19+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "17β-estradiol",
+      "column": "comet assay",
+      "count": 118,
+      "query": "\"17beta-estradiol\" AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%2217beta-estradiol%22%20AND%20%22comet%20assay%22",
+      "retrieved": "2026-11-06T19:12:19+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "17β-estradiol",
+      "column": "zebrafish embryo toxicity",
+      "count": 0,
+      "query": "\"17beta-estradiol\" AND \"zebrafish embryo toxicity\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%2217beta-estradiol%22%20AND%20%22zebrafish%20embryo%20toxicity%22",
+      "retrieved": "2026-11-06T19:12:19+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "di(2-ethylhexyl) phthalate",
+      "column": "Ames test",
+      "count": 37,
+      "query": "\"di(2-ethylhexyl) phthalate\" AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%22di%282-ethylhexyl%29%20phthalate%22%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": "2026-11-06T19:12:20+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "di(2-ethylhexyl) phthalate",
+      "column": "micronucleus assay",
+      "count": 33,
+      "query": "\"di(2-ethylhexyl) phthalate\" AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%22di%282-ethylhexyl%29%20phthalate%22%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": "2026-11-06T19:12:20+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "di(2-ethylhexyl) phthalate",
+      "column": "comet assay",
+      "count": 69,
+      "query": "\"di(2-ethylhexyl) phthalate\" AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%22di%282-ethylhexyl%29%20phthalate%22%20AND%20%22comet%20assay%22",
+      "retrieved": "2026-11-06T19:12:20+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "di(2-ethylhexyl) phthalate",
+      "column": "zebrafish embryo toxicity",
+      "count": 0,
+      "query": "\"di(2-ethylhexyl) phthalate\" AND \"zebrafish embryo toxicity\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%22di%282-ethylhexyl%29%20phthalate%22%20AND%20%22zebrafish%20embryo%20toxicity%22",
+      "retrieved": "2026-11-06T19:12:20+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "glyphosate",
+      "column": "Ames test",
+      "count": 30,
+      "query": "@CHEMICAL_glyphosate AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_glyphosate%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": "2026-11-06T19:12:21+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "glyphosate",
+      "column": "micronucleus assay",
+      "count": 66,
+      "query": "@CHEMICAL_glyphosate AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_glyphosate%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": "2026-11-06T19:12:21+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "glyphosate",
+      "column": "comet assay",
+      "count": 138,
+      "query": "@CHEMICAL_glyphosate AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_glyphosate%20AND%20%22comet%20assay%22",
+      "retrieved": "2026-11-06T19:12:21+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "glyphosate",
+      "column": "zebrafish embryo toxicity",
+      "count": 0,
+      "query": "@CHEMICAL_glyphosate AND \"zebrafish embryo toxicity\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_glyphosate%20AND%20%22zebrafish%20embryo%20toxicity%22",
+      "retrieved": "2026-11-06T19:12:22+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "nonexistium chloride",
+      "column": "Ames test",
+      "count": 0,
+      "query": "\"nonexistium chloride\" AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%22nonexistium%20chloride%22%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": null,
+      "error": null,
+      "note": "not asked: nonexistium chloride has no documents on its own"
+    },
+    {
+      "row": "nonexistium chloride",
+      "column": "micronucleus assay",
+      "count": 0,
+      "query": "\"nonexistium chloride\" AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%22nonexistium%20chloride%22%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": null,
+      "error": null,
+      "note": "not asked: nonexistium chloride has no documents on its own"
+    },
+    {
+      "row": "nonexistium chloride",
+      "column": "comet assay",
+      "count": 0,
+      "query": "\"nonexistium chloride\" AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%22nonexistium%20chloride%22%20AND%20%22comet%20assay%22",
+      "retrieved": null,
+      "error": null,
+      "note": "not asked: nonexistium chloride has no documents on its own"
+    },
+    {
+      "row": "nonexistium chloride",
+      "column": "zebrafish embryo toxicity",
+      "count": 0,
+      "query": "\"nonexistium chloride\" AND \"zebrafish embryo toxicity\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%22nonexistium%20chloride%22%20AND%20%22zebrafish%20embryo%20toxicity%22",
+      "retrieved": null,
+      "error": null,
+      "note": "not asked: nonexistium chloride has no documents on its own"
+    }
+  ]
+}

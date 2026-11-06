@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<title>PubMatrix Reloaded</title>
+<meta name="description" content="Plan a pairwise literature search over PubTator3 and view its results.">
+<link rel="stylesheet" href="style.css">
+<script type="module" src="app.js"></script>
+</head>
+<body>
+<main>
+<header>
+  <h1>PubMatrix Reloaded</h1>
+  <p>Count the literature for every pair of terms from two lists, using
+    <a href="https://www.ncbi.nlm.nih.gov/research/pubtator3/">PubTator3</a>.
+    A rebuild of <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC317283/">PubMatrix</a>.</p>
+  <p class="callout">This page does not run searches. PubTator3 does not accept requests from web pages,
+    so searches run on your computer: plan one here, run the command, then bring the results back to view.</p>
+</header>
+
+<section aria-labelledby="plan-title">
+  <h2 id="plan-title">1. Plan a search</h2>
+  <form id="plan">
+    <div class="lists">
+      <div>
+        <label for="terms">Terms <span>(rows), one per line</span></label>
+        <textarea id="terms" rows="9" spellcheck="false" placeholder="atrazine&#10;bisphenol A&#10;glyphosate"></textarea>
+        <label class="inline" for="terms-type">Look up as</label>
+        <select id="terms-type"></select>
+      </div>
+      <div>
+        <label for="modifiers">Modifiers <span>(columns), one per line</span></label>
+        <textarea id="modifiers" rows="9" spellcheck="false" placeholder="Ames test | Ames assay&#10;comet assay&#10;micronucleus assay"></textarea>
+        <label class="inline" for="modifiers-type">Look up as</label>
+        <select id="modifiers-type"></select>
+      </div>
+    </div>
+    <details>
+      <summary>How terms are read</summary>
+      <table class="plain">
+        <tr><td><code>@GENE_BRCA1</code></td><td>That entity ID, as written</td></tr>
+        <tr><td><code>"DNA repair"</code></td><td>That exact phrase</td></tr>
+        <tr><td><code>p53</code></td><td>The entity with that exact name or synonym, otherwise a phrase</td></tr>
+        <tr><td><code>Ames test | Ames assay</code></td><td>Documents with either</td></tr>
+      </table>
+      <p>Set "Look up as" for a list of one kind. A chemical list needs it: <code>PFOA</code> alone is also the gene <i>pfoA</i>.</p>
+    </details>
+    <div class="options">
+      <div>
+        <label for="relation">Count</label>
+        <select id="relation"></select>
+      </div>
+      <div>
+        <label for="output">Results name</label>
+        <input id="output" type="text" value="pubmatrix" spellcheck="false">
+      </div>
+      <label class="check"><input id="quiet" type="checkbox"> Wait for quiet hours (weekends, 9 PM to 5 AM US Eastern)</label>
+    </div>
+  </form>
+  <p id="estimate" aria-live="polite"></p>
+  <ul id="warnings" class="warnings" aria-live="polite"></ul>
+  <ol class="steps">
+    <li>
+      <span>Download the two lists into one folder.</span>
+      <div class="buttons">
+        <button type="button" id="save-terms">Download terms.txt</button>
+        <button type="button" id="save-modifiers">Download modifiers.txt</button>
+      </div>
+    </li>
+    <li>
+      <span>In that folder, run this. It needs <a href="https://docs.astral.sh/uv/">uv</a> and nothing else.</span>
+      <div class="command">
+        <pre id="command" tabindex="0"></pre>
+        <button type="button" id="copy">Copy</button>
+      </div>
+    </li>
+    <li><span>Open the <code>.xlsx</code> it writes, or view the <code>.json</code> below.</span></li>
+  </ol>
+</section>
+
+<section aria-labelledby="view-title">
+  <h2 id="view-title">2. View results</h2>
+  <div id="drop" class="drop">
+    <label for="file">Choose a <code>.json</code> results file, or drop one here.</label>
+    <input id="file" type="file" accept=".json,application/json">
+    <button type="button" id="example">Show an example</button>
+  </div>
+  <p class="fine">The file stays in your browser. Nothing is uploaded.</p>
+  <p id="load-error" class="error" role="alert" hidden></p>
+
+  <div id="results" hidden>
+    <p id="summary"></p>
+    <p id="partial" class="callout" hidden></p>
+    <label class="check"><input id="hide-empty" type="checkbox"> Hide terms with no hits</label>
+    <div class="scroll"><table id="matrix"></table></div>
+    <div class="legend" id="legend"></div>
+    <p class="fine">Select a count to open those documents in PubTator3. Select a heading to sort.
+      — means no value is known; the reason is in its tooltip. Counts are PubTator3 documents
+      (PubMed abstracts and PMC full text), not PubMed hits.</p>
+    <h3>How each term was read</h3>
+    <div class="scroll"><table id="terms-read" class="plain"></table></div>
+    <h3>How this was made</h3>
+    <div class="scroll"><table id="run-info" class="plain"></table></div>
+  </div>
+</section>
+
+<footer>
+  <p><a href="https://github.com/caufieldjh/pubmatrixreloaded">Source and documentation on GitHub</a></p>
+</footer>
+</main>
+</body>
+</html>

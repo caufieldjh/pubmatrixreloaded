@@ -1,0 +1,66 @@
+"""Check that the web page stays in step with the Python tool."""
+
+import json
+import re
+import shutil
+import subprocess
+from pathlib import Path
+
+import pytest
+
+from pubmatrix.cli import TYPICAL_REQUESTS_PER_SECOND, LARGE_RUN_REQUESTS, _parser
+from pubmatrix.matrix import HEAT_STEPS, RELATION_TYPES, WEB_SEARCH
+from pubmatrix.terms import CONCEPTS, SYNONYM_SEPARATOR
+
+ROOT = Path(__file__).parent.parent
+CORE = (ROOT / "docs" / "core.js").read_text(encoding="utf-8")
+
+
+def js_list(name):
+    block = re.search(rf"export const {name} = \[(.*?)\];", CORE, re.S).group(1)
+    return tuple(re.findall(r"'([^']+)'", block))
+
+
+def js_value(name):
+    return re.search(rf"export const {name} = '?([^';]+)'?;", CORE).group(1)
+
+
+def test_lists_match():
+    assert js_list("RELATION_TYPES") == RELATION_TYPES
+    assert js_list("CONCEPTS") == CONCEPTS
+
+
+def test_constants_match():
+    assert float(js_value("TYPICAL_REQUESTS_PER_SECOND")) == TYPICAL_REQUESTS_PER_SECOND
+    assert int(js_value("LARGE_RUN_REQUESTS")) == LARGE_RUN_REQUESTS
+    assert int(js_value("HEAT_STEPS")) == HEAT_STEPS
+    assert js_value("SYNONYM_SEPARATOR") == SYNONYM_SEPARATOR
+    assert js_value("WEB_SEARCH") == WEB_SEARCH
+
+
+def test_example_is_a_complete_result():
+    data = json.loads((ROOT / "docs" / "example.json").read_text(encoding="utf-8"))
+    assert len(data["cells"]) == len(data["rows"]) * len(data["columns"])
+    assert data["run"]["status"] == "complete"
+    assert not re.search(r"/home/|/tmp/", json.dumps(data))
+
+
+@pytest.mark.skipif(not shutil.which("node"), reason="node is not installed")
+def test_generated_command_is_accepted_by_the_tool():
+    script = """
+    import { buildCommand } from './docs/core.js';
+    console.log(buildCommand({ output: 'my run', relation: 'treat', termsType: 'chemical',
+                               modifiersType: 'disease', quietHours: true }));
+    """
+    done = subprocess.run(
+        ["node", "--input-type=module", "-e", script],
+        cwd=ROOT, capture_output=True, text=True, check=True,
+    )
+    words = re.findall(r"'[^']*'|\S+", done.stdout)
+    args = [w.strip("'") for w in words[words.index("run"):]]
+    parsed = _parser().parse_args(args)
+    assert parsed.terms_type == "chemical"
+    assert parsed.modifiers_type == "disease"
+    assert parsed.relation == "treat"
+    assert parsed.quiet_hours is True
+    assert parsed.output == "my run"

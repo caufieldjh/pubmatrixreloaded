@@ -178,7 +178,9 @@ def _run(args: argparse.Namespace, client: PubTatorClient) -> int:
         _log("Stopped while reading terms. Run the same command again to continue.")
         return STOPPED_EXIT
 
-    for path in write_all(matrix, args.output, shlex.join(sys.argv)):
+    # Not argv[0]: that is a local path, and these files are made to be shared.
+    command = shlex.join(["pubmatrix", *sys.argv[1:]])
+    for path in write_all(matrix, args.output, command):
         print(path)
     failed = matrix.failed
     if matrix.stopped:
