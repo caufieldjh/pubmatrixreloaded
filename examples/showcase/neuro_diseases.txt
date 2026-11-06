@@ -1,0 +1,6 @@
+# IDs rather than names, so each column is one entity.
+@DISEASE_Alzheimer_Disease
+@DISEASE_Parkinson_Disease
+@DISEASE_Huntington_Disease
+@DISEASE_Amyotrophic_Lateral_Sclerosis
+@DISEASE_Frontotemporal_Dementia

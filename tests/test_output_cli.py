@@ -152,3 +152,15 @@ def test_cli_warns_about_large_runs(make_client, tmp_path, capsys):
     err = capsys.readouterr().err
     assert "2000 cells" in err and "--quiet-hours" in err
     assert "210 terms read as" in err
+
+
+def test_recorded_command_does_not_include_the_local_install_path(
+    make_client, tmp_path, monkeypatch, capsys
+):
+    prefix = str(tmp_path / "m")
+    args = ["run", "-t", "@A", "-m", "@B", "-o", prefix]
+    monkeypatch.setattr("sys.argv", ["/home/someone/.venv/bin/pubmatrix", *args])
+    api = FakeApi({"@A": 5, "@B": 5, "@A AND @B": 3})
+    main(args, client=make_client(api))
+    data = json.loads((tmp_path / "m.json").read_text())
+    assert data["run"]["command"].startswith("pubmatrix run -t @A")

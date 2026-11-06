@@ -1,0 +1,7 @@
+# Toxicity assays. Each line lists the wordings of one assay.
+Ames test | Ames assay | Salmonella mutagenicity
+micronucleus assay | micronucleus test
+comet assay
+chromosomal aberration assay | chromosome aberration test
+uterotrophic assay
+local lymph node assay | LLNA

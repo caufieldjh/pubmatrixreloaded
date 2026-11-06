@@ -1,0 +1,21 @@
+# Environmental chemicals of regulatory interest.
+atrazine
+bisphenol A
+glyphosate
+benzo[a]pyrene
+acrylamide
+formaldehyde
+benzene
+vinyl chloride
+trichloroethylene
+chlorpyrifos
+permethrin
+triclosan
+aflatoxin B1
+ochratoxin A
+PFOA | perfluorooctanoic acid
+PFOS | perfluorooctane sulfonate
+di(2-ethylhexyl) phthalate | DEHP
+cadmium
+arsenic
+mercury

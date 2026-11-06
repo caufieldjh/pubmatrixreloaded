@@ -1,0 +1,17 @@
+# Genes with established roles in neurodegenerative disease.
+APP
+PSEN1
+PSEN2
+APOE
+TREM2
+MAPT
+SNCA
+LRRK2
+PARK7
+PINK1
+PRKN
+HTT
+SOD1
+C9orf72
+TARDBP
+FUS

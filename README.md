@@ -13,6 +13,21 @@ day and read the spreadsheet in the morning.
 
 This is an early prototype: a command line tool that writes files.
 
+## Web page
+
+[caufieldjh.github.io/pubmatrixreloaded](https://caufieldjh.github.io/pubmatrixreloaded/)
+shows real example searches, plans your own, and displays results. It helps you
+write the term lists, estimates the run, and gives you the command to paste.
+Afterward, it displays the `.json` file as a sortable heatmap, without uploading it
+anywhere.
+
+The page cannot run searches itself. PubTator3 sends no CORS headers, so browsers
+refuse its answers on any site, and GitHub Pages has no server to ask on the page's
+behalf. The searching stays on your computer.
+
+The page lives in `docs/` and has no build step. To serve it from GitHub, set
+Settings > Pages to deploy from the `main` branch, `/docs` folder.
+
 ## Install and run
 
 Requires Python 3.10+ and [uv](https://docs.astral.sh/uv/).
@@ -187,15 +202,22 @@ cached.
 | Output | Linked HTML table; Excel in later use | Excel, linked HTML, CSV, JSON |
 | Traceability | Stored searches | Exact query and retrieval time for every cell |
 | Saved searches | Shared server archive | Local cache and output files only |
-| Interface | Web form | Command line |
+| Interface | Web form | Command line, with a web page to plan and view |
 
-Not rebuilt yet: the web form, the server that runs jobs for you, and the shared
-archive of searches and term lists.
+Not rebuilt yet: a web form that runs searches, the server that runs jobs for you,
+and the shared archive of searches and term lists.
 
 ## Development
 
 ```sh
 uv run pytest
+node --test tests/web/*.test.mjs
 ```
 
-The tests use a fake API and do not touch the network.
+The tests use a fake API and do not touch the network. `tests/test_web.py` checks
+that the values copied into `docs/core.js` still match the Python tool.
+
+The page's examples are real runs. Their term lists are in `examples/showcase/`,
+their results in `docs/examples/`, and their descriptions in `docs/core.js`. Each
+file records the command that made it; rerun that and copy the `.json` over. The
+descriptions name specific findings, so read them again after a refresh.

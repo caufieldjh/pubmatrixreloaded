@@ -1,0 +1,780 @@
+{
+  "run": {
+    "tool": "pubmatrix-reloaded 0.2.0",
+    "command": "pubmatrix run -T examples/showcase/cyp_genes.txt -M examples/showcase/cyp_drugs.txt --terms-type gene --modifiers-type chemical --relation ANY -o output/showcase/drug-metabolism",
+    "source": "PubTator3 (https://www.ncbi.nlm.nih.gov/research/pubtator3-api)",
+    "mode": "relation",
+    "relation": "ANY",
+    "started": "2026-11-06T19:40:24+00:00",
+    "finished": "2026-11-06T19:41:01+00:00",
+    "status": "complete",
+    "cells": 60,
+    "cells_without_value": 0
+  },
+  "rows": [
+    {
+      "input": "CYP3A4",
+      "kind": "entity",
+      "query": "@GENE_CYP3A4",
+      "name": "CYP3A4",
+      "biotype": "gene",
+      "suggestion": null,
+      "total": 37103,
+      "note": ""
+    },
+    {
+      "input": "CYP2D6",
+      "kind": "entity",
+      "query": "@GENE_CYP2D6",
+      "name": "CYP2D6",
+      "biotype": "gene",
+      "suggestion": null,
+      "total": 17342,
+      "note": ""
+    },
+    {
+      "input": "CYP2C9",
+      "kind": "entity",
+      "query": "@GENE_CYP2C9",
+      "name": "CYP2C9",
+      "biotype": "gene",
+      "suggestion": null,
+      "total": 13879,
+      "note": ""
+    },
+    {
+      "input": "CYP2C19",
+      "kind": "entity",
+      "query": "@GENE_CYP2C19",
+      "name": "CYP2C19",
+      "biotype": "gene",
+      "suggestion": null,
+      "total": 15251,
+      "note": ""
+    },
+    {
+      "input": "CYP1A2",
+      "kind": "entity",
+      "query": "@GENE_CYP1A2",
+      "name": "CYP1A2",
+      "biotype": "gene",
+      "suggestion": null,
+      "total": 16856,
+      "note": ""
+    },
+    {
+      "input": "CYP2B6",
+      "kind": "entity",
+      "query": "@GENE_CYP2B6",
+      "name": "CYP2B6",
+      "biotype": "gene",
+      "suggestion": null,
+      "total": 12247,
+      "note": ""
+    }
+  ],
+  "columns": [
+    {
+      "input": "warfarin",
+      "kind": "entity",
+      "query": "@CHEMICAL_Warfarin",
+      "name": "Warfarin",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 64222,
+      "note": ""
+    },
+    {
+      "input": "clopidogrel",
+      "kind": "entity",
+      "query": "@CHEMICAL_Clopidogrel",
+      "name": "Clopidogrel",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 43669,
+      "note": ""
+    },
+    {
+      "input": "codeine",
+      "kind": "entity",
+      "query": "@CHEMICAL_Codeine",
+      "name": "Codeine",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 14106,
+      "note": ""
+    },
+    {
+      "input": "omeprazole",
+      "kind": "entity",
+      "query": "@CHEMICAL_Omeprazole",
+      "name": "Omeprazole",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 21281,
+      "note": ""
+    },
+    {
+      "input": "tamoxifen",
+      "kind": "entity",
+      "query": "@CHEMICAL_Tamoxifen",
+      "name": "Tamoxifen",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 73854,
+      "note": ""
+    },
+    {
+      "input": "simvastatin",
+      "kind": "entity",
+      "query": "@CHEMICAL_Simvastatin",
+      "name": "Simvastatin",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 28442,
+      "note": ""
+    },
+    {
+      "input": "caffeine",
+      "kind": "entity",
+      "query": "@CHEMICAL_Caffeine",
+      "name": "Caffeine",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 84662,
+      "note": ""
+    },
+    {
+      "input": "efavirenz",
+      "kind": "entity",
+      "query": "@CHEMICAL_efavirenz",
+      "name": "efavirenz",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 14881,
+      "note": ""
+    },
+    {
+      "input": "midazolam",
+      "kind": "entity",
+      "query": "@CHEMICAL_Midazolam",
+      "name": "Midazolam",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 50386,
+      "note": ""
+    },
+    {
+      "input": "ketoconazole",
+      "kind": "entity",
+      "query": "@CHEMICAL_Ketoconazole",
+      "name": "Ketoconazole",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 18685,
+      "note": ""
+    }
+  ],
+  "cells": [
+    {
+      "row": "CYP3A4",
+      "column": "warfarin",
+      "count": 37,
+      "query": "relations:ANY|@GENE_CYP3A4|@CHEMICAL_Warfarin",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP3A4%7C%40CHEMICAL_Warfarin",
+      "retrieved": "2026-11-06T19:40:29+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP3A4",
+      "column": "clopidogrel",
+      "count": 73,
+      "query": "relations:ANY|@GENE_CYP3A4|@CHEMICAL_Clopidogrel",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP3A4%7C%40CHEMICAL_Clopidogrel",
+      "retrieved": "2026-11-06T19:40:29+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP3A4",
+      "column": "codeine",
+      "count": 3,
+      "query": "relations:ANY|@GENE_CYP3A4|@CHEMICAL_Codeine",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP3A4%7C%40CHEMICAL_Codeine",
+      "retrieved": "2026-11-06T19:40:31+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP3A4",
+      "column": "omeprazole",
+      "count": 102,
+      "query": "relations:ANY|@GENE_CYP3A4|@CHEMICAL_Omeprazole",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP3A4%7C%40CHEMICAL_Omeprazole",
+      "retrieved": "2026-11-06T19:40:30+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP3A4",
+      "column": "tamoxifen",
+      "count": 67,
+      "query": "relations:ANY|@GENE_CYP3A4|@CHEMICAL_Tamoxifen",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP3A4%7C%40CHEMICAL_Tamoxifen",
+      "retrieved": "2026-11-06T19:40:29+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP3A4",
+      "column": "simvastatin",
+      "count": 129,
+      "query": "relations:ANY|@GENE_CYP3A4|@CHEMICAL_Simvastatin",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP3A4%7C%40CHEMICAL_Simvastatin",
+      "retrieved": "2026-11-06T19:40:29+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP3A4",
+      "column": "caffeine",
+      "count": 17,
+      "query": "relations:ANY|@GENE_CYP3A4|@CHEMICAL_Caffeine",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP3A4%7C%40CHEMICAL_Caffeine",
+      "retrieved": "2026-11-06T19:40:30+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP3A4",
+      "column": "efavirenz",
+      "count": 95,
+      "query": "relations:ANY|@GENE_CYP3A4|@CHEMICAL_efavirenz",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP3A4%7C%40CHEMICAL_efavirenz",
+      "retrieved": "2026-11-06T19:40:29+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP3A4",
+      "column": "midazolam",
+      "count": 758,
+      "query": "relations:ANY|@GENE_CYP3A4|@CHEMICAL_Midazolam",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP3A4%7C%40CHEMICAL_Midazolam",
+      "retrieved": "2026-11-06T19:40:31+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP3A4",
+      "column": "ketoconazole",
+      "count": 748,
+      "query": "relations:ANY|@GENE_CYP3A4|@CHEMICAL_Ketoconazole",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP3A4%7C%40CHEMICAL_Ketoconazole",
+      "retrieved": "2026-11-06T19:40:32+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2D6",
+      "column": "warfarin",
+      "count": 6,
+      "query": "relations:ANY|@GENE_CYP2D6|@CHEMICAL_Warfarin",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2D6%7C%40CHEMICAL_Warfarin",
+      "retrieved": "2026-11-06T19:40:33+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2D6",
+      "column": "clopidogrel",
+      "count": 3,
+      "query": "relations:ANY|@GENE_CYP2D6|@CHEMICAL_Clopidogrel",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2D6%7C%40CHEMICAL_Clopidogrel",
+      "retrieved": "2026-11-06T19:40:34+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2D6",
+      "column": "codeine",
+      "count": 161,
+      "query": "relations:ANY|@GENE_CYP2D6|@CHEMICAL_Codeine",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2D6%7C%40CHEMICAL_Codeine",
+      "retrieved": "2026-11-06T19:40:33+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2D6",
+      "column": "omeprazole",
+      "count": 6,
+      "query": "relations:ANY|@GENE_CYP2D6|@CHEMICAL_Omeprazole",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2D6%7C%40CHEMICAL_Omeprazole",
+      "retrieved": "2026-11-06T19:40:35+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2D6",
+      "column": "tamoxifen",
+      "count": 374,
+      "query": "relations:ANY|@GENE_CYP2D6|@CHEMICAL_Tamoxifen",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2D6%7C%40CHEMICAL_Tamoxifen",
+      "retrieved": "2026-11-06T19:40:34+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2D6",
+      "column": "simvastatin",
+      "count": 7,
+      "query": "relations:ANY|@GENE_CYP2D6|@CHEMICAL_Simvastatin",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2D6%7C%40CHEMICAL_Simvastatin",
+      "retrieved": "2026-11-06T19:40:35+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2D6",
+      "column": "caffeine",
+      "count": 7,
+      "query": "relations:ANY|@GENE_CYP2D6|@CHEMICAL_Caffeine",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2D6%7C%40CHEMICAL_Caffeine",
+      "retrieved": "2026-11-06T19:40:38+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2D6",
+      "column": "efavirenz",
+      "count": 1,
+      "query": "relations:ANY|@GENE_CYP2D6|@CHEMICAL_efavirenz",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2D6%7C%40CHEMICAL_efavirenz",
+      "retrieved": "2026-11-06T19:40:36+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2D6",
+      "column": "midazolam",
+      "count": 13,
+      "query": "relations:ANY|@GENE_CYP2D6|@CHEMICAL_Midazolam",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2D6%7C%40CHEMICAL_Midazolam",
+      "retrieved": "2026-11-06T19:40:38+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2D6",
+      "column": "ketoconazole",
+      "count": 14,
+      "query": "relations:ANY|@GENE_CYP2D6|@CHEMICAL_Ketoconazole",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2D6%7C%40CHEMICAL_Ketoconazole",
+      "retrieved": "2026-11-06T19:40:38+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2C9",
+      "column": "warfarin",
+      "count": 872,
+      "query": "relations:ANY|@GENE_CYP2C9|@CHEMICAL_Warfarin",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2C9%7C%40CHEMICAL_Warfarin",
+      "retrieved": "2026-11-06T19:40:38+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2C9",
+      "column": "clopidogrel",
+      "count": 25,
+      "query": "relations:ANY|@GENE_CYP2C9|@CHEMICAL_Clopidogrel",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2C9%7C%40CHEMICAL_Clopidogrel",
+      "retrieved": "2026-11-06T19:40:39+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2C9",
+      "column": "codeine",
+      "count": 0,
+      "query": "relations:ANY|@GENE_CYP2C9|@CHEMICAL_Codeine",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2C9%7C%40CHEMICAL_Codeine",
+      "retrieved": "2026-11-06T19:40:39+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2C9",
+      "column": "omeprazole",
+      "count": 11,
+      "query": "relations:ANY|@GENE_CYP2C9|@CHEMICAL_Omeprazole",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2C9%7C%40CHEMICAL_Omeprazole",
+      "retrieved": "2026-11-06T19:40:39+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2C9",
+      "column": "tamoxifen",
+      "count": 16,
+      "query": "relations:ANY|@GENE_CYP2C9|@CHEMICAL_Tamoxifen",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2C9%7C%40CHEMICAL_Tamoxifen",
+      "retrieved": "2026-11-06T19:40:40+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2C9",
+      "column": "simvastatin",
+      "count": 4,
+      "query": "relations:ANY|@GENE_CYP2C9|@CHEMICAL_Simvastatin",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2C9%7C%40CHEMICAL_Simvastatin",
+      "retrieved": "2026-11-06T19:40:42+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2C9",
+      "column": "caffeine",
+      "count": 6,
+      "query": "relations:ANY|@GENE_CYP2C9|@CHEMICAL_Caffeine",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2C9%7C%40CHEMICAL_Caffeine",
+      "retrieved": "2026-11-06T19:40:42+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2C9",
+      "column": "efavirenz",
+      "count": 5,
+      "query": "relations:ANY|@GENE_CYP2C9|@CHEMICAL_efavirenz",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2C9%7C%40CHEMICAL_efavirenz",
+      "retrieved": "2026-11-06T19:40:43+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2C9",
+      "column": "midazolam",
+      "count": 9,
+      "query": "relations:ANY|@GENE_CYP2C9|@CHEMICAL_Midazolam",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2C9%7C%40CHEMICAL_Midazolam",
+      "retrieved": "2026-11-06T19:40:44+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2C9",
+      "column": "ketoconazole",
+      "count": 18,
+      "query": "relations:ANY|@GENE_CYP2C9|@CHEMICAL_Ketoconazole",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2C9%7C%40CHEMICAL_Ketoconazole",
+      "retrieved": "2026-11-06T19:40:49+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2C19",
+      "column": "warfarin",
+      "count": 41,
+      "query": "relations:ANY|@GENE_CYP2C19|@CHEMICAL_Warfarin",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2C19%7C%40CHEMICAL_Warfarin",
+      "retrieved": "2026-11-06T19:40:43+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2C19",
+      "column": "clopidogrel",
+      "count": 916,
+      "query": "relations:ANY|@GENE_CYP2C19|@CHEMICAL_Clopidogrel",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2C19%7C%40CHEMICAL_Clopidogrel",
+      "retrieved": "2026-11-06T19:40:45+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2C19",
+      "column": "codeine",
+      "count": 0,
+      "query": "relations:ANY|@GENE_CYP2C19|@CHEMICAL_Codeine",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2C19%7C%40CHEMICAL_Codeine",
+      "retrieved": "2026-11-06T19:40:46+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2C19",
+      "column": "omeprazole",
+      "count": 344,
+      "query": "relations:ANY|@GENE_CYP2C19|@CHEMICAL_Omeprazole",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2C19%7C%40CHEMICAL_Omeprazole",
+      "retrieved": "2026-11-06T19:40:47+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2C19",
+      "column": "tamoxifen",
+      "count": 16,
+      "query": "relations:ANY|@GENE_CYP2C19|@CHEMICAL_Tamoxifen",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2C19%7C%40CHEMICAL_Tamoxifen",
+      "retrieved": "2026-11-06T19:40:48+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2C19",
+      "column": "simvastatin",
+      "count": 2,
+      "query": "relations:ANY|@GENE_CYP2C19|@CHEMICAL_Simvastatin",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2C19%7C%40CHEMICAL_Simvastatin",
+      "retrieved": "2026-11-06T19:40:47+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2C19",
+      "column": "caffeine",
+      "count": 4,
+      "query": "relations:ANY|@GENE_CYP2C19|@CHEMICAL_Caffeine",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2C19%7C%40CHEMICAL_Caffeine",
+      "retrieved": "2026-11-06T19:40:48+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2C19",
+      "column": "efavirenz",
+      "count": 8,
+      "query": "relations:ANY|@GENE_CYP2C19|@CHEMICAL_efavirenz",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2C19%7C%40CHEMICAL_efavirenz",
+      "retrieved": "2026-11-06T19:40:48+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2C19",
+      "column": "midazolam",
+      "count": 14,
+      "query": "relations:ANY|@GENE_CYP2C19|@CHEMICAL_Midazolam",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2C19%7C%40CHEMICAL_Midazolam",
+      "retrieved": "2026-11-06T19:40:49+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2C19",
+      "column": "ketoconazole",
+      "count": 9,
+      "query": "relations:ANY|@GENE_CYP2C19|@CHEMICAL_Ketoconazole",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2C19%7C%40CHEMICAL_Ketoconazole",
+      "retrieved": "2026-11-06T19:40:50+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP1A2",
+      "column": "warfarin",
+      "count": 17,
+      "query": "relations:ANY|@GENE_CYP1A2|@CHEMICAL_Warfarin",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP1A2%7C%40CHEMICAL_Warfarin",
+      "retrieved": "2026-11-06T19:40:50+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP1A2",
+      "column": "clopidogrel",
+      "count": 19,
+      "query": "relations:ANY|@GENE_CYP1A2|@CHEMICAL_Clopidogrel",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP1A2%7C%40CHEMICAL_Clopidogrel",
+      "retrieved": "2026-11-06T19:40:50+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP1A2",
+      "column": "codeine",
+      "count": 0,
+      "query": "relations:ANY|@GENE_CYP1A2|@CHEMICAL_Codeine",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP1A2%7C%40CHEMICAL_Codeine",
+      "retrieved": "2026-11-06T19:40:51+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP1A2",
+      "column": "omeprazole",
+      "count": 65,
+      "query": "relations:ANY|@GENE_CYP1A2|@CHEMICAL_Omeprazole",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP1A2%7C%40CHEMICAL_Omeprazole",
+      "retrieved": "2026-11-06T19:40:51+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP1A2",
+      "column": "tamoxifen",
+      "count": 4,
+      "query": "relations:ANY|@GENE_CYP1A2|@CHEMICAL_Tamoxifen",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP1A2%7C%40CHEMICAL_Tamoxifen",
+      "retrieved": "2026-11-06T19:40:52+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP1A2",
+      "column": "simvastatin",
+      "count": 1,
+      "query": "relations:ANY|@GENE_CYP1A2|@CHEMICAL_Simvastatin",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP1A2%7C%40CHEMICAL_Simvastatin",
+      "retrieved": "2026-11-06T19:40:52+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP1A2",
+      "column": "caffeine",
+      "count": 419,
+      "query": "relations:ANY|@GENE_CYP1A2|@CHEMICAL_Caffeine",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP1A2%7C%40CHEMICAL_Caffeine",
+      "retrieved": "2026-11-06T19:40:51+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP1A2",
+      "column": "efavirenz",
+      "count": 4,
+      "query": "relations:ANY|@GENE_CYP1A2|@CHEMICAL_efavirenz",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP1A2%7C%40CHEMICAL_efavirenz",
+      "retrieved": "2026-11-06T19:40:54+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP1A2",
+      "column": "midazolam",
+      "count": 9,
+      "query": "relations:ANY|@GENE_CYP1A2|@CHEMICAL_Midazolam",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP1A2%7C%40CHEMICAL_Midazolam",
+      "retrieved": "2026-11-06T19:40:55+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP1A2",
+      "column": "ketoconazole",
+      "count": 18,
+      "query": "relations:ANY|@GENE_CYP1A2|@CHEMICAL_Ketoconazole",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP1A2%7C%40CHEMICAL_Ketoconazole",
+      "retrieved": "2026-11-06T19:40:54+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2B6",
+      "column": "warfarin",
+      "count": 7,
+      "query": "relations:ANY|@GENE_CYP2B6|@CHEMICAL_Warfarin",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2B6%7C%40CHEMICAL_Warfarin",
+      "retrieved": "2026-11-06T19:40:56+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2B6",
+      "column": "clopidogrel",
+      "count": 36,
+      "query": "relations:ANY|@GENE_CYP2B6|@CHEMICAL_Clopidogrel",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2B6%7C%40CHEMICAL_Clopidogrel",
+      "retrieved": "2026-11-06T19:40:55+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2B6",
+      "column": "codeine",
+      "count": 1,
+      "query": "relations:ANY|@GENE_CYP2B6|@CHEMICAL_Codeine",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2B6%7C%40CHEMICAL_Codeine",
+      "retrieved": "2026-11-06T19:40:56+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2B6",
+      "column": "omeprazole",
+      "count": 17,
+      "query": "relations:ANY|@GENE_CYP2B6|@CHEMICAL_Omeprazole",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2B6%7C%40CHEMICAL_Omeprazole",
+      "retrieved": "2026-11-06T19:40:56+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2B6",
+      "column": "tamoxifen",
+      "count": 15,
+      "query": "relations:ANY|@GENE_CYP2B6|@CHEMICAL_Tamoxifen",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2B6%7C%40CHEMICAL_Tamoxifen",
+      "retrieved": "2026-11-06T19:40:56+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2B6",
+      "column": "simvastatin",
+      "count": 4,
+      "query": "relations:ANY|@GENE_CYP2B6|@CHEMICAL_Simvastatin",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2B6%7C%40CHEMICAL_Simvastatin",
+      "retrieved": "2026-11-06T19:40:57+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2B6",
+      "column": "caffeine",
+      "count": 5,
+      "query": "relations:ANY|@GENE_CYP2B6|@CHEMICAL_Caffeine",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2B6%7C%40CHEMICAL_Caffeine",
+      "retrieved": "2026-11-06T19:40:58+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2B6",
+      "column": "efavirenz",
+      "count": 301,
+      "query": "relations:ANY|@GENE_CYP2B6|@CHEMICAL_efavirenz",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2B6%7C%40CHEMICAL_efavirenz",
+      "retrieved": "2026-11-06T19:40:57+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2B6",
+      "column": "midazolam",
+      "count": 11,
+      "query": "relations:ANY|@GENE_CYP2B6|@CHEMICAL_Midazolam",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2B6%7C%40CHEMICAL_Midazolam",
+      "retrieved": "2026-11-06T19:40:59+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "CYP2B6",
+      "column": "ketoconazole",
+      "count": 35,
+      "query": "relations:ANY|@GENE_CYP2B6|@CHEMICAL_Ketoconazole",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3AANY%7C%40GENE_CYP2B6%7C%40CHEMICAL_Ketoconazole",
+      "retrieved": "2026-11-06T19:41:01+00:00",
+      "error": null,
+      "note": null
+    }
+  ]
+}
