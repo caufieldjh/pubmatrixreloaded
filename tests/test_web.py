@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from pubmatrix.cli import TYPICAL_REQUESTS_PER_SECOND, LARGE_RUN_REQUESTS, _parser
+from pubmatrix.cli import LARGE_RUN_REQUESTS, TYPICAL_REQUESTS_PER_SECOND, _parser
 from pubmatrix.matrix import HEAT_STEPS, RELATION_TYPES, WEB_SEARCH
 from pubmatrix.terms import CONCEPTS, SYNONYM_SEPARATOR
 
@@ -65,10 +65,13 @@ def test_generated_command_is_accepted_by_the_tool():
     """
     done = subprocess.run(
         ["node", "--input-type=module", "-e", script],
-        cwd=ROOT, capture_output=True, text=True, check=True,
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=True,
     )
     words = re.findall(r"'[^']*'|\S+", done.stdout)
-    args = [w.strip("'") for w in words[words.index("run"):]]
+    args = [w.strip("'") for w in words[words.index("run") :]]
     parsed = _parser().parse_args(args)
     assert parsed.terms_type == "chemical"
     assert parsed.modifiers_type == "disease"

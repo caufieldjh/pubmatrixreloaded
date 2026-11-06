@@ -1,4 +1,7 @@
+"""Tests for reading terms."""
+
 from conftest import FakeApi
+
 from pubmatrix.terms import phrase, read_term_file, resolve_term
 
 

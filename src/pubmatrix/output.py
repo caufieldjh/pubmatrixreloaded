@@ -16,7 +16,6 @@ from .matrix import HEAT_STEPS, Matrix, heat_step
 from .terms import Term
 
 
-
 def write_csv(matrix: Matrix, path: Path) -> None:
     """Plain numeric grid for spreadsheets. Unknown cells are blank, not zero."""
     with open(path, "w", newline="", encoding="utf-8") as handle:
@@ -41,7 +40,7 @@ def _term_dict(term: Term) -> dict:
 
 
 def run_info(matrix: Matrix, command: str | None = None) -> dict:
-    """What it takes to trace a result back to how it was made."""
+    """Record what it takes to trace a result back to how it was made."""
     return {
         "tool": f"pubmatrix-reloaded {__version__}",
         "command": command,
@@ -84,7 +83,7 @@ def write_json(matrix: Matrix, path: Path, command: str | None = None) -> None:
 
 def _header(term: Term) -> str:
     total = "?" if term.total is None else f"{term.total:,}"
-    return f'{escape(term.label)}<small>{total} docs</small>'
+    return f"{escape(term.label)}<small>{total} docs</small>"
 
 
 def _cell_html(matrix: Matrix, i: int, j: int, low: int, high: int) -> str:
@@ -202,14 +201,11 @@ table.querySelectorAll('thead button').forEach((button) => {
 def render_html(matrix: Matrix) -> str:
     low, high = matrix.count_range()
     head = "".join(
-        f'<th scope="col"><button type="button">{_header(col)}</button></th>'
-        for col in matrix.cols
+        f'<th scope="col"><button type="button">{_header(col)}</button></th>' for col in matrix.cols
     )
     body = "\n".join(
         f'<tr><th scope="row">{_header(row)}</th>'
-        + "".join(
-            _cell_html(matrix, i, j, low, high) for j in range(len(matrix.cols))
-        )
+        + "".join(_cell_html(matrix, i, j, low, high) for j in range(len(matrix.cols)))
         + "</tr>"
         for i, row in enumerate(matrix.rows)
     )
@@ -218,9 +214,7 @@ def render_html(matrix: Matrix) -> str:
         if matrix.relation
         else "Documents mentioning both terms"
     )
-    swatches = "".join(
-        f'<i style="background: var(--h{n})"></i>' for n in range(1, HEAT_STEPS + 1)
-    )
+    swatches = "".join(f'<i style="background: var(--h{n})"></i>' for n in range(1, HEAT_STEPS + 1))
     generated = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     partial = (
         f'<p class="partial">Partial result: {len(matrix.failed):,} of '
@@ -239,19 +233,23 @@ def render_html(matrix: Matrix) -> str:
 <body>
 <main>
 <h1>PubMatrix Reloaded</h1>
-<p>{mode}, from PubTator3 (PubMed abstracts and PMC full text). Generated {generated}.</p>
+<p>{mode}, from PubTator3 (PubMed abstracts and PMC full text).
+Generated {generated}.</p>
 {partial}
 <p>Select a count to open those documents in PubTator3. Select a column heading to sort.
 — means no value is known; hover for the reason.</p>
 <div class="scroll">
 <table id="matrix">
-<thead><tr><th scope="col"><button type="button">Term<small>docs alone</small></button></th>{head}</tr></thead>
+<thead><tr>
+<th scope="col"><button type="button">Term<small>docs alone</small></button></th>{head}
+</tr></thead>
 <tbody>
 {body}
 </tbody>
 </table>
 </div>
-<div class="legend"><span>{low:,}</span>{swatches}<span>{high:,} (log scale; 0 is unshaded)</span></div>
+<div class="legend"><span>{low:,}</span>{swatches}
+<span>{high:,} (log scale; 0 is unshaded)</span></div>
 <h2>How each term was read</h2>
 <div class="scroll">
 <table id="terms">

@@ -1,10 +1,11 @@
+"""Tests for the API client: retries, caching, pacing, and quiet hours."""
+
 import time
+from datetime import datetime, timedelta, timezone
 
 import httpx
 import pytest
-
 from conftest import FakeApi
-from datetime import datetime, timedelta, timezone
 
 from pubmatrix.client import (
     Cache,
@@ -39,8 +40,9 @@ def test_bad_query_is_not_retried(make_client):
 
 def test_retry_after_header_is_honored():
     slept = []
-    replies = iter([httpx.Response(429, headers={"Retry-After": "11"}),
-                    httpx.Response(200, json={"count": 1})])
+    replies = iter(
+        [httpx.Response(429, headers={"Retry-After": "11"}), httpx.Response(200, json={"count": 1})]
+    )
     client = PubTatorClient(
         transport=httpx.MockTransport(lambda _: next(replies)),
         sleep=slept.append,

@@ -1,6 +1,8 @@
-import pytest
+"""Tests for building a matrix, including runs that end early."""
 
+import pytest
 from conftest import FakeApi
+
 from pubmatrix.matrix import INTERRUPTED, NOT_FINISHED, build_matrix
 
 

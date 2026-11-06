@@ -101,7 +101,7 @@ def resolve_term(raw: str, client: PubTatorClient, concept: str | None = None) -
         return Term(raw, "entity", raw)
     quoted = len(raw) > 1 and raw.startswith('"') and raw.endswith('"')
     if '"' in (raw[1:-1] if quoted else raw):
-        return Term(raw, "text", "", problem='stray quote mark; write alternatives as a | b')
+        return Term(raw, "text", "", problem="stray quote mark; write alternatives as a | b")
     if quoted:
         return Term(raw, "text", phrase(raw[1:-1]))
     candidates = client.autocomplete(raw, concept=concept.upper() if concept else None)

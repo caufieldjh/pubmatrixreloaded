@@ -11,7 +11,7 @@ dependencies = ["httpx>=0.27", "openpyxl>=3.1", "tzdata"]
 pubmatrix = "pubmatrix.cli:main"
 
 [dependency-groups]
-dev = ["pytest>=8"]
+dev = ["pytest>=8", "tox>=4"]
 
 [build-system]
 requires = ["hatchling"]
@@ -22,3 +22,16 @@ packages = ["src/pubmatrix"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.black]
+line-length = 100
+target-version = ["py310", "py313"]
+
+[tool.isort]
+profile = "black"
+line_length = 100
+reverse_relative = true
+
+[tool.codespell]
+skip = '.git,output'
+ignore-words-list = 'als'

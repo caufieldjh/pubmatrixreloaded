@@ -1,5 +1,7 @@
 # PubMatrix Reloaded
 
+[![pubmatrix QC](https://github.com/caufieldjh/pubmatrixreloaded/actions/workflows/qc.yml/badge.svg)](https://github.com/caufieldjh/pubmatrixreloaded/actions/workflows/qc.yml)
+
 A rebuild of [PubMatrix](https://pmc.ncbi.nlm.nih.gov/articles/PMC317283/)
 (Becker et al., 2003) on top of the
 [PubTator3 API](https://www.ncbi.nlm.nih.gov/research/pubtator3/api).
@@ -213,6 +215,15 @@ and the shared archive of searches and term lists.
 uv run pytest
 node --test tests/web/*.test.mjs
 ```
+
+The same checks run on every pull request and push to `main`, on Python 3.10 through
+3.14. To run them locally:
+
+```sh
+uv run --group dev tox -e lint,flake8,mypy,codespell
+```
+
+`lint` only checks. To fix formatting, run `uv run --group dev tox -e format`.
 
 The tests use a fake API and do not touch the network. `tests/test_web.py` checks
 that the values copied into `docs/core.js` still match the Python tool.
