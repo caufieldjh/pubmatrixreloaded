@@ -12,6 +12,42 @@ export const HEAT_STEPS = 6;
 export const SYNONYM_SEPARATOR = ' | ';
 export const WEB_SEARCH = 'https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=';
 export const INSTALL = 'uvx --from git+https://github.com/caufieldjh/pubmatrixreloaded pubmatrix';
+export const EXAMPLES = [
+  {
+    id: 'cancer-drugs',
+    title: 'Which drugs treat which cancers',
+    question: '12 cancer drugs by 6 cancers, counting extracted "treat" relations.',
+    reading: 'Most drugs peak at their established use: imatinib with chronic myeloid leukemia, '
+      + 'vemurafenib with melanoma, 5-fluorouracil with colorectal cancer. Aspirin with colorectal '
+      + 'cancer and metformin with breast cancer are studied uses, not approved ones: a "treat" '
+      + 'relation means a paper says so, and is extracted by machine.',
+  },
+  {
+    id: 'drug-metabolism',
+    title: 'Which enzymes act on which drugs',
+    question: '6 cytochrome P450 enzymes by 10 drugs, counting any extracted relation.',
+    reading: 'Each enzyme picks out its textbook drugs with nothing but the literature to go on: '
+      + 'CYP2C9 with warfarin, CYP2C19 with clopidogrel, CYP2D6 with tamoxifen and codeine, CYP1A2 with caffeine, '
+      + 'CYP2B6 with efavirenz, CYP3A4 with midazolam and ketoconazole.',
+  },
+  {
+    id: 'disease-genes',
+    title: 'Which genes go with which diseases',
+    question: '16 genes by 5 neurodegenerative diseases, counting documents that mention both.',
+    reading: 'SNCA and LRRK2 sit with Parkinson disease and HTT with Huntington disease. Raw counts '
+      + 'favor large fields, though: SOD1 is a classic ALS gene yet shows more documents for '
+      + 'Alzheimer disease, whose literature is about six times larger. Compare with the '
+      + '"docs" figure under each heading.',
+  },
+  {
+    id: 'chemical-screen',
+    title: 'Which chemicals were tested in which assays',
+    question: '20 environmental chemicals by 6 toxicity assays, counting documents that mention both.',
+    reading: 'Bisphenol A stands out in the uterotrophic assay, a test of estrogen-like activity. '
+      + 'Be wary of formaldehyde: many of its comet assay documents are about something else, '
+      + 'and it is likely there as a lab reagent. A mention in full text is not a test.',
+  },
+];
 export const TERMS_FILE = 'terms.txt';
 export const MODIFIERS_FILE = 'modifiers.txt';
 

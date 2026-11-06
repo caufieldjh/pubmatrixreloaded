@@ -38,11 +38,22 @@ def test_constants_match():
     assert js_value("WEB_SEARCH") == WEB_SEARCH
 
 
-def test_example_is_a_complete_result():
-    data = json.loads((ROOT / "docs" / "example.json").read_text(encoding="utf-8"))
+EXAMPLE_IDS = re.findall(r"id: '([a-z-]+)'", CORE)
+
+
+def test_every_example_file_is_listed():
+    files = sorted(p.stem for p in (ROOT / "docs" / "examples").glob("*.json"))
+    assert files == sorted(EXAMPLE_IDS) and files
+
+
+@pytest.mark.parametrize("example", EXAMPLE_IDS)
+def test_example_is_a_complete_result(example):
+    text = (ROOT / "docs" / "examples" / f"{example}.json").read_text(encoding="utf-8")
+    data = json.loads(text)
     assert len(data["cells"]) == len(data["rows"]) * len(data["columns"])
     assert data["run"]["status"] == "complete"
-    assert not re.search(r"/home/|/tmp/", json.dumps(data))
+    assert data["run"]["cells_without_value"] == 0
+    assert not re.search(r"/home/|/tmp/", text)
 
 
 @pytest.mark.skipif(not shutil.which("node"), reason="node is not installed")

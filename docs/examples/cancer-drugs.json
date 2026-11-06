@@ -1,0 +1,920 @@
+{
+  "run": {
+    "tool": "pubmatrix-reloaded 0.2.0",
+    "command": "pubmatrix run -T examples/showcase/cancer_drugs.txt -M examples/showcase/cancers.txt --terms-type chemical --relation treat -o output/showcase/cancer-drugs",
+    "source": "PubTator3 (https://www.ncbi.nlm.nih.gov/research/pubtator3-api)",
+    "mode": "relation",
+    "relation": "treat",
+    "started": "2026-11-06T19:42:43+00:00",
+    "finished": "2026-11-06T19:42:49+00:00",
+    "status": "complete",
+    "cells": 72,
+    "cells_without_value": 0
+  },
+  "rows": [
+    {
+      "input": "tamoxifen",
+      "kind": "entity",
+      "query": "@CHEMICAL_Tamoxifen",
+      "name": "Tamoxifen",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 73854,
+      "note": ""
+    },
+    {
+      "input": "trastuzumab",
+      "kind": "entity",
+      "query": "@CHEMICAL_Trastuzumab",
+      "name": "Trastuzumab",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 43872,
+      "note": ""
+    },
+    {
+      "input": "@CHEMICAL_Imatinib_Mesylate",
+      "kind": "entity",
+      "query": "@CHEMICAL_Imatinib_Mesylate",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 38879,
+      "note": ""
+    },
+    {
+      "input": "@CHEMICAL_Erlotinib_Hydrochloride",
+      "kind": "entity",
+      "query": "@CHEMICAL_Erlotinib_Hydrochloride",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 27908,
+      "note": ""
+    },
+    {
+      "input": "vemurafenib",
+      "kind": "entity",
+      "query": "@CHEMICAL_Vemurafenib",
+      "name": "Vemurafenib",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 11060,
+      "note": ""
+    },
+    {
+      "input": "cisplatin",
+      "kind": "entity",
+      "query": "@CHEMICAL_Cisplatin",
+      "name": "Cisplatin",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 188193,
+      "note": ""
+    },
+    {
+      "input": "paclitaxel",
+      "kind": "entity",
+      "query": "@CHEMICAL_Paclitaxel",
+      "name": "Paclitaxel",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 121292,
+      "note": ""
+    },
+    {
+      "input": "doxorubicin",
+      "kind": "entity",
+      "query": "@CHEMICAL_Doxorubicin",
+      "name": "Doxorubicin",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 169354,
+      "note": ""
+    },
+    {
+      "input": "5-fluorouracil",
+      "kind": "entity",
+      "query": "@CHEMICAL_Fluorouracil",
+      "name": "Fluorouracil",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 113561,
+      "note": ""
+    },
+    {
+      "input": "metformin",
+      "kind": "entity",
+      "query": "@CHEMICAL_Metformin",
+      "name": "Metformin",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 91734,
+      "note": ""
+    },
+    {
+      "input": "aspirin",
+      "kind": "entity",
+      "query": "@CHEMICAL_Aspirin",
+      "name": "Aspirin",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 167948,
+      "note": ""
+    },
+    {
+      "input": "pembrolizumab",
+      "kind": "entity",
+      "query": "@CHEMICAL_pembrolizumab",
+      "name": "pembrolizumab",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 52719,
+      "note": ""
+    }
+  ],
+  "columns": [
+    {
+      "input": "@DISEASE_Breast_Neoplasms",
+      "kind": "entity",
+      "query": "@DISEASE_Breast_Neoplasms",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 809977,
+      "note": ""
+    },
+    {
+      "input": "@DISEASE_Carcinoma_Non_Small_Cell_Lung",
+      "kind": "entity",
+      "query": "@DISEASE_Carcinoma_Non_Small_Cell_Lung",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 226177,
+      "note": ""
+    },
+    {
+      "input": "@DISEASE_Colorectal_Neoplasms",
+      "kind": "entity",
+      "query": "@DISEASE_Colorectal_Neoplasms",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 508175,
+      "note": ""
+    },
+    {
+      "input": "@DISEASE_Prostatic_Neoplasms",
+      "kind": "entity",
+      "query": "@DISEASE_Prostatic_Neoplasms",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 316278,
+      "note": ""
+    },
+    {
+      "input": "@DISEASE_Melanoma",
+      "kind": "entity",
+      "query": "@DISEASE_Melanoma",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 286591,
+      "note": ""
+    },
+    {
+      "input": "@DISEASE_Leukemia_Myelogenous_Chronic_BCR_ABL_Positive",
+      "kind": "entity",
+      "query": "@DISEASE_Leukemia_Myelogenous_Chronic_BCR_ABL_Positive",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 58391,
+      "note": ""
+    }
+  ],
+  "cells": [
+    {
+      "row": "tamoxifen",
+      "column": "Breast Neoplasms",
+      "count": 10538,
+      "query": "relations:treat|@CHEMICAL_Tamoxifen|@DISEASE_Breast_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Tamoxifen%7C%40DISEASE_Breast_Neoplasms",
+      "retrieved": "2026-11-06T19:37:25+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "tamoxifen",
+      "column": "Carcinoma Non Small Cell Lung",
+      "count": 16,
+      "query": "relations:treat|@CHEMICAL_Tamoxifen|@DISEASE_Carcinoma_Non_Small_Cell_Lung",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Tamoxifen%7C%40DISEASE_Carcinoma_Non_Small_Cell_Lung",
+      "retrieved": "2026-11-06T19:42:46+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "tamoxifen",
+      "column": "Colorectal Neoplasms",
+      "count": 27,
+      "query": "relations:treat|@CHEMICAL_Tamoxifen|@DISEASE_Colorectal_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Tamoxifen%7C%40DISEASE_Colorectal_Neoplasms",
+      "retrieved": "2026-11-06T19:37:26+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "tamoxifen",
+      "column": "Prostatic Neoplasms",
+      "count": 49,
+      "query": "relations:treat|@CHEMICAL_Tamoxifen|@DISEASE_Prostatic_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Tamoxifen%7C%40DISEASE_Prostatic_Neoplasms",
+      "retrieved": "2026-11-06T19:37:26+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "tamoxifen",
+      "column": "Melanoma",
+      "count": 159,
+      "query": "relations:treat|@CHEMICAL_Tamoxifen|@DISEASE_Melanoma",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Tamoxifen%7C%40DISEASE_Melanoma",
+      "retrieved": "2026-11-06T19:37:26+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "tamoxifen",
+      "column": "Leukemia Myelogenous Chronic BCR ABL Positive",
+      "count": 2,
+      "query": "relations:treat|@CHEMICAL_Tamoxifen|@DISEASE_Leukemia_Myelogenous_Chronic_BCR_ABL_Positive",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Tamoxifen%7C%40DISEASE_Leukemia_Myelogenous_Chronic_BCR_ABL_Positive",
+      "retrieved": "2026-11-06T19:37:27+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "trastuzumab",
+      "column": "Breast Neoplasms",
+      "count": 7170,
+      "query": "relations:treat|@CHEMICAL_Trastuzumab|@DISEASE_Breast_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Trastuzumab%7C%40DISEASE_Breast_Neoplasms",
+      "retrieved": "2026-11-06T19:40:21+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "trastuzumab",
+      "column": "Carcinoma Non Small Cell Lung",
+      "count": 53,
+      "query": "relations:treat|@CHEMICAL_Trastuzumab|@DISEASE_Carcinoma_Non_Small_Cell_Lung",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Trastuzumab%7C%40DISEASE_Carcinoma_Non_Small_Cell_Lung",
+      "retrieved": "2026-11-06T19:42:46+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "trastuzumab",
+      "column": "Colorectal Neoplasms",
+      "count": 76,
+      "query": "relations:treat|@CHEMICAL_Trastuzumab|@DISEASE_Colorectal_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Trastuzumab%7C%40DISEASE_Colorectal_Neoplasms",
+      "retrieved": "2026-11-06T19:37:28+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "trastuzumab",
+      "column": "Prostatic Neoplasms",
+      "count": 16,
+      "query": "relations:treat|@CHEMICAL_Trastuzumab|@DISEASE_Prostatic_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Trastuzumab%7C%40DISEASE_Prostatic_Neoplasms",
+      "retrieved": "2026-11-06T19:40:23+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "trastuzumab",
+      "column": "Melanoma",
+      "count": 3,
+      "query": "relations:treat|@CHEMICAL_Trastuzumab|@DISEASE_Melanoma",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Trastuzumab%7C%40DISEASE_Melanoma",
+      "retrieved": "2026-11-06T19:37:29+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "trastuzumab",
+      "column": "Leukemia Myelogenous Chronic BCR ABL Positive",
+      "count": 3,
+      "query": "relations:treat|@CHEMICAL_Trastuzumab|@DISEASE_Leukemia_Myelogenous_Chronic_BCR_ABL_Positive",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Trastuzumab%7C%40DISEASE_Leukemia_Myelogenous_Chronic_BCR_ABL_Positive",
+      "retrieved": "2026-11-06T19:37:29+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "Imatinib Mesylate",
+      "column": "Breast Neoplasms",
+      "count": 80,
+      "query": "relations:treat|@CHEMICAL_Imatinib_Mesylate|@DISEASE_Breast_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Imatinib_Mesylate%7C%40DISEASE_Breast_Neoplasms",
+      "retrieved": "2026-11-06T19:37:29+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "Imatinib Mesylate",
+      "column": "Carcinoma Non Small Cell Lung",
+      "count": 17,
+      "query": "relations:treat|@CHEMICAL_Imatinib_Mesylate|@DISEASE_Carcinoma_Non_Small_Cell_Lung",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Imatinib_Mesylate%7C%40DISEASE_Carcinoma_Non_Small_Cell_Lung",
+      "retrieved": "2026-11-06T19:42:47+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "Imatinib Mesylate",
+      "column": "Colorectal Neoplasms",
+      "count": 67,
+      "query": "relations:treat|@CHEMICAL_Imatinib_Mesylate|@DISEASE_Colorectal_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Imatinib_Mesylate%7C%40DISEASE_Colorectal_Neoplasms",
+      "retrieved": "2026-11-06T19:37:30+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "Imatinib Mesylate",
+      "column": "Prostatic Neoplasms",
+      "count": 41,
+      "query": "relations:treat|@CHEMICAL_Imatinib_Mesylate|@DISEASE_Prostatic_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Imatinib_Mesylate%7C%40DISEASE_Prostatic_Neoplasms",
+      "retrieved": "2026-11-06T19:37:31+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "Imatinib Mesylate",
+      "column": "Melanoma",
+      "count": 102,
+      "query": "relations:treat|@CHEMICAL_Imatinib_Mesylate|@DISEASE_Melanoma",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Imatinib_Mesylate%7C%40DISEASE_Melanoma",
+      "retrieved": "2026-11-06T19:37:31+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "Imatinib Mesylate",
+      "column": "Leukemia Myelogenous Chronic BCR ABL Positive",
+      "count": 5645,
+      "query": "relations:treat|@CHEMICAL_Imatinib_Mesylate|@DISEASE_Leukemia_Myelogenous_Chronic_BCR_ABL_Positive",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Imatinib_Mesylate%7C%40DISEASE_Leukemia_Myelogenous_Chronic_BCR_ABL_Positive",
+      "retrieved": "2026-11-06T19:37:31+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "Erlotinib Hydrochloride",
+      "column": "Breast Neoplasms",
+      "count": 79,
+      "query": "relations:treat|@CHEMICAL_Erlotinib_Hydrochloride|@DISEASE_Breast_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Erlotinib_Hydrochloride%7C%40DISEASE_Breast_Neoplasms",
+      "retrieved": "2026-11-06T19:37:32+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "Erlotinib Hydrochloride",
+      "column": "Carcinoma Non Small Cell Lung",
+      "count": 2499,
+      "query": "relations:treat|@CHEMICAL_Erlotinib_Hydrochloride|@DISEASE_Carcinoma_Non_Small_Cell_Lung",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Erlotinib_Hydrochloride%7C%40DISEASE_Carcinoma_Non_Small_Cell_Lung",
+      "retrieved": "2026-11-06T19:42:46+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "Erlotinib Hydrochloride",
+      "column": "Colorectal Neoplasms",
+      "count": 73,
+      "query": "relations:treat|@CHEMICAL_Erlotinib_Hydrochloride|@DISEASE_Colorectal_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Erlotinib_Hydrochloride%7C%40DISEASE_Colorectal_Neoplasms",
+      "retrieved": "2026-11-06T19:37:33+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "Erlotinib Hydrochloride",
+      "column": "Prostatic Neoplasms",
+      "count": 10,
+      "query": "relations:treat|@CHEMICAL_Erlotinib_Hydrochloride|@DISEASE_Prostatic_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Erlotinib_Hydrochloride%7C%40DISEASE_Prostatic_Neoplasms",
+      "retrieved": "2026-11-06T19:37:34+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "Erlotinib Hydrochloride",
+      "column": "Melanoma",
+      "count": 10,
+      "query": "relations:treat|@CHEMICAL_Erlotinib_Hydrochloride|@DISEASE_Melanoma",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Erlotinib_Hydrochloride%7C%40DISEASE_Melanoma",
+      "retrieved": "2026-11-06T19:37:34+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "Erlotinib Hydrochloride",
+      "column": "Leukemia Myelogenous Chronic BCR ABL Positive",
+      "count": 3,
+      "query": "relations:treat|@CHEMICAL_Erlotinib_Hydrochloride|@DISEASE_Leukemia_Myelogenous_Chronic_BCR_ABL_Positive",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Erlotinib_Hydrochloride%7C%40DISEASE_Leukemia_Myelogenous_Chronic_BCR_ABL_Positive",
+      "retrieved": "2026-11-06T19:37:34+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "vemurafenib",
+      "column": "Breast Neoplasms",
+      "count": 5,
+      "query": "relations:treat|@CHEMICAL_Vemurafenib|@DISEASE_Breast_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Vemurafenib%7C%40DISEASE_Breast_Neoplasms",
+      "retrieved": "2026-11-06T19:37:35+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "vemurafenib",
+      "column": "Carcinoma Non Small Cell Lung",
+      "count": 19,
+      "query": "relations:treat|@CHEMICAL_Vemurafenib|@DISEASE_Carcinoma_Non_Small_Cell_Lung",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Vemurafenib%7C%40DISEASE_Carcinoma_Non_Small_Cell_Lung",
+      "retrieved": "2026-11-06T19:42:47+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "vemurafenib",
+      "column": "Colorectal Neoplasms",
+      "count": 63,
+      "query": "relations:treat|@CHEMICAL_Vemurafenib|@DISEASE_Colorectal_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Vemurafenib%7C%40DISEASE_Colorectal_Neoplasms",
+      "retrieved": "2026-11-06T19:37:36+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "vemurafenib",
+      "column": "Prostatic Neoplasms",
+      "count": 1,
+      "query": "relations:treat|@CHEMICAL_Vemurafenib|@DISEASE_Prostatic_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Vemurafenib%7C%40DISEASE_Prostatic_Neoplasms",
+      "retrieved": "2026-11-06T19:37:37+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "vemurafenib",
+      "column": "Melanoma",
+      "count": 1406,
+      "query": "relations:treat|@CHEMICAL_Vemurafenib|@DISEASE_Melanoma",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Vemurafenib%7C%40DISEASE_Melanoma",
+      "retrieved": "2026-11-06T19:37:36+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "vemurafenib",
+      "column": "Leukemia Myelogenous Chronic BCR ABL Positive",
+      "count": 2,
+      "query": "relations:treat|@CHEMICAL_Vemurafenib|@DISEASE_Leukemia_Myelogenous_Chronic_BCR_ABL_Positive",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Vemurafenib%7C%40DISEASE_Leukemia_Myelogenous_Chronic_BCR_ABL_Positive",
+      "retrieved": "2026-11-06T19:37:37+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "cisplatin",
+      "column": "Breast Neoplasms",
+      "count": 1431,
+      "query": "relations:treat|@CHEMICAL_Cisplatin|@DISEASE_Breast_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Cisplatin%7C%40DISEASE_Breast_Neoplasms",
+      "retrieved": "2026-11-06T19:37:37+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "cisplatin",
+      "column": "Carcinoma Non Small Cell Lung",
+      "count": 4671,
+      "query": "relations:treat|@CHEMICAL_Cisplatin|@DISEASE_Carcinoma_Non_Small_Cell_Lung",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Cisplatin%7C%40DISEASE_Carcinoma_Non_Small_Cell_Lung",
+      "retrieved": "2026-11-06T19:42:48+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "cisplatin",
+      "column": "Colorectal Neoplasms",
+      "count": 556,
+      "query": "relations:treat|@CHEMICAL_Cisplatin|@DISEASE_Colorectal_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Cisplatin%7C%40DISEASE_Colorectal_Neoplasms",
+      "retrieved": "2026-11-06T19:37:38+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "cisplatin",
+      "column": "Prostatic Neoplasms",
+      "count": 252,
+      "query": "relations:treat|@CHEMICAL_Cisplatin|@DISEASE_Prostatic_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Cisplatin%7C%40DISEASE_Prostatic_Neoplasms",
+      "retrieved": "2026-11-06T19:37:38+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "cisplatin",
+      "column": "Melanoma",
+      "count": 679,
+      "query": "relations:treat|@CHEMICAL_Cisplatin|@DISEASE_Melanoma",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Cisplatin%7C%40DISEASE_Melanoma",
+      "retrieved": "2026-11-06T19:37:39+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "cisplatin",
+      "column": "Leukemia Myelogenous Chronic BCR ABL Positive",
+      "count": 16,
+      "query": "relations:treat|@CHEMICAL_Cisplatin|@DISEASE_Leukemia_Myelogenous_Chronic_BCR_ABL_Positive",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Cisplatin%7C%40DISEASE_Leukemia_Myelogenous_Chronic_BCR_ABL_Positive",
+      "retrieved": "2026-11-06T19:37:40+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "paclitaxel",
+      "column": "Breast Neoplasms",
+      "count": 4777,
+      "query": "relations:treat|@CHEMICAL_Paclitaxel|@DISEASE_Breast_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Paclitaxel%7C%40DISEASE_Breast_Neoplasms",
+      "retrieved": "2026-11-06T19:37:40+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "paclitaxel",
+      "column": "Carcinoma Non Small Cell Lung",
+      "count": 2085,
+      "query": "relations:treat|@CHEMICAL_Paclitaxel|@DISEASE_Carcinoma_Non_Small_Cell_Lung",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Paclitaxel%7C%40DISEASE_Carcinoma_Non_Small_Cell_Lung",
+      "retrieved": "2026-11-06T19:42:47+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "paclitaxel",
+      "column": "Colorectal Neoplasms",
+      "count": 217,
+      "query": "relations:treat|@CHEMICAL_Paclitaxel|@DISEASE_Colorectal_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Paclitaxel%7C%40DISEASE_Colorectal_Neoplasms",
+      "retrieved": "2026-11-06T19:37:40+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "paclitaxel",
+      "column": "Prostatic Neoplasms",
+      "count": 319,
+      "query": "relations:treat|@CHEMICAL_Paclitaxel|@DISEASE_Prostatic_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Paclitaxel%7C%40DISEASE_Prostatic_Neoplasms",
+      "retrieved": "2026-11-06T19:37:40+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "paclitaxel",
+      "column": "Melanoma",
+      "count": 260,
+      "query": "relations:treat|@CHEMICAL_Paclitaxel|@DISEASE_Melanoma",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Paclitaxel%7C%40DISEASE_Melanoma",
+      "retrieved": "2026-11-06T19:37:41+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "paclitaxel",
+      "column": "Leukemia Myelogenous Chronic BCR ABL Positive",
+      "count": 8,
+      "query": "relations:treat|@CHEMICAL_Paclitaxel|@DISEASE_Leukemia_Myelogenous_Chronic_BCR_ABL_Positive",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Paclitaxel%7C%40DISEASE_Leukemia_Myelogenous_Chronic_BCR_ABL_Positive",
+      "retrieved": "2026-11-06T19:37:42+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "doxorubicin",
+      "column": "Breast Neoplasms",
+      "count": 6440,
+      "query": "relations:treat|@CHEMICAL_Doxorubicin|@DISEASE_Breast_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Doxorubicin%7C%40DISEASE_Breast_Neoplasms",
+      "retrieved": "2026-11-06T19:37:42+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "doxorubicin",
+      "column": "Carcinoma Non Small Cell Lung",
+      "count": 251,
+      "query": "relations:treat|@CHEMICAL_Doxorubicin|@DISEASE_Carcinoma_Non_Small_Cell_Lung",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Doxorubicin%7C%40DISEASE_Carcinoma_Non_Small_Cell_Lung",
+      "retrieved": "2026-11-06T19:42:47+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "doxorubicin",
+      "column": "Colorectal Neoplasms",
+      "count": 571,
+      "query": "relations:treat|@CHEMICAL_Doxorubicin|@DISEASE_Colorectal_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Doxorubicin%7C%40DISEASE_Colorectal_Neoplasms",
+      "retrieved": "2026-11-06T19:37:42+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "doxorubicin",
+      "column": "Prostatic Neoplasms",
+      "count": 324,
+      "query": "relations:treat|@CHEMICAL_Doxorubicin|@DISEASE_Prostatic_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Doxorubicin%7C%40DISEASE_Prostatic_Neoplasms",
+      "retrieved": "2026-11-06T19:37:43+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "doxorubicin",
+      "column": "Melanoma",
+      "count": 362,
+      "query": "relations:treat|@CHEMICAL_Doxorubicin|@DISEASE_Melanoma",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Doxorubicin%7C%40DISEASE_Melanoma",
+      "retrieved": "2026-11-06T19:37:45+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "doxorubicin",
+      "column": "Leukemia Myelogenous Chronic BCR ABL Positive",
+      "count": 81,
+      "query": "relations:treat|@CHEMICAL_Doxorubicin|@DISEASE_Leukemia_Myelogenous_Chronic_BCR_ABL_Positive",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Doxorubicin%7C%40DISEASE_Leukemia_Myelogenous_Chronic_BCR_ABL_Positive",
+      "retrieved": "2026-11-06T19:37:44+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "5-fluorouracil",
+      "column": "Breast Neoplasms",
+      "count": 2541,
+      "query": "relations:treat|@CHEMICAL_Fluorouracil|@DISEASE_Breast_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Fluorouracil%7C%40DISEASE_Breast_Neoplasms",
+      "retrieved": "2026-11-06T19:37:44+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "5-fluorouracil",
+      "column": "Carcinoma Non Small Cell Lung",
+      "count": 170,
+      "query": "relations:treat|@CHEMICAL_Fluorouracil|@DISEASE_Carcinoma_Non_Small_Cell_Lung",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Fluorouracil%7C%40DISEASE_Carcinoma_Non_Small_Cell_Lung",
+      "retrieved": "2026-11-06T19:42:47+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "5-fluorouracil",
+      "column": "Colorectal Neoplasms",
+      "count": 6811,
+      "query": "relations:treat|@CHEMICAL_Fluorouracil|@DISEASE_Colorectal_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Fluorouracil%7C%40DISEASE_Colorectal_Neoplasms",
+      "retrieved": "2026-11-06T19:37:45+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "5-fluorouracil",
+      "column": "Prostatic Neoplasms",
+      "count": 98,
+      "query": "relations:treat|@CHEMICAL_Fluorouracil|@DISEASE_Prostatic_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Fluorouracil%7C%40DISEASE_Prostatic_Neoplasms",
+      "retrieved": "2026-11-06T19:37:45+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "5-fluorouracil",
+      "column": "Melanoma",
+      "count": 65,
+      "query": "relations:treat|@CHEMICAL_Fluorouracil|@DISEASE_Melanoma",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Fluorouracil%7C%40DISEASE_Melanoma",
+      "retrieved": "2026-11-06T19:37:45+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "5-fluorouracil",
+      "column": "Leukemia Myelogenous Chronic BCR ABL Positive",
+      "count": 4,
+      "query": "relations:treat|@CHEMICAL_Fluorouracil|@DISEASE_Leukemia_Myelogenous_Chronic_BCR_ABL_Positive",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Fluorouracil%7C%40DISEASE_Leukemia_Myelogenous_Chronic_BCR_ABL_Positive",
+      "retrieved": "2026-11-06T19:37:46+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "metformin",
+      "column": "Breast Neoplasms",
+      "count": 555,
+      "query": "relations:treat|@CHEMICAL_Metformin|@DISEASE_Breast_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Metformin%7C%40DISEASE_Breast_Neoplasms",
+      "retrieved": "2026-11-06T19:37:48+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "metformin",
+      "column": "Carcinoma Non Small Cell Lung",
+      "count": 112,
+      "query": "relations:treat|@CHEMICAL_Metformin|@DISEASE_Carcinoma_Non_Small_Cell_Lung",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Metformin%7C%40DISEASE_Carcinoma_Non_Small_Cell_Lung",
+      "retrieved": "2026-11-06T19:42:48+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "metformin",
+      "column": "Colorectal Neoplasms",
+      "count": 287,
+      "query": "relations:treat|@CHEMICAL_Metformin|@DISEASE_Colorectal_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Metformin%7C%40DISEASE_Colorectal_Neoplasms",
+      "retrieved": "2026-11-06T19:37:47+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "metformin",
+      "column": "Prostatic Neoplasms",
+      "count": 235,
+      "query": "relations:treat|@CHEMICAL_Metformin|@DISEASE_Prostatic_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Metformin%7C%40DISEASE_Prostatic_Neoplasms",
+      "retrieved": "2026-11-06T19:37:47+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "metformin",
+      "column": "Melanoma",
+      "count": 71,
+      "query": "relations:treat|@CHEMICAL_Metformin|@DISEASE_Melanoma",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Metformin%7C%40DISEASE_Melanoma",
+      "retrieved": "2026-11-06T19:37:48+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "metformin",
+      "column": "Leukemia Myelogenous Chronic BCR ABL Positive",
+      "count": 8,
+      "query": "relations:treat|@CHEMICAL_Metformin|@DISEASE_Leukemia_Myelogenous_Chronic_BCR_ABL_Positive",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Metformin%7C%40DISEASE_Leukemia_Myelogenous_Chronic_BCR_ABL_Positive",
+      "retrieved": "2026-11-06T19:37:48+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "aspirin",
+      "column": "Breast Neoplasms",
+      "count": 213,
+      "query": "relations:treat|@CHEMICAL_Aspirin|@DISEASE_Breast_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Aspirin%7C%40DISEASE_Breast_Neoplasms",
+      "retrieved": "2026-11-06T19:37:49+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "aspirin",
+      "column": "Carcinoma Non Small Cell Lung",
+      "count": 29,
+      "query": "relations:treat|@CHEMICAL_Aspirin|@DISEASE_Carcinoma_Non_Small_Cell_Lung",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Aspirin%7C%40DISEASE_Carcinoma_Non_Small_Cell_Lung",
+      "retrieved": "2026-11-06T19:42:49+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "aspirin",
+      "column": "Colorectal Neoplasms",
+      "count": 945,
+      "query": "relations:treat|@CHEMICAL_Aspirin|@DISEASE_Colorectal_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Aspirin%7C%40DISEASE_Colorectal_Neoplasms",
+      "retrieved": "2026-11-06T19:37:49+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "aspirin",
+      "column": "Prostatic Neoplasms",
+      "count": 119,
+      "query": "relations:treat|@CHEMICAL_Aspirin|@DISEASE_Prostatic_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Aspirin%7C%40DISEASE_Prostatic_Neoplasms",
+      "retrieved": "2026-11-06T19:37:50+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "aspirin",
+      "column": "Melanoma",
+      "count": 33,
+      "query": "relations:treat|@CHEMICAL_Aspirin|@DISEASE_Melanoma",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Aspirin%7C%40DISEASE_Melanoma",
+      "retrieved": "2026-11-06T19:37:50+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "aspirin",
+      "column": "Leukemia Myelogenous Chronic BCR ABL Positive",
+      "count": 2,
+      "query": "relations:treat|@CHEMICAL_Aspirin|@DISEASE_Leukemia_Myelogenous_Chronic_BCR_ABL_Positive",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_Aspirin%7C%40DISEASE_Leukemia_Myelogenous_Chronic_BCR_ABL_Positive",
+      "retrieved": "2026-11-06T19:37:51+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "pembrolizumab",
+      "column": "Breast Neoplasms",
+      "count": 194,
+      "query": "relations:treat|@CHEMICAL_pembrolizumab|@DISEASE_Breast_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_pembrolizumab%7C%40DISEASE_Breast_Neoplasms",
+      "retrieved": "2026-11-06T19:37:51+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "pembrolizumab",
+      "column": "Carcinoma Non Small Cell Lung",
+      "count": 1601,
+      "query": "relations:treat|@CHEMICAL_pembrolizumab|@DISEASE_Carcinoma_Non_Small_Cell_Lung",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_pembrolizumab%7C%40DISEASE_Carcinoma_Non_Small_Cell_Lung",
+      "retrieved": "2026-11-06T19:42:48+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "pembrolizumab",
+      "column": "Colorectal Neoplasms",
+      "count": 278,
+      "query": "relations:treat|@CHEMICAL_pembrolizumab|@DISEASE_Colorectal_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_pembrolizumab%7C%40DISEASE_Colorectal_Neoplasms",
+      "retrieved": "2026-11-06T19:37:51+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "pembrolizumab",
+      "column": "Prostatic Neoplasms",
+      "count": 63,
+      "query": "relations:treat|@CHEMICAL_pembrolizumab|@DISEASE_Prostatic_Neoplasms",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_pembrolizumab%7C%40DISEASE_Prostatic_Neoplasms",
+      "retrieved": "2026-11-06T19:37:53+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "pembrolizumab",
+      "column": "Melanoma",
+      "count": 1201,
+      "query": "relations:treat|@CHEMICAL_pembrolizumab|@DISEASE_Melanoma",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_pembrolizumab%7C%40DISEASE_Melanoma",
+      "retrieved": "2026-11-06T19:37:53+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "pembrolizumab",
+      "column": "Leukemia Myelogenous Chronic BCR ABL Positive",
+      "count": 0,
+      "query": "relations:treat|@CHEMICAL_pembrolizumab|@DISEASE_Leukemia_Myelogenous_Chronic_BCR_ABL_Positive",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=relations%3Atreat%7C%40CHEMICAL_pembrolizumab%7C%40DISEASE_Leukemia_Myelogenous_Chronic_BCR_ABL_Positive",
+      "retrieved": "2026-11-06T19:37:54+00:00",
+      "error": null,
+      "note": null
+    }
+  ]
+}

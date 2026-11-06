@@ -1,5 +1,5 @@
 import {
-  CONCEPTS, HEAT_STEPS, LARGE_RUN_REQUESTS, MODIFIERS_FILE, RELATION_TYPES, TERMS_FILE,
+  CONCEPTS, EXAMPLES, HEAT_STEPS, LARGE_RUN_REQUESTS, MODIFIERS_FILE, RELATION_TYPES, TERMS_FILE,
   buildCommand, cellLink, estimate, formatDuration, heatStep, parseTerms, resultProblem,
   termsUnfitForRelations, termsWithStrayQuotes, toGrid,
 } from './core.js';
@@ -229,7 +229,7 @@ function renderLegend(grid) {
   );
 }
 
-function showResults(data, name) {
+function showResults(data, name, reading = '') {
   const problem = resultProblem(data);
   $('load-error').hidden = !problem;
   if (problem) {
@@ -239,8 +239,13 @@ function showResults(data, name) {
   }
   const grid = toGrid(data);
   const blanks = data.cells.filter((cell) => cell.count === null).length;
-  const what = data.run?.relation ? `documents with a ${data.run.relation} relation` : 'documents mentioning both terms';
-  $('summary').textContent = `${name}: ${number(data.rows.length)} × ${number(data.columns.length)}, counting ${what}.`;
+  const relation = data.run?.relation;
+  const what = relation
+    ? `documents with ${relation === 'ANY' ? 'any extracted relation' : `the relation "${relation}"`}`
+    : 'documents mentioning both terms';
+  $('summary').textContent = `${name}: ${number(data.rows.length)} × ${number(data.columns.length)}, counting ${what}`;
+  $('reading').textContent = reading;
+  $('reading').hidden = !reading;
   const partial = String(data.run?.status ?? '').startsWith('partial');
   $('partial').hidden = !partial && blanks === 0;
   $('partial').textContent = partial
@@ -260,8 +265,15 @@ function showLoadError(message) {
   $('results').hidden = true;
 }
 
+function markExample(id) {
+  for (const button of $('examples').children) {
+    button.setAttribute('aria-pressed', String(button.dataset.id === id));
+  }
+}
+
 async function openFile(file) {
   if (!file) return;
+  markExample(null);
   try {
     showResults(JSON.parse(await file.text()), file.name);
   } catch {
@@ -269,14 +281,30 @@ async function openFile(file) {
   }
 }
 
-async function openExample() {
+async function openExample(example) {
+  markExample(example.id);
   try {
-    const response = await fetch('example.json');
+    const response = await fetch(`examples/${example.id}.json`);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    showResults(await response.json(), 'Example');
+    showResults(await response.json(), example.title, example.reading);
+    $('summary').focus({ preventScroll: true });
+    $('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
   } catch {
-    showLoadError('The example could not be loaded.');
+    showLoadError('This example could not be loaded.');
   }
+}
+
+function renderExamples() {
+  const buttons = EXAMPLES.map((example) => {
+    const button = element('button');
+    button.type = 'button';
+    button.dataset.id = example.id;
+    button.setAttribute('aria-pressed', 'false');
+    button.append(element('b', example.title), element('small', example.question));
+    button.addEventListener('click', () => openExample(example));
+    return button;
+  });
+  $('examples').replaceChildren(...buttons);
 }
 
 function watchDrops() {
@@ -306,8 +334,8 @@ function start() {
   $('save-modifiers').addEventListener('click', () => download(MODIFIERS_FILE, currentPlan().modifiers));
   $('copy').addEventListener('click', copyCommand);
   $('file').addEventListener('change', (event) => openFile(event.target.files[0]));
-  $('example').addEventListener('click', openExample);
   $('hide-empty').addEventListener('change', applyHideEmpty);
+  renderExamples();
   watchDrops();
   updatePlan();
 }

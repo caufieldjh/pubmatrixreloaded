@@ -16,9 +16,10 @@ This is an early prototype: a command line tool that writes files.
 ## Web page
 
 [caufieldjh.github.io/pubmatrixreloaded](https://caufieldjh.github.io/pubmatrixreloaded/)
-plans a search and shows its results. It helps you write the term lists, estimates
-the run, and gives you the command to paste. Afterward, it displays the `.json` file
-as a sortable heatmap, without uploading it anywhere.
+shows real example searches, plans your own, and displays results. It helps you
+write the term lists, estimates the run, and gives you the command to paste.
+Afterward, it displays the `.json` file as a sortable heatmap, without uploading it
+anywhere.
 
 The page cannot run searches itself. PubTator3 sends no CORS headers, so browsers
 refuse its answers on any site, and GitHub Pages has no server to ask on the page's
@@ -216,8 +217,7 @@ node --test tests/web/*.test.mjs
 The tests use a fake API and do not touch the network. `tests/test_web.py` checks
 that the values copied into `docs/core.js` still match the Python tool.
 
-To refresh the page's example, rerun it and copy `output/example.json` to `docs/`:
-
-```sh
-uv run pubmatrix run -T examples/chemicals.txt -M examples/assays.txt --terms-type chemical -o output/example
-```
+The page's examples are real runs. Their term lists are in `examples/showcase/`,
+their results in `docs/examples/`, and their descriptions in `docs/core.js`. Each
+file records the command that made it; rerun that and copy the `.json` over. The
+descriptions name specific findings, so read them again after a refresh.

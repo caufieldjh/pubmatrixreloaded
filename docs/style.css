@@ -22,6 +22,7 @@ main { max-width: 1000px; margin: 0 auto; }
 h1 { font-size: 28px; line-height: 1.2; margin: 0 0 8px; }
 h2 { font-size: 20px; margin: 40px 0 12px; padding-top: 16px; border-top: 1px solid var(--line); }
 h3 { font-size: 16px; margin: 28px 0 8px; }
+#summary:focus { outline: none; }
 p { margin: 8px 0; }
 a { color: var(--accent); }
 code, pre { font: 14px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
@@ -54,6 +55,11 @@ summary { cursor: pointer; color: var(--accent); }
 .command { display: flex; gap: 8px; align-items: flex-start; margin-top: 6px; }
 .command pre { flex: 1; min-width: 0; margin: 0; padding: 10px 12px; background: var(--raised);
   border-radius: 6px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 12px 0 16px; }
+.cards button { text-align: left; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; }
+.cards button[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.cards b { font-weight: 600; }
+.cards small { color: var(--muted); font-size: 14px; }
 .drop { border: 2px dashed var(--muted); border-radius: 8px; padding: 16px; display: flex;
   flex-wrap: wrap; gap: 12px; align-items: center; }
 .drop.over { border-color: var(--accent); background: var(--raised); }

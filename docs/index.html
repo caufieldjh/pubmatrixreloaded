@@ -17,11 +17,39 @@
     <a href="https://www.ncbi.nlm.nih.gov/research/pubtator3/">PubTator3</a>.
     A rebuild of <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC317283/">PubMatrix</a>.</p>
   <p class="callout">This page does not run searches. PubTator3 does not accept requests from web pages,
-    so searches run on your computer: plan one here, run the command, then bring the results back to view.</p>
+    so searches run on your computer: <a href="#plan-title">plan one here</a>, run the command, then bring the results back to view.</p>
 </header>
 
+<section aria-labelledby="view-title">
+  <h2 id="view-title">See it working</h2>
+  <p>Real searches, run on 2026-11-06. Select one to explore it.</p>
+  <div id="examples" class="cards"></div>
+  <div id="drop" class="drop">
+    <label for="file">Or open your own: choose a <code>.json</code> results file, or drop one here.</label>
+    <input id="file" type="file" accept=".json,application/json">
+  </div>
+  <p class="fine">The file stays in your browser. Nothing is uploaded.</p>
+  <p id="load-error" class="error" role="alert" hidden></p>
+
+  <div id="results" hidden>
+    <h3 id="summary" tabindex="-1"></h3>
+    <p id="reading" class="callout" hidden></p>
+    <p id="partial" class="callout" hidden></p>
+    <label class="check"><input id="hide-empty" type="checkbox"> Hide terms with no hits</label>
+    <div class="scroll"><table id="matrix"></table></div>
+    <div class="legend" id="legend"></div>
+    <p class="fine">Select a count to open those documents in PubTator3. Select a heading to sort.
+      — means no value is known; the reason is in its tooltip. Counts are PubTator3 documents
+      (PubMed abstracts and PMC full text), not PubMed hits.</p>
+    <h3>How each term was read</h3>
+    <div class="scroll"><table id="terms-read" class="plain"></table></div>
+    <h3>How this was made</h3>
+    <div class="scroll"><table id="run-info" class="plain"></table></div>
+  </div>
+</section>
+
 <section aria-labelledby="plan-title">
-  <h2 id="plan-title">1. Plan a search</h2>
+  <h2 id="plan-title">Plan your own search</h2>
   <form id="plan">
     <div class="lists">
       <div>
@@ -76,34 +104,8 @@
         <button type="button" id="copy">Copy</button>
       </div>
     </li>
-    <li><span>Open the <code>.xlsx</code> it writes, or view the <code>.json</code> below.</span></li>
+    <li><span>Open the <code>.xlsx</code> it writes, or open the <code>.json</code> <a href="#view-title">at the top of this page</a>.</span></li>
   </ol>
-</section>
-
-<section aria-labelledby="view-title">
-  <h2 id="view-title">2. View results</h2>
-  <div id="drop" class="drop">
-    <label for="file">Choose a <code>.json</code> results file, or drop one here.</label>
-    <input id="file" type="file" accept=".json,application/json">
-    <button type="button" id="example">Show an example</button>
-  </div>
-  <p class="fine">The file stays in your browser. Nothing is uploaded.</p>
-  <p id="load-error" class="error" role="alert" hidden></p>
-
-  <div id="results" hidden>
-    <p id="summary"></p>
-    <p id="partial" class="callout" hidden></p>
-    <label class="check"><input id="hide-empty" type="checkbox"> Hide terms with no hits</label>
-    <div class="scroll"><table id="matrix"></table></div>
-    <div class="legend" id="legend"></div>
-    <p class="fine">Select a count to open those documents in PubTator3. Select a heading to sort.
-      — means no value is known; the reason is in its tooltip. Counts are PubTator3 documents
-      (PubMed abstracts and PMC full text), not PubMed hits.</p>
-    <h3>How each term was read</h3>
-    <div class="scroll"><table id="terms-read" class="plain"></table></div>
-    <h3>How this was made</h3>
-    <div class="scroll"><table id="run-info" class="plain"></table></div>
-  </div>
 </section>
 
 <footer>

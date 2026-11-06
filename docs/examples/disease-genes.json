@@ -1,0 +1,1030 @@
+{
+  "run": {
+    "tool": "pubmatrix-reloaded 0.2.0",
+    "command": "pubmatrix run -T examples/showcase/neuro_genes.txt -M examples/showcase/neuro_diseases.txt --terms-type gene -o output/showcase/disease-genes",
+    "source": "PubTator3 (https://www.ncbi.nlm.nih.gov/research/pubtator3-api)",
+    "mode": "co-occurrence",
+    "relation": null,
+    "started": "2026-11-06T19:36:55+00:00",
+    "finished": "2026-11-06T19:37:22+00:00",
+    "status": "complete",
+    "cells": 80,
+    "cells_without_value": 0
+  },
+  "rows": [
+    {
+      "input": "APP",
+      "kind": "entity",
+      "query": "@GENE_APP",
+      "name": "APP",
+      "biotype": "gene",
+      "suggestion": null,
+      "total": 129986,
+      "note": ""
+    },
+    {
+      "input": "PSEN1",
+      "kind": "entity",
+      "query": "@GENE_PSEN1",
+      "name": "PSEN1",
+      "biotype": "gene",
+      "suggestion": null,
+      "total": 26081,
+      "note": ""
+    },
+    {
+      "input": "PSEN2",
+      "kind": "entity",
+      "query": "@GENE_PSEN2",
+      "name": "PSEN2",
+      "biotype": "gene",
+      "suggestion": null,
+      "total": 7269,
+      "note": ""
+    },
+    {
+      "input": "APOE",
+      "kind": "entity",
+      "query": "@GENE_APOE",
+      "name": "APOE",
+      "biotype": "gene",
+      "suggestion": null,
+      "total": 72033,
+      "note": ""
+    },
+    {
+      "input": "TREM2",
+      "kind": "entity",
+      "query": "@GENE_TREM2",
+      "name": "Trem2",
+      "biotype": "gene",
+      "suggestion": null,
+      "total": 11052,
+      "note": ""
+    },
+    {
+      "input": "MAPT",
+      "kind": "entity",
+      "query": "@GENE_MAPT",
+      "name": "MAPT",
+      "biotype": "gene",
+      "suggestion": null,
+      "total": 77301,
+      "note": ""
+    },
+    {
+      "input": "SNCA",
+      "kind": "entity",
+      "query": "@GENE_SNCA",
+      "name": "Snca",
+      "biotype": "gene",
+      "suggestion": null,
+      "total": 50725,
+      "note": ""
+    },
+    {
+      "input": "LRRK2",
+      "kind": "entity",
+      "query": "@GENE_LRRK2",
+      "name": "LRRK2",
+      "biotype": "gene",
+      "suggestion": null,
+      "total": 10722,
+      "note": ""
+    },
+    {
+      "input": "PARK7",
+      "kind": "entity",
+      "query": "@GENE_PARK7",
+      "name": "PARK7",
+      "biotype": "gene",
+      "suggestion": null,
+      "total": 7774,
+      "note": ""
+    },
+    {
+      "input": "PINK1",
+      "kind": "entity",
+      "query": "@GENE_PINK1",
+      "name": "PINK1",
+      "biotype": "gene",
+      "suggestion": null,
+      "total": 17164,
+      "note": ""
+    },
+    {
+      "input": "PRKN",
+      "kind": "entity",
+      "query": "@GENE_PRKN",
+      "name": "PRKN",
+      "biotype": "gene",
+      "suggestion": null,
+      "total": 16667,
+      "note": ""
+    },
+    {
+      "input": "HTT",
+      "kind": "entity",
+      "query": "@GENE_HTT",
+      "name": "HTT",
+      "biotype": "gene",
+      "suggestion": null,
+      "total": 14743,
+      "note": ""
+    },
+    {
+      "input": "SOD1",
+      "kind": "entity",
+      "query": "@GENE_SOD1",
+      "name": "SOD1",
+      "biotype": "gene",
+      "suggestion": null,
+      "total": 77495,
+      "note": ""
+    },
+    {
+      "input": "C9orf72",
+      "kind": "entity",
+      "query": "@GENE_C9ORF72",
+      "name": "C9orf72",
+      "biotype": "gene",
+      "suggestion": null,
+      "total": 7410,
+      "note": ""
+    },
+    {
+      "input": "TARDBP",
+      "kind": "entity",
+      "query": "@GENE_TARDBP",
+      "name": "TARDBP",
+      "biotype": "gene",
+      "suggestion": null,
+      "total": 16332,
+      "note": ""
+    },
+    {
+      "input": "FUS",
+      "kind": "entity",
+      "query": "@GENE_FUS",
+      "name": "FUS",
+      "biotype": "gene",
+      "suggestion": null,
+      "total": 12424,
+      "note": ""
+    }
+  ],
+  "columns": [
+    {
+      "input": "@DISEASE_Alzheimer_Disease",
+      "kind": "entity",
+      "query": "@DISEASE_Alzheimer_Disease",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 451731,
+      "note": ""
+    },
+    {
+      "input": "@DISEASE_Parkinson_Disease",
+      "kind": "entity",
+      "query": "@DISEASE_Parkinson_Disease",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 340863,
+      "note": ""
+    },
+    {
+      "input": "@DISEASE_Huntington_Disease",
+      "kind": "entity",
+      "query": "@DISEASE_Huntington_Disease",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 83064,
+      "note": ""
+    },
+    {
+      "input": "@DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "kind": "entity",
+      "query": "@DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 72177,
+      "note": ""
+    },
+    {
+      "input": "@DISEASE_Frontotemporal_Dementia",
+      "kind": "entity",
+      "query": "@DISEASE_Frontotemporal_Dementia",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 35900,
+      "note": ""
+    }
+  ],
+  "cells": [
+    {
+      "row": "APP",
+      "column": "Alzheimer Disease",
+      "count": 99829,
+      "query": "@GENE_APP AND @DISEASE_Alzheimer_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_APP%20AND%20%40DISEASE_Alzheimer_Disease",
+      "retrieved": "2026-11-06T19:36:57+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "APP",
+      "column": "Parkinson Disease",
+      "count": 28551,
+      "query": "@GENE_APP AND @DISEASE_Parkinson_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_APP%20AND%20%40DISEASE_Parkinson_Disease",
+      "retrieved": "2026-11-06T19:36:59+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "APP",
+      "column": "Huntington Disease",
+      "count": 9871,
+      "query": "@GENE_APP AND @DISEASE_Huntington_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_APP%20AND%20%40DISEASE_Huntington_Disease",
+      "retrieved": "2026-11-06T19:36:59+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "APP",
+      "column": "Amyotrophic Lateral Sclerosis",
+      "count": 10137,
+      "query": "@GENE_APP AND @DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_APP%20AND%20%40DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "retrieved": "2026-11-06T19:36:57+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "APP",
+      "column": "Frontotemporal Dementia",
+      "count": 7983,
+      "query": "@GENE_APP AND @DISEASE_Frontotemporal_Dementia",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_APP%20AND%20%40DISEASE_Frontotemporal_Dementia",
+      "retrieved": "2026-11-06T19:36:58+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PSEN1",
+      "column": "Alzheimer Disease",
+      "count": 22457,
+      "query": "@GENE_PSEN1 AND @DISEASE_Alzheimer_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_PSEN1%20AND%20%40DISEASE_Alzheimer_Disease",
+      "retrieved": "2026-11-06T19:36:58+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PSEN1",
+      "column": "Parkinson Disease",
+      "count": 7153,
+      "query": "@GENE_PSEN1 AND @DISEASE_Parkinson_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_PSEN1%20AND%20%40DISEASE_Parkinson_Disease",
+      "retrieved": "2026-11-06T19:36:58+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PSEN1",
+      "column": "Huntington Disease",
+      "count": 3079,
+      "query": "@GENE_PSEN1 AND @DISEASE_Huntington_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_PSEN1%20AND%20%40DISEASE_Huntington_Disease",
+      "retrieved": "2026-11-06T19:36:58+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PSEN1",
+      "column": "Amyotrophic Lateral Sclerosis",
+      "count": 3092,
+      "query": "@GENE_PSEN1 AND @DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_PSEN1%20AND%20%40DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "retrieved": "2026-11-06T19:36:59+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PSEN1",
+      "column": "Frontotemporal Dementia",
+      "count": 2488,
+      "query": "@GENE_PSEN1 AND @DISEASE_Frontotemporal_Dementia",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_PSEN1%20AND%20%40DISEASE_Frontotemporal_Dementia",
+      "retrieved": "2026-11-06T19:37:00+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PSEN2",
+      "column": "Alzheimer Disease",
+      "count": 6147,
+      "query": "@GENE_PSEN2 AND @DISEASE_Alzheimer_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_PSEN2%20AND%20%40DISEASE_Alzheimer_Disease",
+      "retrieved": "2026-11-06T19:37:00+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PSEN2",
+      "column": "Parkinson Disease",
+      "count": 2096,
+      "query": "@GENE_PSEN2 AND @DISEASE_Parkinson_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_PSEN2%20AND%20%40DISEASE_Parkinson_Disease",
+      "retrieved": "2026-11-06T19:37:00+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PSEN2",
+      "column": "Huntington Disease",
+      "count": 966,
+      "query": "@GENE_PSEN2 AND @DISEASE_Huntington_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_PSEN2%20AND%20%40DISEASE_Huntington_Disease",
+      "retrieved": "2026-11-06T19:37:01+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PSEN2",
+      "column": "Amyotrophic Lateral Sclerosis",
+      "count": 1031,
+      "query": "@GENE_PSEN2 AND @DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_PSEN2%20AND%20%40DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "retrieved": "2026-11-06T19:37:01+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PSEN2",
+      "column": "Frontotemporal Dementia",
+      "count": 1214,
+      "query": "@GENE_PSEN2 AND @DISEASE_Frontotemporal_Dementia",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_PSEN2%20AND%20%40DISEASE_Frontotemporal_Dementia",
+      "retrieved": "2026-11-06T19:37:01+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "APOE",
+      "column": "Alzheimer Disease",
+      "count": 37149,
+      "query": "@GENE_APOE AND @DISEASE_Alzheimer_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_APOE%20AND%20%40DISEASE_Alzheimer_Disease",
+      "retrieved": "2026-11-06T19:37:02+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "APOE",
+      "column": "Parkinson Disease",
+      "count": 10327,
+      "query": "@GENE_APOE AND @DISEASE_Parkinson_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_APOE%20AND%20%40DISEASE_Parkinson_Disease",
+      "retrieved": "2026-11-06T19:37:02+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "APOE",
+      "column": "Huntington Disease",
+      "count": 3144,
+      "query": "@GENE_APOE AND @DISEASE_Huntington_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_APOE%20AND%20%40DISEASE_Huntington_Disease",
+      "retrieved": "2026-11-06T19:37:02+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "APOE",
+      "column": "Amyotrophic Lateral Sclerosis",
+      "count": 3445,
+      "query": "@GENE_APOE AND @DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_APOE%20AND%20%40DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "retrieved": "2026-11-06T19:37:02+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "APOE",
+      "column": "Frontotemporal Dementia",
+      "count": 4110,
+      "query": "@GENE_APOE AND @DISEASE_Frontotemporal_Dementia",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_APOE%20AND%20%40DISEASE_Frontotemporal_Dementia",
+      "retrieved": "2026-11-06T19:37:03+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "TREM2",
+      "column": "Alzheimer Disease",
+      "count": 6684,
+      "query": "@GENE_TREM2 AND @DISEASE_Alzheimer_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_TREM2%20AND%20%40DISEASE_Alzheimer_Disease",
+      "retrieved": "2026-11-06T19:37:03+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "TREM2",
+      "column": "Parkinson Disease",
+      "count": 2916,
+      "query": "@GENE_TREM2 AND @DISEASE_Parkinson_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_TREM2%20AND%20%40DISEASE_Parkinson_Disease",
+      "retrieved": "2026-11-06T19:37:04+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "TREM2",
+      "column": "Huntington Disease",
+      "count": 924,
+      "query": "@GENE_TREM2 AND @DISEASE_Huntington_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_TREM2%20AND%20%40DISEASE_Huntington_Disease",
+      "retrieved": "2026-11-06T19:37:04+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "TREM2",
+      "column": "Amyotrophic Lateral Sclerosis",
+      "count": 1613,
+      "query": "@GENE_TREM2 AND @DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_TREM2%20AND%20%40DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "retrieved": "2026-11-06T19:37:04+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "TREM2",
+      "column": "Frontotemporal Dementia",
+      "count": 1286,
+      "query": "@GENE_TREM2 AND @DISEASE_Frontotemporal_Dementia",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_TREM2%20AND%20%40DISEASE_Frontotemporal_Dementia",
+      "retrieved": "2026-11-06T19:37:05+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "MAPT",
+      "column": "Alzheimer Disease",
+      "count": 59643,
+      "query": "@GENE_MAPT AND @DISEASE_Alzheimer_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_MAPT%20AND%20%40DISEASE_Alzheimer_Disease",
+      "retrieved": "2026-11-06T19:37:05+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "MAPT",
+      "column": "Parkinson Disease",
+      "count": 22511,
+      "query": "@GENE_MAPT AND @DISEASE_Parkinson_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_MAPT%20AND%20%40DISEASE_Parkinson_Disease",
+      "retrieved": "2026-11-06T19:37:05+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "MAPT",
+      "column": "Huntington Disease",
+      "count": 7230,
+      "query": "@GENE_MAPT AND @DISEASE_Huntington_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_MAPT%20AND%20%40DISEASE_Huntington_Disease",
+      "retrieved": "2026-11-06T19:37:05+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "MAPT",
+      "column": "Amyotrophic Lateral Sclerosis",
+      "count": 8838,
+      "query": "@GENE_MAPT AND @DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_MAPT%20AND%20%40DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "retrieved": "2026-11-06T19:37:06+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "MAPT",
+      "column": "Frontotemporal Dementia",
+      "count": 11167,
+      "query": "@GENE_MAPT AND @DISEASE_Frontotemporal_Dementia",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_MAPT%20AND%20%40DISEASE_Frontotemporal_Dementia",
+      "retrieved": "2026-11-06T19:37:06+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "SNCA",
+      "column": "Alzheimer Disease",
+      "count": 23993,
+      "query": "@GENE_SNCA AND @DISEASE_Alzheimer_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_SNCA%20AND%20%40DISEASE_Alzheimer_Disease",
+      "retrieved": "2026-11-06T19:37:07+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "SNCA",
+      "column": "Parkinson Disease",
+      "count": 37877,
+      "query": "@GENE_SNCA AND @DISEASE_Parkinson_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_SNCA%20AND%20%40DISEASE_Parkinson_Disease",
+      "retrieved": "2026-11-06T19:37:07+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "SNCA",
+      "column": "Huntington Disease",
+      "count": 7193,
+      "query": "@GENE_SNCA AND @DISEASE_Huntington_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_SNCA%20AND%20%40DISEASE_Huntington_Disease",
+      "retrieved": "2026-11-06T19:37:07+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "SNCA",
+      "column": "Amyotrophic Lateral Sclerosis",
+      "count": 7550,
+      "query": "@GENE_SNCA AND @DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_SNCA%20AND%20%40DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "retrieved": "2026-11-06T19:37:08+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "SNCA",
+      "column": "Frontotemporal Dementia",
+      "count": 4218,
+      "query": "@GENE_SNCA AND @DISEASE_Frontotemporal_Dementia",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_SNCA%20AND%20%40DISEASE_Frontotemporal_Dementia",
+      "retrieved": "2026-11-06T19:37:08+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "LRRK2",
+      "column": "Alzheimer Disease",
+      "count": 4505,
+      "query": "@GENE_LRRK2 AND @DISEASE_Alzheimer_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_LRRK2%20AND%20%40DISEASE_Alzheimer_Disease",
+      "retrieved": "2026-11-06T19:37:08+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "LRRK2",
+      "column": "Parkinson Disease",
+      "count": 9199,
+      "query": "@GENE_LRRK2 AND @DISEASE_Parkinson_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_LRRK2%20AND%20%40DISEASE_Parkinson_Disease",
+      "retrieved": "2026-11-06T19:37:09+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "LRRK2",
+      "column": "Huntington Disease",
+      "count": 1771,
+      "query": "@GENE_LRRK2 AND @DISEASE_Huntington_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_LRRK2%20AND%20%40DISEASE_Huntington_Disease",
+      "retrieved": "2026-11-06T19:37:09+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "LRRK2",
+      "column": "Amyotrophic Lateral Sclerosis",
+      "count": 1815,
+      "query": "@GENE_LRRK2 AND @DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_LRRK2%20AND%20%40DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "retrieved": "2026-11-06T19:37:09+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "LRRK2",
+      "column": "Frontotemporal Dementia",
+      "count": 973,
+      "query": "@GENE_LRRK2 AND @DISEASE_Frontotemporal_Dementia",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_LRRK2%20AND%20%40DISEASE_Frontotemporal_Dementia",
+      "retrieved": "2026-11-06T19:37:10+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PARK7",
+      "column": "Alzheimer Disease",
+      "count": 3139,
+      "query": "@GENE_PARK7 AND @DISEASE_Alzheimer_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_PARK7%20AND%20%40DISEASE_Alzheimer_Disease",
+      "retrieved": "2026-11-06T19:37:10+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PARK7",
+      "column": "Parkinson Disease",
+      "count": 5445,
+      "query": "@GENE_PARK7 AND @DISEASE_Parkinson_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_PARK7%20AND%20%40DISEASE_Parkinson_Disease",
+      "retrieved": "2026-11-06T19:37:10+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PARK7",
+      "column": "Huntington Disease",
+      "count": 1305,
+      "query": "@GENE_PARK7 AND @DISEASE_Huntington_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_PARK7%20AND%20%40DISEASE_Huntington_Disease",
+      "retrieved": "2026-11-06T19:37:11+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PARK7",
+      "column": "Amyotrophic Lateral Sclerosis",
+      "count": 1323,
+      "query": "@GENE_PARK7 AND @DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_PARK7%20AND%20%40DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "retrieved": "2026-11-06T19:37:11+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PARK7",
+      "column": "Frontotemporal Dementia",
+      "count": 565,
+      "query": "@GENE_PARK7 AND @DISEASE_Frontotemporal_Dementia",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_PARK7%20AND%20%40DISEASE_Frontotemporal_Dementia",
+      "retrieved": "2026-11-06T19:37:12+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PINK1",
+      "column": "Alzheimer Disease",
+      "count": 5274,
+      "query": "@GENE_PINK1 AND @DISEASE_Alzheimer_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_PINK1%20AND%20%40DISEASE_Alzheimer_Disease",
+      "retrieved": "2026-11-06T19:37:12+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PINK1",
+      "column": "Parkinson Disease",
+      "count": 8397,
+      "query": "@GENE_PINK1 AND @DISEASE_Parkinson_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_PINK1%20AND%20%40DISEASE_Parkinson_Disease",
+      "retrieved": "2026-11-06T19:37:12+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PINK1",
+      "column": "Huntington Disease",
+      "count": 2182,
+      "query": "@GENE_PINK1 AND @DISEASE_Huntington_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_PINK1%20AND%20%40DISEASE_Huntington_Disease",
+      "retrieved": "2026-11-06T19:37:12+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PINK1",
+      "column": "Amyotrophic Lateral Sclerosis",
+      "count": 2169,
+      "query": "@GENE_PINK1 AND @DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_PINK1%20AND%20%40DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "retrieved": "2026-11-06T19:37:13+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PINK1",
+      "column": "Frontotemporal Dementia",
+      "count": 879,
+      "query": "@GENE_PINK1 AND @DISEASE_Frontotemporal_Dementia",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_PINK1%20AND%20%40DISEASE_Frontotemporal_Dementia",
+      "retrieved": "2026-11-06T19:37:13+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PRKN",
+      "column": "Alzheimer Disease",
+      "count": 5279,
+      "query": "@GENE_PRKN AND @DISEASE_Alzheimer_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_PRKN%20AND%20%40DISEASE_Alzheimer_Disease",
+      "retrieved": "2026-11-06T19:37:14+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PRKN",
+      "column": "Parkinson Disease",
+      "count": 9299,
+      "query": "@GENE_PRKN AND @DISEASE_Parkinson_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_PRKN%20AND%20%40DISEASE_Parkinson_Disease",
+      "retrieved": "2026-11-06T19:37:14+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PRKN",
+      "column": "Huntington Disease",
+      "count": 2293,
+      "query": "@GENE_PRKN AND @DISEASE_Huntington_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_PRKN%20AND%20%40DISEASE_Huntington_Disease",
+      "retrieved": "2026-11-06T19:37:14+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PRKN",
+      "column": "Amyotrophic Lateral Sclerosis",
+      "count": 2217,
+      "query": "@GENE_PRKN AND @DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_PRKN%20AND%20%40DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "retrieved": "2026-11-06T19:37:13+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PRKN",
+      "column": "Frontotemporal Dementia",
+      "count": 990,
+      "query": "@GENE_PRKN AND @DISEASE_Frontotemporal_Dementia",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_PRKN%20AND%20%40DISEASE_Frontotemporal_Dementia",
+      "retrieved": "2026-11-06T19:37:13+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "HTT",
+      "column": "Alzheimer Disease",
+      "count": 6295,
+      "query": "@GENE_HTT AND @DISEASE_Alzheimer_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_HTT%20AND%20%40DISEASE_Alzheimer_Disease",
+      "retrieved": "2026-11-06T19:37:13+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "HTT",
+      "column": "Parkinson Disease",
+      "count": 5882,
+      "query": "@GENE_HTT AND @DISEASE_Parkinson_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_HTT%20AND%20%40DISEASE_Parkinson_Disease",
+      "retrieved": "2026-11-06T19:37:14+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "HTT",
+      "column": "Huntington Disease",
+      "count": 11886,
+      "query": "@GENE_HTT AND @DISEASE_Huntington_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_HTT%20AND%20%40DISEASE_Huntington_Disease",
+      "retrieved": "2026-11-06T19:37:16+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "HTT",
+      "column": "Amyotrophic Lateral Sclerosis",
+      "count": 3661,
+      "query": "@GENE_HTT AND @DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_HTT%20AND%20%40DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "retrieved": "2026-11-06T19:37:16+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "HTT",
+      "column": "Frontotemporal Dementia",
+      "count": 1477,
+      "query": "@GENE_HTT AND @DISEASE_Frontotemporal_Dementia",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_HTT%20AND%20%40DISEASE_Frontotemporal_Dementia",
+      "retrieved": "2026-11-06T19:37:16+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "SOD1",
+      "column": "Alzheimer Disease",
+      "count": 13333,
+      "query": "@GENE_SOD1 AND @DISEASE_Alzheimer_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_SOD1%20AND%20%40DISEASE_Alzheimer_Disease",
+      "retrieved": "2026-11-06T19:37:17+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "SOD1",
+      "column": "Parkinson Disease",
+      "count": 10763,
+      "query": "@GENE_SOD1 AND @DISEASE_Parkinson_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_SOD1%20AND%20%40DISEASE_Parkinson_Disease",
+      "retrieved": "2026-11-06T19:37:16+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "SOD1",
+      "column": "Huntington Disease",
+      "count": 4716,
+      "query": "@GENE_SOD1 AND @DISEASE_Huntington_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_SOD1%20AND%20%40DISEASE_Huntington_Disease",
+      "retrieved": "2026-11-06T19:37:17+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "SOD1",
+      "column": "Amyotrophic Lateral Sclerosis",
+      "count": 12806,
+      "query": "@GENE_SOD1 AND @DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_SOD1%20AND%20%40DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "retrieved": "2026-11-06T19:37:16+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "SOD1",
+      "column": "Frontotemporal Dementia",
+      "count": 2981,
+      "query": "@GENE_SOD1 AND @DISEASE_Frontotemporal_Dementia",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_SOD1%20AND%20%40DISEASE_Frontotemporal_Dementia",
+      "retrieved": "2026-11-06T19:37:17+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "C9orf72",
+      "column": "Alzheimer Disease",
+      "count": 3683,
+      "query": "@GENE_C9ORF72 AND @DISEASE_Alzheimer_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_C9ORF72%20AND%20%40DISEASE_Alzheimer_Disease",
+      "retrieved": "2026-11-06T19:37:17+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "C9orf72",
+      "column": "Parkinson Disease",
+      "count": 2706,
+      "query": "@GENE_C9ORF72 AND @DISEASE_Parkinson_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_C9ORF72%20AND%20%40DISEASE_Parkinson_Disease",
+      "retrieved": "2026-11-06T19:37:18+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "C9orf72",
+      "column": "Huntington Disease",
+      "count": 1602,
+      "query": "@GENE_C9ORF72 AND @DISEASE_Huntington_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_C9ORF72%20AND%20%40DISEASE_Huntington_Disease",
+      "retrieved": "2026-11-06T19:37:18+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "C9orf72",
+      "column": "Amyotrophic Lateral Sclerosis",
+      "count": 5797,
+      "query": "@GENE_C9ORF72 AND @DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_C9ORF72%20AND%20%40DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "retrieved": "2026-11-06T19:37:19+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "C9orf72",
+      "column": "Frontotemporal Dementia",
+      "count": 4577,
+      "query": "@GENE_C9ORF72 AND @DISEASE_Frontotemporal_Dementia",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_C9ORF72%20AND%20%40DISEASE_Frontotemporal_Dementia",
+      "retrieved": "2026-11-06T19:37:19+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "TARDBP",
+      "column": "Alzheimer Disease",
+      "count": 8925,
+      "query": "@GENE_TARDBP AND @DISEASE_Alzheimer_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_TARDBP%20AND%20%40DISEASE_Alzheimer_Disease",
+      "retrieved": "2026-11-06T19:37:19+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "TARDBP",
+      "column": "Parkinson Disease",
+      "count": 6110,
+      "query": "@GENE_TARDBP AND @DISEASE_Parkinson_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_TARDBP%20AND%20%40DISEASE_Parkinson_Disease",
+      "retrieved": "2026-11-06T19:37:20+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "TARDBP",
+      "column": "Huntington Disease",
+      "count": 3077,
+      "query": "@GENE_TARDBP AND @DISEASE_Huntington_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_TARDBP%20AND%20%40DISEASE_Huntington_Disease",
+      "retrieved": "2026-11-06T19:37:20+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "TARDBP",
+      "column": "Amyotrophic Lateral Sclerosis",
+      "count": 10174,
+      "query": "@GENE_TARDBP AND @DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_TARDBP%20AND%20%40DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "retrieved": "2026-11-06T19:37:20+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "TARDBP",
+      "column": "Frontotemporal Dementia",
+      "count": 6359,
+      "query": "@GENE_TARDBP AND @DISEASE_Frontotemporal_Dementia",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_TARDBP%20AND%20%40DISEASE_Frontotemporal_Dementia",
+      "retrieved": "2026-11-06T19:37:21+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "FUS",
+      "column": "Alzheimer Disease",
+      "count": 3704,
+      "query": "@GENE_FUS AND @DISEASE_Alzheimer_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_FUS%20AND%20%40DISEASE_Alzheimer_Disease",
+      "retrieved": "2026-11-06T19:37:21+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "FUS",
+      "column": "Parkinson Disease",
+      "count": 2970,
+      "query": "@GENE_FUS AND @DISEASE_Parkinson_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_FUS%20AND%20%40DISEASE_Parkinson_Disease",
+      "retrieved": "2026-11-06T19:37:21+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "FUS",
+      "column": "Huntington Disease",
+      "count": 1751,
+      "query": "@GENE_FUS AND @DISEASE_Huntington_Disease",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_FUS%20AND%20%40DISEASE_Huntington_Disease",
+      "retrieved": "2026-11-06T19:37:21+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "FUS",
+      "column": "Amyotrophic Lateral Sclerosis",
+      "count": 5579,
+      "query": "@GENE_FUS AND @DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_FUS%20AND%20%40DISEASE_Amyotrophic_Lateral_Sclerosis",
+      "retrieved": "2026-11-06T19:37:22+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "FUS",
+      "column": "Frontotemporal Dementia",
+      "count": 2975,
+      "query": "@GENE_FUS AND @DISEASE_Frontotemporal_Dementia",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40GENE_FUS%20AND%20%40DISEASE_Frontotemporal_Dementia",
+      "retrieved": "2026-11-06T19:37:22+00:00",
+      "error": null,
+      "note": null
+    }
+  ]
+}

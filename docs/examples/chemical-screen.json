@@ -1,0 +1,1480 @@
+{
+  "run": {
+    "tool": "pubmatrix-reloaded 0.2.0",
+    "command": "pubmatrix run -T examples/showcase/chemicals.txt -M examples/showcase/assays.txt --terms-type chemical -o output/showcase/chemical-screen",
+    "source": "PubTator3 (https://www.ncbi.nlm.nih.gov/research/pubtator3-api)",
+    "mode": "co-occurrence",
+    "relation": null,
+    "started": "2026-11-06T19:36:21+00:00",
+    "finished": "2026-11-06T19:36:55+00:00",
+    "status": "complete",
+    "cells": 120,
+    "cells_without_value": 0
+  },
+  "rows": [
+    {
+      "input": "atrazine",
+      "kind": "entity",
+      "query": "@CHEMICAL_Atrazine",
+      "name": "Atrazine",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 9536,
+      "note": ""
+    },
+    {
+      "input": "bisphenol A",
+      "kind": "entity",
+      "query": "@CHEMICAL_bisphenol_A",
+      "name": "bisphenol A",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 27122,
+      "note": ""
+    },
+    {
+      "input": "glyphosate",
+      "kind": "entity",
+      "query": "@CHEMICAL_glyphosate",
+      "name": "glyphosate",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 11106,
+      "note": ""
+    },
+    {
+      "input": "benzo[a]pyrene",
+      "kind": "text",
+      "query": "\"benzo[a]pyrene\"",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 22858,
+      "note": ""
+    },
+    {
+      "input": "acrylamide",
+      "kind": "entity",
+      "query": "@CHEMICAL_Acrylamide",
+      "name": "Acrylamide",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 51891,
+      "note": ""
+    },
+    {
+      "input": "formaldehyde",
+      "kind": "entity",
+      "query": "@CHEMICAL_Formaldehyde",
+      "name": "Formaldehyde",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 435400,
+      "note": ""
+    },
+    {
+      "input": "benzene",
+      "kind": "entity",
+      "query": "@CHEMICAL_Benzene",
+      "name": "Benzene",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 90414,
+      "note": ""
+    },
+    {
+      "input": "vinyl chloride",
+      "kind": "entity",
+      "query": "@CHEMICAL_Vinyl_Chloride",
+      "name": "Vinyl Chloride",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 5152,
+      "note": ""
+    },
+    {
+      "input": "trichloroethylene",
+      "kind": "entity",
+      "query": "@CHEMICAL_Trichloroethylene",
+      "name": "Trichloroethylene",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 9431,
+      "note": ""
+    },
+    {
+      "input": "chlorpyrifos",
+      "kind": "entity",
+      "query": "@CHEMICAL_Chlorpyrifos",
+      "name": "Chlorpyrifos",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 10984,
+      "note": ""
+    },
+    {
+      "input": "permethrin",
+      "kind": "entity",
+      "query": "@CHEMICAL_Permethrin",
+      "name": "Permethrin",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 8529,
+      "note": ""
+    },
+    {
+      "input": "triclosan",
+      "kind": "entity",
+      "query": "@CHEMICAL_Triclosan",
+      "name": "Triclosan",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 9043,
+      "note": ""
+    },
+    {
+      "input": "aflatoxin B1",
+      "kind": "entity",
+      "query": "@CHEMICAL_Aflatoxin_B1",
+      "name": "Aflatoxin B1",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 15685,
+      "note": ""
+    },
+    {
+      "input": "ochratoxin A",
+      "kind": "entity",
+      "query": "@CHEMICAL_ochratoxin_A",
+      "name": "ochratoxin A",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 10343,
+      "note": ""
+    },
+    {
+      "input": "PFOA | perfluorooctanoic acid",
+      "kind": "synonyms",
+      "query": "(\"PFOA\" OR @CHEMICAL_perfluorooctanoic_acid)",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 10411,
+      "note": ""
+    },
+    {
+      "input": "PFOS | perfluorooctane sulfonate",
+      "kind": "synonyms",
+      "query": "(\"PFOS\" OR \"perfluorooctane sulfonate\")",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 19822,
+      "note": ""
+    },
+    {
+      "input": "di(2-ethylhexyl) phthalate | DEHP",
+      "kind": "synonyms",
+      "query": "(\"di(2-ethylhexyl) phthalate\" OR @CHEMICAL_Diethylhexyl_Phthalate)",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 10847,
+      "note": ""
+    },
+    {
+      "input": "cadmium",
+      "kind": "entity",
+      "query": "@CHEMICAL_Cadmium",
+      "name": "Cadmium",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 156783,
+      "note": ""
+    },
+    {
+      "input": "arsenic",
+      "kind": "entity",
+      "query": "@CHEMICAL_Arsenic",
+      "name": "Arsenic",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 137369,
+      "note": ""
+    },
+    {
+      "input": "mercury",
+      "kind": "entity",
+      "query": "@CHEMICAL_Mercury",
+      "name": "Mercury",
+      "biotype": "chemical",
+      "suggestion": null,
+      "total": 110671,
+      "note": ""
+    }
+  ],
+  "columns": [
+    {
+      "input": "Ames test | Ames assay | Salmonella mutagenicity",
+      "kind": "synonyms",
+      "query": "(\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 7510,
+      "note": ""
+    },
+    {
+      "input": "micronucleus assay | micronucleus test",
+      "kind": "synonyms",
+      "query": "(\"micronucleus assay\" OR \"micronucleus test\")",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 9050,
+      "note": ""
+    },
+    {
+      "input": "comet assay",
+      "kind": "text",
+      "query": "\"comet assay\"",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 20971,
+      "note": ""
+    },
+    {
+      "input": "chromosomal aberration assay | chromosome aberration test",
+      "kind": "synonyms",
+      "query": "(\"chromosomal aberration assay\" OR \"chromosome aberration test\")",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 2263,
+      "note": ""
+    },
+    {
+      "input": "uterotrophic assay",
+      "kind": "text",
+      "query": "\"uterotrophic assay\"",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 469,
+      "note": ""
+    },
+    {
+      "input": "local lymph node assay | LLNA",
+      "kind": "synonyms",
+      "query": "(\"local lymph node assay\" OR \"LLNA\")",
+      "name": null,
+      "biotype": null,
+      "suggestion": null,
+      "total": 1152,
+      "note": ""
+    }
+  ],
+  "cells": [
+    {
+      "row": "atrazine",
+      "column": "Ames test",
+      "count": 16,
+      "query": "@CHEMICAL_Atrazine AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Atrazine%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": "2026-11-06T19:12:13+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "atrazine",
+      "column": "micronucleus assay",
+      "count": 40,
+      "query": "@CHEMICAL_Atrazine AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Atrazine%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": "2026-11-06T19:12:15+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "atrazine",
+      "column": "comet assay",
+      "count": 81,
+      "query": "@CHEMICAL_Atrazine AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Atrazine%20AND%20%22comet%20assay%22",
+      "retrieved": "2026-11-06T19:12:13+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "atrazine",
+      "column": "chromosomal aberration assay",
+      "count": 11,
+      "query": "@CHEMICAL_Atrazine AND (\"chromosomal aberration assay\" OR \"chromosome aberration test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Atrazine%20AND%20%28%22chromosomal%20aberration%20assay%22%20OR%20%22chromosome%20aberration%20test%22%29",
+      "retrieved": "2026-11-06T19:36:23+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "atrazine",
+      "column": "uterotrophic assay",
+      "count": 9,
+      "query": "@CHEMICAL_Atrazine AND \"uterotrophic assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Atrazine%20AND%20%22uterotrophic%20assay%22",
+      "retrieved": "2026-11-06T19:36:22+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "atrazine",
+      "column": "local lymph node assay",
+      "count": 1,
+      "query": "@CHEMICAL_Atrazine AND (\"local lymph node assay\" OR \"LLNA\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Atrazine%20AND%20%28%22local%20lymph%20node%20assay%22%20OR%20%22LLNA%22%29",
+      "retrieved": "2026-11-06T19:36:22+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "bisphenol A",
+      "column": "Ames test",
+      "count": 71,
+      "query": "@CHEMICAL_bisphenol_A AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_bisphenol_A%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": "2026-11-06T19:12:14+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "bisphenol A",
+      "column": "micronucleus assay",
+      "count": 84,
+      "query": "@CHEMICAL_bisphenol_A AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_bisphenol_A%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": "2026-11-06T19:12:14+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "bisphenol A",
+      "column": "comet assay",
+      "count": 228,
+      "query": "@CHEMICAL_bisphenol_A AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_bisphenol_A%20AND%20%22comet%20assay%22",
+      "retrieved": "2026-11-06T19:12:15+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "bisphenol A",
+      "column": "chromosomal aberration assay",
+      "count": 30,
+      "query": "@CHEMICAL_bisphenol_A AND (\"chromosomal aberration assay\" OR \"chromosome aberration test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_bisphenol_A%20AND%20%28%22chromosomal%20aberration%20assay%22%20OR%20%22chromosome%20aberration%20test%22%29",
+      "retrieved": "2026-11-06T19:36:22+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "bisphenol A",
+      "column": "uterotrophic assay",
+      "count": 109,
+      "query": "@CHEMICAL_bisphenol_A AND \"uterotrophic assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_bisphenol_A%20AND%20%22uterotrophic%20assay%22",
+      "retrieved": "2026-11-06T19:36:23+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "bisphenol A",
+      "column": "local lymph node assay",
+      "count": 13,
+      "query": "@CHEMICAL_bisphenol_A AND (\"local lymph node assay\" OR \"LLNA\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_bisphenol_A%20AND%20%28%22local%20lymph%20node%20assay%22%20OR%20%22LLNA%22%29",
+      "retrieved": "2026-11-06T19:36:23+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "glyphosate",
+      "column": "Ames test",
+      "count": 30,
+      "query": "@CHEMICAL_glyphosate AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_glyphosate%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": "2026-11-06T19:12:21+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "glyphosate",
+      "column": "micronucleus assay",
+      "count": 66,
+      "query": "@CHEMICAL_glyphosate AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_glyphosate%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": "2026-11-06T19:12:21+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "glyphosate",
+      "column": "comet assay",
+      "count": 138,
+      "query": "@CHEMICAL_glyphosate AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_glyphosate%20AND%20%22comet%20assay%22",
+      "retrieved": "2026-11-06T19:12:21+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "glyphosate",
+      "column": "chromosomal aberration assay",
+      "count": 17,
+      "query": "@CHEMICAL_glyphosate AND (\"chromosomal aberration assay\" OR \"chromosome aberration test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_glyphosate%20AND%20%28%22chromosomal%20aberration%20assay%22%20OR%20%22chromosome%20aberration%20test%22%29",
+      "retrieved": "2026-11-06T19:36:24+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "glyphosate",
+      "column": "uterotrophic assay",
+      "count": 3,
+      "query": "@CHEMICAL_glyphosate AND \"uterotrophic assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_glyphosate%20AND%20%22uterotrophic%20assay%22",
+      "retrieved": "2026-11-06T19:36:23+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "glyphosate",
+      "column": "local lymph node assay",
+      "count": 2,
+      "query": "@CHEMICAL_glyphosate AND (\"local lymph node assay\" OR \"LLNA\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_glyphosate%20AND%20%28%22local%20lymph%20node%20assay%22%20OR%20%22LLNA%22%29",
+      "retrieved": "2026-11-06T19:36:24+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "benzo[a]pyrene",
+      "column": "Ames test",
+      "count": 628,
+      "query": "\"benzo[a]pyrene\" AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%22benzo%5Ba%5Dpyrene%22%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": "2026-11-06T19:12:17+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "benzo[a]pyrene",
+      "column": "micronucleus assay",
+      "count": 500,
+      "query": "\"benzo[a]pyrene\" AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%22benzo%5Ba%5Dpyrene%22%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": "2026-11-06T19:12:16+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "benzo[a]pyrene",
+      "column": "comet assay",
+      "count": 744,
+      "query": "\"benzo[a]pyrene\" AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%22benzo%5Ba%5Dpyrene%22%20AND%20%22comet%20assay%22",
+      "retrieved": "2026-11-06T19:12:17+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "benzo[a]pyrene",
+      "column": "chromosomal aberration assay",
+      "count": 161,
+      "query": "\"benzo[a]pyrene\" AND (\"chromosomal aberration assay\" OR \"chromosome aberration test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%22benzo%5Ba%5Dpyrene%22%20AND%20%28%22chromosomal%20aberration%20assay%22%20OR%20%22chromosome%20aberration%20test%22%29",
+      "retrieved": "2026-11-06T19:36:25+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "benzo[a]pyrene",
+      "column": "uterotrophic assay",
+      "count": 5,
+      "query": "\"benzo[a]pyrene\" AND \"uterotrophic assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%22benzo%5Ba%5Dpyrene%22%20AND%20%22uterotrophic%20assay%22",
+      "retrieved": "2026-11-06T19:36:25+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "benzo[a]pyrene",
+      "column": "local lymph node assay",
+      "count": 13,
+      "query": "\"benzo[a]pyrene\" AND (\"local lymph node assay\" OR \"LLNA\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%22benzo%5Ba%5Dpyrene%22%20AND%20%28%22local%20lymph%20node%20assay%22%20OR%20%22LLNA%22%29",
+      "retrieved": "2026-11-06T19:36:25+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "acrylamide",
+      "column": "Ames test",
+      "count": 101,
+      "query": "@CHEMICAL_Acrylamide AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Acrylamide%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": "2026-11-06T19:36:26+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "acrylamide",
+      "column": "micronucleus assay",
+      "count": 113,
+      "query": "@CHEMICAL_Acrylamide AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Acrylamide%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": "2026-11-06T19:36:27+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "acrylamide",
+      "column": "comet assay",
+      "count": 302,
+      "query": "@CHEMICAL_Acrylamide AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Acrylamide%20AND%20%22comet%20assay%22",
+      "retrieved": "2026-11-06T19:36:27+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "acrylamide",
+      "column": "chromosomal aberration assay",
+      "count": 34,
+      "query": "@CHEMICAL_Acrylamide AND (\"chromosomal aberration assay\" OR \"chromosome aberration test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Acrylamide%20AND%20%28%22chromosomal%20aberration%20assay%22%20OR%20%22chromosome%20aberration%20test%22%29",
+      "retrieved": "2026-11-06T19:36:27+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "acrylamide",
+      "column": "uterotrophic assay",
+      "count": 4,
+      "query": "@CHEMICAL_Acrylamide AND \"uterotrophic assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Acrylamide%20AND%20%22uterotrophic%20assay%22",
+      "retrieved": "2026-11-06T19:36:27+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "acrylamide",
+      "column": "local lymph node assay",
+      "count": 4,
+      "query": "@CHEMICAL_Acrylamide AND (\"local lymph node assay\" OR \"LLNA\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Acrylamide%20AND%20%28%22local%20lymph%20node%20assay%22%20OR%20%22LLNA%22%29",
+      "retrieved": "2026-11-06T19:36:27+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "formaldehyde",
+      "column": "Ames test",
+      "count": 450,
+      "query": "@CHEMICAL_Formaldehyde AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Formaldehyde%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": "2026-11-06T19:36:28+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "formaldehyde",
+      "column": "micronucleus assay",
+      "count": 621,
+      "query": "@CHEMICAL_Formaldehyde AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Formaldehyde%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": "2026-11-06T19:36:28+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "formaldehyde",
+      "column": "comet assay",
+      "count": 2207,
+      "query": "@CHEMICAL_Formaldehyde AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Formaldehyde%20AND%20%22comet%20assay%22",
+      "retrieved": "2026-11-06T19:36:28+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "formaldehyde",
+      "column": "chromosomal aberration assay",
+      "count": 172,
+      "query": "@CHEMICAL_Formaldehyde AND (\"chromosomal aberration assay\" OR \"chromosome aberration test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Formaldehyde%20AND%20%28%22chromosomal%20aberration%20assay%22%20OR%20%22chromosome%20aberration%20test%22%29",
+      "retrieved": "2026-11-06T19:36:29+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "formaldehyde",
+      "column": "uterotrophic assay",
+      "count": 38,
+      "query": "@CHEMICAL_Formaldehyde AND \"uterotrophic assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Formaldehyde%20AND%20%22uterotrophic%20assay%22",
+      "retrieved": "2026-11-06T19:36:29+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "formaldehyde",
+      "column": "local lymph node assay",
+      "count": 67,
+      "query": "@CHEMICAL_Formaldehyde AND (\"local lymph node assay\" OR \"LLNA\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Formaldehyde%20AND%20%28%22local%20lymph%20node%20assay%22%20OR%20%22LLNA%22%29",
+      "retrieved": "2026-11-06T19:36:29+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "benzene",
+      "column": "Ames test",
+      "count": 331,
+      "query": "@CHEMICAL_Benzene AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Benzene%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": "2026-11-06T19:36:30+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "benzene",
+      "column": "micronucleus assay",
+      "count": 226,
+      "query": "@CHEMICAL_Benzene AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Benzene%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": "2026-11-06T19:36:30+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "benzene",
+      "column": "comet assay",
+      "count": 362,
+      "query": "@CHEMICAL_Benzene AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Benzene%20AND%20%22comet%20assay%22",
+      "retrieved": "2026-11-06T19:36:30+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "benzene",
+      "column": "chromosomal aberration assay",
+      "count": 57,
+      "query": "@CHEMICAL_Benzene AND (\"chromosomal aberration assay\" OR \"chromosome aberration test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Benzene%20AND%20%28%22chromosomal%20aberration%20assay%22%20OR%20%22chromosome%20aberration%20test%22%29",
+      "retrieved": "2026-11-06T19:36:30+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "benzene",
+      "column": "uterotrophic assay",
+      "count": 6,
+      "query": "@CHEMICAL_Benzene AND \"uterotrophic assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Benzene%20AND%20%22uterotrophic%20assay%22",
+      "retrieved": "2026-11-06T19:36:31+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "benzene",
+      "column": "local lymph node assay",
+      "count": 18,
+      "query": "@CHEMICAL_Benzene AND (\"local lymph node assay\" OR \"LLNA\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Benzene%20AND%20%28%22local%20lymph%20node%20assay%22%20OR%20%22LLNA%22%29",
+      "retrieved": "2026-11-06T19:36:31+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "vinyl chloride",
+      "column": "Ames test",
+      "count": 26,
+      "query": "@CHEMICAL_Vinyl_Chloride AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Vinyl_Chloride%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": "2026-11-06T19:36:31+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "vinyl chloride",
+      "column": "micronucleus assay",
+      "count": 31,
+      "query": "@CHEMICAL_Vinyl_Chloride AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Vinyl_Chloride%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": "2026-11-06T19:36:32+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "vinyl chloride",
+      "column": "comet assay",
+      "count": 33,
+      "query": "@CHEMICAL_Vinyl_Chloride AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Vinyl_Chloride%20AND%20%22comet%20assay%22",
+      "retrieved": "2026-11-06T19:36:32+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "vinyl chloride",
+      "column": "chromosomal aberration assay",
+      "count": 11,
+      "query": "@CHEMICAL_Vinyl_Chloride AND (\"chromosomal aberration assay\" OR \"chromosome aberration test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Vinyl_Chloride%20AND%20%28%22chromosomal%20aberration%20assay%22%20OR%20%22chromosome%20aberration%20test%22%29",
+      "retrieved": "2026-11-06T19:36:32+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "vinyl chloride",
+      "column": "uterotrophic assay",
+      "count": 0,
+      "query": "@CHEMICAL_Vinyl_Chloride AND \"uterotrophic assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Vinyl_Chloride%20AND%20%22uterotrophic%20assay%22",
+      "retrieved": "2026-11-06T19:36:33+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "vinyl chloride",
+      "column": "local lymph node assay",
+      "count": 0,
+      "query": "@CHEMICAL_Vinyl_Chloride AND (\"local lymph node assay\" OR \"LLNA\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Vinyl_Chloride%20AND%20%28%22local%20lymph%20node%20assay%22%20OR%20%22LLNA%22%29",
+      "retrieved": "2026-11-06T19:36:33+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "trichloroethylene",
+      "column": "Ames test",
+      "count": 39,
+      "query": "@CHEMICAL_Trichloroethylene AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Trichloroethylene%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": "2026-11-06T19:36:34+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "trichloroethylene",
+      "column": "micronucleus assay",
+      "count": 25,
+      "query": "@CHEMICAL_Trichloroethylene AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Trichloroethylene%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": "2026-11-06T19:36:34+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "trichloroethylene",
+      "column": "comet assay",
+      "count": 28,
+      "query": "@CHEMICAL_Trichloroethylene AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Trichloroethylene%20AND%20%22comet%20assay%22",
+      "retrieved": "2026-11-06T19:36:34+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "trichloroethylene",
+      "column": "chromosomal aberration assay",
+      "count": 6,
+      "query": "@CHEMICAL_Trichloroethylene AND (\"chromosomal aberration assay\" OR \"chromosome aberration test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Trichloroethylene%20AND%20%28%22chromosomal%20aberration%20assay%22%20OR%20%22chromosome%20aberration%20test%22%29",
+      "retrieved": "2026-11-06T19:36:34+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "trichloroethylene",
+      "column": "uterotrophic assay",
+      "count": 2,
+      "query": "@CHEMICAL_Trichloroethylene AND \"uterotrophic assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Trichloroethylene%20AND%20%22uterotrophic%20assay%22",
+      "retrieved": "2026-11-06T19:36:35+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "trichloroethylene",
+      "column": "local lymph node assay",
+      "count": 7,
+      "query": "@CHEMICAL_Trichloroethylene AND (\"local lymph node assay\" OR \"LLNA\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Trichloroethylene%20AND%20%28%22local%20lymph%20node%20assay%22%20OR%20%22LLNA%22%29",
+      "retrieved": "2026-11-06T19:36:35+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "chlorpyrifos",
+      "column": "Ames test",
+      "count": 26,
+      "query": "@CHEMICAL_Chlorpyrifos AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Chlorpyrifos%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": "2026-11-06T19:36:35+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "chlorpyrifos",
+      "column": "micronucleus assay",
+      "count": 60,
+      "query": "@CHEMICAL_Chlorpyrifos AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Chlorpyrifos%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": "2026-11-06T19:36:36+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "chlorpyrifos",
+      "column": "comet assay",
+      "count": 119,
+      "query": "@CHEMICAL_Chlorpyrifos AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Chlorpyrifos%20AND%20%22comet%20assay%22",
+      "retrieved": "2026-11-06T19:36:36+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "chlorpyrifos",
+      "column": "chromosomal aberration assay",
+      "count": 16,
+      "query": "@CHEMICAL_Chlorpyrifos AND (\"chromosomal aberration assay\" OR \"chromosome aberration test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Chlorpyrifos%20AND%20%28%22chromosomal%20aberration%20assay%22%20OR%20%22chromosome%20aberration%20test%22%29",
+      "retrieved": "2026-11-06T19:36:36+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "chlorpyrifos",
+      "column": "uterotrophic assay",
+      "count": 5,
+      "query": "@CHEMICAL_Chlorpyrifos AND \"uterotrophic assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Chlorpyrifos%20AND%20%22uterotrophic%20assay%22",
+      "retrieved": "2026-11-06T19:36:37+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "chlorpyrifos",
+      "column": "local lymph node assay",
+      "count": 5,
+      "query": "@CHEMICAL_Chlorpyrifos AND (\"local lymph node assay\" OR \"LLNA\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Chlorpyrifos%20AND%20%28%22local%20lymph%20node%20assay%22%20OR%20%22LLNA%22%29",
+      "retrieved": "2026-11-06T19:36:37+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "permethrin",
+      "column": "Ames test",
+      "count": 9,
+      "query": "@CHEMICAL_Permethrin AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Permethrin%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": "2026-11-06T19:36:37+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "permethrin",
+      "column": "micronucleus assay",
+      "count": 11,
+      "query": "@CHEMICAL_Permethrin AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Permethrin%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": "2026-11-06T19:36:38+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "permethrin",
+      "column": "comet assay",
+      "count": 39,
+      "query": "@CHEMICAL_Permethrin AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Permethrin%20AND%20%22comet%20assay%22",
+      "retrieved": "2026-11-06T19:36:38+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "permethrin",
+      "column": "chromosomal aberration assay",
+      "count": 3,
+      "query": "@CHEMICAL_Permethrin AND (\"chromosomal aberration assay\" OR \"chromosome aberration test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Permethrin%20AND%20%28%22chromosomal%20aberration%20assay%22%20OR%20%22chromosome%20aberration%20test%22%29",
+      "retrieved": "2026-11-06T19:36:38+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "permethrin",
+      "column": "uterotrophic assay",
+      "count": 6,
+      "query": "@CHEMICAL_Permethrin AND \"uterotrophic assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Permethrin%20AND%20%22uterotrophic%20assay%22",
+      "retrieved": "2026-11-06T19:36:39+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "permethrin",
+      "column": "local lymph node assay",
+      "count": 1,
+      "query": "@CHEMICAL_Permethrin AND (\"local lymph node assay\" OR \"LLNA\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Permethrin%20AND%20%28%22local%20lymph%20node%20assay%22%20OR%20%22LLNA%22%29",
+      "retrieved": "2026-11-06T19:36:39+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "triclosan",
+      "column": "Ames test",
+      "count": 32,
+      "query": "@CHEMICAL_Triclosan AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Triclosan%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": "2026-11-06T19:36:39+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "triclosan",
+      "column": "micronucleus assay",
+      "count": 27,
+      "query": "@CHEMICAL_Triclosan AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Triclosan%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": "2026-11-06T19:36:40+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "triclosan",
+      "column": "comet assay",
+      "count": 59,
+      "query": "@CHEMICAL_Triclosan AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Triclosan%20AND%20%22comet%20assay%22",
+      "retrieved": "2026-11-06T19:36:40+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "triclosan",
+      "column": "chromosomal aberration assay",
+      "count": 9,
+      "query": "@CHEMICAL_Triclosan AND (\"chromosomal aberration assay\" OR \"chromosome aberration test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Triclosan%20AND%20%28%22chromosomal%20aberration%20assay%22%20OR%20%22chromosome%20aberration%20test%22%29",
+      "retrieved": "2026-11-06T19:36:40+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "triclosan",
+      "column": "uterotrophic assay",
+      "count": 14,
+      "query": "@CHEMICAL_Triclosan AND \"uterotrophic assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Triclosan%20AND%20%22uterotrophic%20assay%22",
+      "retrieved": "2026-11-06T19:36:41+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "triclosan",
+      "column": "local lymph node assay",
+      "count": 12,
+      "query": "@CHEMICAL_Triclosan AND (\"local lymph node assay\" OR \"LLNA\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Triclosan%20AND%20%28%22local%20lymph%20node%20assay%22%20OR%20%22LLNA%22%29",
+      "retrieved": "2026-11-06T19:36:41+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "aflatoxin B1",
+      "column": "Ames test",
+      "count": 327,
+      "query": "@CHEMICAL_Aflatoxin_B1 AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Aflatoxin_B1%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": "2026-11-06T19:36:42+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "aflatoxin B1",
+      "column": "micronucleus assay",
+      "count": 194,
+      "query": "@CHEMICAL_Aflatoxin_B1 AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Aflatoxin_B1%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": "2026-11-06T19:36:42+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "aflatoxin B1",
+      "column": "comet assay",
+      "count": 222,
+      "query": "@CHEMICAL_Aflatoxin_B1 AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Aflatoxin_B1%20AND%20%22comet%20assay%22",
+      "retrieved": "2026-11-06T19:36:42+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "aflatoxin B1",
+      "column": "chromosomal aberration assay",
+      "count": 70,
+      "query": "@CHEMICAL_Aflatoxin_B1 AND (\"chromosomal aberration assay\" OR \"chromosome aberration test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Aflatoxin_B1%20AND%20%28%22chromosomal%20aberration%20assay%22%20OR%20%22chromosome%20aberration%20test%22%29",
+      "retrieved": "2026-11-06T19:36:42+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "aflatoxin B1",
+      "column": "uterotrophic assay",
+      "count": 4,
+      "query": "@CHEMICAL_Aflatoxin_B1 AND \"uterotrophic assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Aflatoxin_B1%20AND%20%22uterotrophic%20assay%22",
+      "retrieved": "2026-11-06T19:36:43+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "aflatoxin B1",
+      "column": "local lymph node assay",
+      "count": 11,
+      "query": "@CHEMICAL_Aflatoxin_B1 AND (\"local lymph node assay\" OR \"LLNA\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Aflatoxin_B1%20AND%20%28%22local%20lymph%20node%20assay%22%20OR%20%22LLNA%22%29",
+      "retrieved": "2026-11-06T19:36:42+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "ochratoxin A",
+      "column": "Ames test",
+      "count": 223,
+      "query": "@CHEMICAL_ochratoxin_A AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_ochratoxin_A%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": "2026-11-06T19:36:43+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "ochratoxin A",
+      "column": "micronucleus assay",
+      "count": 164,
+      "query": "@CHEMICAL_ochratoxin_A AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_ochratoxin_A%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": "2026-11-06T19:36:44+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "ochratoxin A",
+      "column": "comet assay",
+      "count": 144,
+      "query": "@CHEMICAL_ochratoxin_A AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_ochratoxin_A%20AND%20%22comet%20assay%22",
+      "retrieved": "2026-11-06T19:36:44+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "ochratoxin A",
+      "column": "chromosomal aberration assay",
+      "count": 119,
+      "query": "@CHEMICAL_ochratoxin_A AND (\"chromosomal aberration assay\" OR \"chromosome aberration test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_ochratoxin_A%20AND%20%28%22chromosomal%20aberration%20assay%22%20OR%20%22chromosome%20aberration%20test%22%29",
+      "retrieved": "2026-11-06T19:36:44+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "ochratoxin A",
+      "column": "uterotrophic assay",
+      "count": 3,
+      "query": "@CHEMICAL_ochratoxin_A AND \"uterotrophic assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_ochratoxin_A%20AND%20%22uterotrophic%20assay%22",
+      "retrieved": "2026-11-06T19:36:45+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "ochratoxin A",
+      "column": "local lymph node assay",
+      "count": 35,
+      "query": "@CHEMICAL_ochratoxin_A AND (\"local lymph node assay\" OR \"LLNA\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_ochratoxin_A%20AND%20%28%22local%20lymph%20node%20assay%22%20OR%20%22LLNA%22%29",
+      "retrieved": "2026-11-06T19:36:45+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PFOA",
+      "column": "Ames test",
+      "count": 17,
+      "query": "(\"PFOA\" OR @CHEMICAL_perfluorooctanoic_acid) AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%28%22PFOA%22%20OR%20%40CHEMICAL_perfluorooctanoic_acid%29%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": "2026-11-06T19:12:17+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PFOA",
+      "column": "micronucleus assay",
+      "count": 16,
+      "query": "(\"PFOA\" OR @CHEMICAL_perfluorooctanoic_acid) AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%28%22PFOA%22%20OR%20%40CHEMICAL_perfluorooctanoic_acid%29%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": "2026-11-06T19:12:17+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PFOA",
+      "column": "comet assay",
+      "count": 45,
+      "query": "(\"PFOA\" OR @CHEMICAL_perfluorooctanoic_acid) AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%28%22PFOA%22%20OR%20%40CHEMICAL_perfluorooctanoic_acid%29%20AND%20%22comet%20assay%22",
+      "retrieved": "2026-11-06T19:12:18+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PFOA",
+      "column": "chromosomal aberration assay",
+      "count": 7,
+      "query": "(\"PFOA\" OR @CHEMICAL_perfluorooctanoic_acid) AND (\"chromosomal aberration assay\" OR \"chromosome aberration test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%28%22PFOA%22%20OR%20%40CHEMICAL_perfluorooctanoic_acid%29%20AND%20%28%22chromosomal%20aberration%20assay%22%20OR%20%22chromosome%20aberration%20test%22%29",
+      "retrieved": "2026-11-06T19:36:45+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PFOA",
+      "column": "uterotrophic assay",
+      "count": 9,
+      "query": "(\"PFOA\" OR @CHEMICAL_perfluorooctanoic_acid) AND \"uterotrophic assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%28%22PFOA%22%20OR%20%40CHEMICAL_perfluorooctanoic_acid%29%20AND%20%22uterotrophic%20assay%22",
+      "retrieved": "2026-11-06T19:36:44+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PFOA",
+      "column": "local lymph node assay",
+      "count": 5,
+      "query": "(\"PFOA\" OR @CHEMICAL_perfluorooctanoic_acid) AND (\"local lymph node assay\" OR \"LLNA\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%28%22PFOA%22%20OR%20%40CHEMICAL_perfluorooctanoic_acid%29%20AND%20%28%22local%20lymph%20node%20assay%22%20OR%20%22LLNA%22%29",
+      "retrieved": "2026-11-06T19:36:45+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PFOS",
+      "column": "Ames test",
+      "count": 19,
+      "query": "(\"PFOS\" OR \"perfluorooctane sulfonate\") AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%28%22PFOS%22%20OR%20%22perfluorooctane%20sulfonate%22%29%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": "2026-11-06T19:36:45+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PFOS",
+      "column": "micronucleus assay",
+      "count": 20,
+      "query": "(\"PFOS\" OR \"perfluorooctane sulfonate\") AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%28%22PFOS%22%20OR%20%22perfluorooctane%20sulfonate%22%29%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": "2026-11-06T19:36:45+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PFOS",
+      "column": "comet assay",
+      "count": 45,
+      "query": "(\"PFOS\" OR \"perfluorooctane sulfonate\") AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%28%22PFOS%22%20OR%20%22perfluorooctane%20sulfonate%22%29%20AND%20%22comet%20assay%22",
+      "retrieved": "2026-11-06T19:36:46+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PFOS",
+      "column": "chromosomal aberration assay",
+      "count": 3,
+      "query": "(\"PFOS\" OR \"perfluorooctane sulfonate\") AND (\"chromosomal aberration assay\" OR \"chromosome aberration test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%28%22PFOS%22%20OR%20%22perfluorooctane%20sulfonate%22%29%20AND%20%28%22chromosomal%20aberration%20assay%22%20OR%20%22chromosome%20aberration%20test%22%29",
+      "retrieved": "2026-11-06T19:36:46+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PFOS",
+      "column": "uterotrophic assay",
+      "count": 5,
+      "query": "(\"PFOS\" OR \"perfluorooctane sulfonate\") AND \"uterotrophic assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%28%22PFOS%22%20OR%20%22perfluorooctane%20sulfonate%22%29%20AND%20%22uterotrophic%20assay%22",
+      "retrieved": "2026-11-06T19:36:46+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "PFOS",
+      "column": "local lymph node assay",
+      "count": 6,
+      "query": "(\"PFOS\" OR \"perfluorooctane sulfonate\") AND (\"local lymph node assay\" OR \"LLNA\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%28%22PFOS%22%20OR%20%22perfluorooctane%20sulfonate%22%29%20AND%20%28%22local%20lymph%20node%20assay%22%20OR%20%22LLNA%22%29",
+      "retrieved": "2026-11-06T19:36:47+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "di(2-ethylhexyl) phthalate",
+      "column": "Ames test",
+      "count": 53,
+      "query": "(\"di(2-ethylhexyl) phthalate\" OR @CHEMICAL_Diethylhexyl_Phthalate) AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%28%22di%282-ethylhexyl%29%20phthalate%22%20OR%20%40CHEMICAL_Diethylhexyl_Phthalate%29%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": "2026-11-06T19:36:48+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "di(2-ethylhexyl) phthalate",
+      "column": "micronucleus assay",
+      "count": 49,
+      "query": "(\"di(2-ethylhexyl) phthalate\" OR @CHEMICAL_Diethylhexyl_Phthalate) AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%28%22di%282-ethylhexyl%29%20phthalate%22%20OR%20%40CHEMICAL_Diethylhexyl_Phthalate%29%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": "2026-11-06T19:36:48+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "di(2-ethylhexyl) phthalate",
+      "column": "comet assay",
+      "count": 89,
+      "query": "(\"di(2-ethylhexyl) phthalate\" OR @CHEMICAL_Diethylhexyl_Phthalate) AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%28%22di%282-ethylhexyl%29%20phthalate%22%20OR%20%40CHEMICAL_Diethylhexyl_Phthalate%29%20AND%20%22comet%20assay%22",
+      "retrieved": "2026-11-06T19:36:48+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "di(2-ethylhexyl) phthalate",
+      "column": "chromosomal aberration assay",
+      "count": 29,
+      "query": "(\"di(2-ethylhexyl) phthalate\" OR @CHEMICAL_Diethylhexyl_Phthalate) AND (\"chromosomal aberration assay\" OR \"chromosome aberration test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%28%22di%282-ethylhexyl%29%20phthalate%22%20OR%20%40CHEMICAL_Diethylhexyl_Phthalate%29%20AND%20%28%22chromosomal%20aberration%20assay%22%20OR%20%22chromosome%20aberration%20test%22%29",
+      "retrieved": "2026-11-06T19:36:48+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "di(2-ethylhexyl) phthalate",
+      "column": "uterotrophic assay",
+      "count": 19,
+      "query": "(\"di(2-ethylhexyl) phthalate\" OR @CHEMICAL_Diethylhexyl_Phthalate) AND \"uterotrophic assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%28%22di%282-ethylhexyl%29%20phthalate%22%20OR%20%40CHEMICAL_Diethylhexyl_Phthalate%29%20AND%20%22uterotrophic%20assay%22",
+      "retrieved": "2026-11-06T19:36:49+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "di(2-ethylhexyl) phthalate",
+      "column": "local lymph node assay",
+      "count": 4,
+      "query": "(\"di(2-ethylhexyl) phthalate\" OR @CHEMICAL_Diethylhexyl_Phthalate) AND (\"local lymph node assay\" OR \"LLNA\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%28%22di%282-ethylhexyl%29%20phthalate%22%20OR%20%40CHEMICAL_Diethylhexyl_Phthalate%29%20AND%20%28%22local%20lymph%20node%20assay%22%20OR%20%22LLNA%22%29",
+      "retrieved": "2026-11-06T19:36:49+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "cadmium",
+      "column": "Ames test",
+      "count": 441,
+      "query": "@CHEMICAL_Cadmium AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Cadmium%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": "2026-11-06T19:36:49+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "cadmium",
+      "column": "micronucleus assay",
+      "count": 579,
+      "query": "@CHEMICAL_Cadmium AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Cadmium%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": "2026-11-06T19:36:49+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "cadmium",
+      "column": "comet assay",
+      "count": 823,
+      "query": "@CHEMICAL_Cadmium AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Cadmium%20AND%20%22comet%20assay%22",
+      "retrieved": "2026-11-06T19:36:50+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "cadmium",
+      "column": "chromosomal aberration assay",
+      "count": 231,
+      "query": "@CHEMICAL_Cadmium AND (\"chromosomal aberration assay\" OR \"chromosome aberration test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Cadmium%20AND%20%28%22chromosomal%20aberration%20assay%22%20OR%20%22chromosome%20aberration%20test%22%29",
+      "retrieved": "2026-11-06T19:36:50+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "cadmium",
+      "column": "uterotrophic assay",
+      "count": 12,
+      "query": "@CHEMICAL_Cadmium AND \"uterotrophic assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Cadmium%20AND%20%22uterotrophic%20assay%22",
+      "retrieved": "2026-11-06T19:36:50+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "cadmium",
+      "column": "local lymph node assay",
+      "count": 70,
+      "query": "@CHEMICAL_Cadmium AND (\"local lymph node assay\" OR \"LLNA\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Cadmium%20AND%20%28%22local%20lymph%20node%20assay%22%20OR%20%22LLNA%22%29",
+      "retrieved": "2026-11-06T19:36:51+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "arsenic",
+      "column": "Ames test",
+      "count": 496,
+      "query": "@CHEMICAL_Arsenic AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Arsenic%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": "2026-11-06T19:36:51+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "arsenic",
+      "column": "micronucleus assay",
+      "count": 549,
+      "query": "@CHEMICAL_Arsenic AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Arsenic%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": "2026-11-06T19:36:52+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "arsenic",
+      "column": "comet assay",
+      "count": 750,
+      "query": "@CHEMICAL_Arsenic AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Arsenic%20AND%20%22comet%20assay%22",
+      "retrieved": "2026-11-06T19:36:52+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "arsenic",
+      "column": "chromosomal aberration assay",
+      "count": 255,
+      "query": "@CHEMICAL_Arsenic AND (\"chromosomal aberration assay\" OR \"chromosome aberration test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Arsenic%20AND%20%28%22chromosomal%20aberration%20assay%22%20OR%20%22chromosome%20aberration%20test%22%29",
+      "retrieved": "2026-11-06T19:36:52+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "arsenic",
+      "column": "uterotrophic assay",
+      "count": 11,
+      "query": "@CHEMICAL_Arsenic AND \"uterotrophic assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Arsenic%20AND%20%22uterotrophic%20assay%22",
+      "retrieved": "2026-11-06T19:36:52+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "arsenic",
+      "column": "local lymph node assay",
+      "count": 70,
+      "query": "@CHEMICAL_Arsenic AND (\"local lymph node assay\" OR \"LLNA\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Arsenic%20AND%20%28%22local%20lymph%20node%20assay%22%20OR%20%22LLNA%22%29",
+      "retrieved": "2026-11-06T19:36:53+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "mercury",
+      "column": "Ames test",
+      "count": 341,
+      "query": "@CHEMICAL_Mercury AND (\"Ames test\" OR \"Ames assay\" OR \"Salmonella mutagenicity\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Mercury%20AND%20%28%22Ames%20test%22%20OR%20%22Ames%20assay%22%20OR%20%22Salmonella%20mutagenicity%22%29",
+      "retrieved": "2026-11-06T19:36:53+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "mercury",
+      "column": "micronucleus assay",
+      "count": 415,
+      "query": "@CHEMICAL_Mercury AND (\"micronucleus assay\" OR \"micronucleus test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Mercury%20AND%20%28%22micronucleus%20assay%22%20OR%20%22micronucleus%20test%22%29",
+      "retrieved": "2026-11-06T19:36:53+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "mercury",
+      "column": "comet assay",
+      "count": 435,
+      "query": "@CHEMICAL_Mercury AND \"comet assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Mercury%20AND%20%22comet%20assay%22",
+      "retrieved": "2026-11-06T19:36:54+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "mercury",
+      "column": "chromosomal aberration assay",
+      "count": 196,
+      "query": "@CHEMICAL_Mercury AND (\"chromosomal aberration assay\" OR \"chromosome aberration test\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Mercury%20AND%20%28%22chromosomal%20aberration%20assay%22%20OR%20%22chromosome%20aberration%20test%22%29",
+      "retrieved": "2026-11-06T19:36:54+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "mercury",
+      "column": "uterotrophic assay",
+      "count": 5,
+      "query": "@CHEMICAL_Mercury AND \"uterotrophic assay\"",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Mercury%20AND%20%22uterotrophic%20assay%22",
+      "retrieved": "2026-11-06T19:36:54+00:00",
+      "error": null,
+      "note": null
+    },
+    {
+      "row": "mercury",
+      "column": "local lymph node assay",
+      "count": 68,
+      "query": "@CHEMICAL_Mercury AND (\"local lymph node assay\" OR \"LLNA\")",
+      "link": "https://www.ncbi.nlm.nih.gov/research/pubtator3/docsum?text=%40CHEMICAL_Mercury%20AND%20%28%22local%20lymph%20node%20assay%22%20OR%20%22LLNA%22%29",
+      "retrieved": "2026-11-06T19:36:55+00:00",
+      "error": null,
+      "note": null
+    }
+  ]
+}

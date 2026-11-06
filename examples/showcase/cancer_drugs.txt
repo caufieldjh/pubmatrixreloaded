@@ -1,0 +1,13 @@
+# Established cancer drugs.
+tamoxifen
+trastuzumab
+@CHEMICAL_Imatinib_Mesylate
+@CHEMICAL_Erlotinib_Hydrochloride
+vemurafenib
+cisplatin
+paclitaxel
+doxorubicin
+5-fluorouracil
+metformin
+aspirin
+pembrolizumab

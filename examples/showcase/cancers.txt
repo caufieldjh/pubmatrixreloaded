@@ -1,0 +1,7 @@
+# Specific entities: most lung cancer papers use the non-small cell entity, not Lung Neoplasms.
+@DISEASE_Breast_Neoplasms
+@DISEASE_Carcinoma_Non_Small_Cell_Lung
+@DISEASE_Colorectal_Neoplasms
+@DISEASE_Prostatic_Neoplasms
+@DISEASE_Melanoma
+@DISEASE_Leukemia_Myelogenous_Chronic_BCR_ABL_Positive
