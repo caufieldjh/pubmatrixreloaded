@@ -84,5 +84,6 @@ def test_page_policy_allows_what_the_search_needs():
     """The Parquet reader is fetched at run time, and blocking it crashes every query."""
     page = (ROOT / "docs" / "index.html").read_text(encoding="utf-8")
     policy = re.search(r"connect-src ([^;]+);", page).group(1)
-    for host in ("cdn.jsdelivr.net", "extensions.duckdb.org", "huggingface.co", "*.hf.co"):
+    hosts = ("cdn.jsdelivr.net", "extensions.duckdb.org", "huggingface.co", "*.hf.co")
+    for host in (*hosts, "www.ebi.ac.uk"):
         assert f"https://{host}" in policy

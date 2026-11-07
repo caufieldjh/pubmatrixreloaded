@@ -29,12 +29,18 @@ only the pieces each search needs. Issue 3 has the measurements and reasoning.
 | | Web page | Command line tool |
 |---|---|---|
 | Install | None | `uv` |
-| Data | Bulk copy of one release | Live PubTator3 service |
-| Terms | Genes, diseases, and chemicals, by name | Anything, including phrases |
+| Data | Bulk copy of one PubTator3 release; phrases from Europe PMC | Live PubTator3 service |
+| Terms | Genes, diseases, chemicals, and phrases of up to 100,000 documents | Anything |
 | 1000 terms by 8 | About 2 minutes | About 1.4 hours |
 | Output | `.json`, `.csv` | `.xlsx`, `.html`, `.csv`, `.json` |
 
-Counts differ between the two by a few percent. The tab must stay open during a search.
+Entity counts differ between the two by a few percent. Phrase cells mix sources: documents
+PubTator3 tagged with the entity, among those Europe PMC finds for the phrase. In one test of
+20 chemicals by 6 assays their median was within 1% of the API's, but single phrases ranged
+from 0.4 to 1.3 times, mostly because Europe PMC matches exact wording and PubTator3 also
+matches variants such as plurals. Phrases take minutes: a list of 26,000 documents took two
+to seven minutes in testing, depending on how busy Europe PMC was. The tab must stay open
+during a search.
 
 The dataset is built by `scripts/build_parquet.py` and pinned by `DATASET_REVISION` in
 `docs/core.js`, so a new data release needs a new upload and that value updated.
@@ -218,8 +224,8 @@ cached.
 | Saved searches | Shared server archive | Local cache and output files only |
 | Interface | Web form | Web form in your browser, and a command line |
 
-Not rebuilt yet: phrases on the web page, the server that runs jobs for you, and the
-shared archive of searches and term lists.
+Not rebuilt yet: the server that runs jobs for you, and the shared archive of searches
+and term lists.
 
 ## Development
 

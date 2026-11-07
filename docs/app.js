@@ -1,6 +1,6 @@
 import {
   CONCEPTS, DATASET, DATASET_REVISION, DATA_RELEASE, EXAMPLES, HEAT_STEPS, LARGE_RUN_REQUESTS,
-  MODIFIERS_FILE, RELATION_TYPES, TERMS_FILE, browserEstimate, buildCommand, cellLink, estimate,
+  MODIFIERS_FILE, PHRASE_DOCS_PER_SECOND, RELATION_TYPES, SECONDS_PER_TERM, TERMS_FILE, browserEstimate, buildCommand, cellLink, estimate,
   formatDuration, formatWait, heatStep, intersectionSize, linkQuery, parseTerms, relationKey,
   remainingSeconds, resultProblem, splitParts, termsUnfitForRelations, termsWithStrayQuotes, toCsv, toGrid,
 } from './core.js';
@@ -114,8 +114,9 @@ function updateTimeEstimate(plan, ready) {
   }
   const { check, search } = browserEstimate(plan.terms.length, plan.modifiers.length, plan.options.relation);
   $('time-estimate').textContent = `Expect ${formatWait(check)} to check your terms, then ${formatWait(search)} `
-    + 'to search. This depends on your connection, and the page shows the time left '
-    + 'as it goes.';
+    + 'to search, plus about a minute for every 3,000 documents of phrases. Checking shows how many documents '
+    + 'each phrase has and gives a full estimate. All of this depends on your connection and on how busy Europe PMC '
+    + 'is, and the page shows the time left as it goes.';
 }
 
 function resetCheck() {
@@ -138,14 +139,22 @@ function setBusy(busy) {
 
 function describeTerm(term) {
   if (term.problem) return { read: term.unchecked ? 'Could not check' : 'Not found', note: term.problem };
-  const read = term.parts.map((part) => `${part.type} ${part.concept}`).join(' or ');
+  const read = term.parts.map((part) => (part.phrase === undefined ? `${part.type} ${part.concept}` : 'phrase')).join(' or ');
   const others = term.parts.flatMap((part) => part.alternatives.map(
     (other) => `${other.type} ${other.concept} (${number(other.mentions)})`,
   ));
-  return { read, note: others.length ? `Can also mean: ${others.slice(0, 3).join(', ')}` : '' };
+  const notes = term.parts.filter((part) => part.phrase !== undefined).map((part) => (part.hits === 0
+    ? `"${part.phrase}": no documents at Europe PMC; check the spelling`
+    : `"${part.phrase}": ${number(part.hits)} documents at Europe PMC`));
+  if (others.length) notes.push(`Can also mean: ${others.slice(0, 3).join(', ')}`);
+  if (termKind(term) === 'entity and phrase') {
+    notes.unshift('Mixes an entity with a phrase. If all of it is wording, set "Look up as" to phrases only');
+  }
+  return { read, note: notes.join('. ') };
 }
 
 function conceptLink(part) {
+  if (part.phrase !== undefined) return 'phrase';
   const link = element('a', `${part.type} ${part.concept}`);
   link.href = part.type === 'gene'
     ? `https://www.ncbi.nlm.nih.gov/gene/${part.concept}`
@@ -223,29 +232,53 @@ function finishCheck(all, rows, cols, plan) {
       + 'select Check terms to try again.';
   }
   const usable = (list) => list.filter((term) => !term.problem).length;
-  const { search } = browserEstimate(usable(rows), usable(cols), plan.options.relation);
+  const phrases = phrasesIn(rows, cols);
+  const documents = phrases.reduce((total, { hits }) => total + hits, 0);
+  const { search } = browserEstimate(usable(rows), usable(cols), plan.options.relation, documents);
   const possible = usable(rows) > 0 && usable(cols) > 0;
+  const slowly = documents > 0
+    ? ` Most of that is fetching ${number(documents)} documents for ${number(phrases.length)} phrases from Europe PMC, `
+      + 'which is often busy and may take longer.'
+    : '';
   $('run-estimate').textContent = possible
-    ? `This search should take ${formatWait(search)}.`
+    ? `This search should take ${formatWait(search)}.${slowly}`
     : 'Nothing can be searched yet: each list needs at least one term that was found.';
   $('start').disabled = !possible;
   $('checked').hidden = false;
 }
 
-function reportProgress(done, total, startedAt) {
+function phrasesIn(rows, cols) {
+  const seen = new Map();
+  for (const term of [...rows, ...cols]) {
+    for (const part of term.parts) {
+      if (part.phrase !== undefined) seen.set(part.phrase, { phrase: part.phrase, hits: part.hits });
+    }
+  }
+  return [...seen.values()];
+}
+
+function reportProgress(stage, done, total, startedAt) {
   const elapsed = (performance.now() - startedAt) / 1000;
   const left = remainingSeconds(done, total, elapsed);
-  $('progress').value = done / total;
-  $('run-status').textContent = `${number(done)} of ${number(total)} done. `
+  const percent = Math.min(100, Math.round((100 * done) / total));
+  $('progress').value = Math.min(1, done / total);
+  $('run-status').textContent = `${percent}% done. ${stage} `
     + (left === null ? 'Working out the time left.' : `Time left: ${formatWait(left)}.`);
-  document.title = `${Math.round((100 * done) / total)}% PubMatrix Reloaded`;
+  document.title = `${percent}% PubMatrix Reloaded`;
+}
+
+function termKind(term) {
+  if (term.problem) return 'not found';
+  const phrases = term.parts.filter((part) => part.phrase !== undefined).length;
+  if (phrases === 0) return 'entity';
+  return phrases === term.parts.length ? 'phrase' : 'entity and phrase';
 }
 
 function termRecord(term, type, total) {
   return {
     input: term.raw,
-    kind: term.problem ? 'not found' : 'entity',
-    query: term.parts.map((part) => part.concept).join(' OR '),
+    kind: termKind(term),
+    query: term.parts.map((part) => part.concept ?? `"${part.phrase}"`).join(' OR '),
     name: null,
     biotype: term.parts[0]?.type ?? null,
     suggestion: null,
@@ -280,7 +313,8 @@ function buildResult(search) {
     run: {
       tool: 'PubMatrix Reloaded web page',
       command: null,
-      source: `PubTator3 bulk annotations, release ${DATA_RELEASE}, from ${DATASET} at ${DATASET_REVISION}`,
+      source: `PubTator3 bulk annotations, release ${DATA_RELEASE}, from ${DATASET} at ${DATASET_REVISION}`
+        + (phrasesIn(rows, cols).length ? `; phrases from Europe PMC, fetched ${startedAt.slice(0, 10)}` : ''),
       mode: relation ? 'relation' : 'co-occurrence',
       relation: relation || null,
       started: startedAt,
@@ -297,11 +331,26 @@ function buildResult(search) {
 
 async function searchOverlaps(search, tick) {
   const { rows, cols, totals, counts, errors } = search;
+  // Work is measured in expected seconds, so the bar and the time left stay honest
+  // when slow phrases and quick entities are mixed.
+  const phrases = phrasesIn(rows, cols);
+  const phraseSeconds = phrases.reduce((total, { hits }) => total + hits, 0) / PHRASE_DOCS_PER_SECOND;
+  const termCount = rows.concat(cols).filter((term) => !term.problem).length;
+  const workTotal = phraseSeconds + termCount * SECONDS_PER_TERM;
+  let phraseDone = 0;
+  const phraseFailures = await engine.fetchPhrases(phrases, (documents) => {
+    phraseDone += documents / PHRASE_DOCS_PER_SECOND;
+    tick('Fetching phrases from Europe PMC.', Math.min(phraseDone, phraseSeconds), workTotal);
+  });
+  if (engine.stopped) return;
+  search.phraseFailures = phraseFailures;
   const usableCols = cols.map((col, j) => ({ col, j })).filter((item) => !item.col.problem);
   const usableRows = rows.map((row, i) => ({ row, i })).filter((item) => !item.row.problem);
-  const total = usableCols.length + usableRows.length;
   let done = 0;
-  const step = () => { done += 1; tick(done, total); };
+  const step = () => {
+    done += 1;
+    tick('Reading entities.', phraseSeconds + done * SECONDS_PER_TERM, workTotal);
+  };
   // Column lists stay in memory. Row lists are counted and dropped as they arrive.
   const lists = await engine.map(usableCols, (slot, { col }) => engine.documentsOf(slot, col), {
     keyOf: ({ col }) => engine.shardKey(col),
@@ -341,21 +390,22 @@ async function searchRelations(search, tick) {
   const pairs = [];
   rows.forEach((row, i) => cols.forEach((col, j) => {
     if (row.problem || col.problem) return;
-    if (row.parts.length > 1 || col.parts.length > 1) {
-      (errors[i] ??= {})[j] = 'Relation counts need one entity per side, not a list of alternatives.';
+    const single = (term) => term.parts.length === 1 && term.parts[0].phrase === undefined;
+    if (!single(row) || !single(col)) {
+      (errors[i] ??= {})[j] = 'Relation counts need one entity per side, not a phrase or a list of alternatives.';
       return;
     }
     pairs.push({ row, col, i, j });
   }));
   const keys = [...new Set(pairs.flatMap(({ row, col }) => [relationKey(row.parts[0]), relationKey(col.parts[0])]))];
-  tick(0, 1);
+  tick('Reading relations.', 0, 1);
   $('run-status').textContent = 'Reading the relations file, about 50 MB. The bar moves when it is done.';
   const found = await engine.relationCounts(keys, relation);
   for (const { row, col, i, j } of pairs) {
     const [a, b] = [relationKey(row.parts[0]), relationKey(col.parts[0])].sort();
     (counts[i] ??= {})[j] = found.get(`${a}\n${b}`) ?? 0;
   }
-  tick(1, 1);
+  tick('Reading relations.', 1, 1);
 }
 
 function warnBeforeLeaving(event) {
@@ -381,7 +431,7 @@ async function startSearch() {
   $('run-status').textContent = 'Starting.';
   window.addEventListener('beforeunload', warnBeforeLeaving);
   const began = performance.now();
-  const tick = (done, total) => reportProgress(done, total, began);
+  const tick = (stage, done, total) => reportProgress(stage, done, total, began);
   const work = () => (search.relation ? searchRelations(search, tick) : searchOverlaps(search, tick));
   try {
     // Holding a lock asks the browser not to freeze this tab while it is in the background.
@@ -643,7 +693,7 @@ function watchDrops() {
 }
 
 function start() {
-  const types = [['', 'Any type'], ...CONCEPTS.map((concept) => [concept, concept])];
+  const types = [['', 'Any type'], ...CONCEPTS.map((concept) => [concept, concept]), ['phrase', 'phrases only']];
   // Options are added before the first update, since it reads them.
   addOptions($('terms-type'), types);
   addOptions($('modifiers-type'), types);
