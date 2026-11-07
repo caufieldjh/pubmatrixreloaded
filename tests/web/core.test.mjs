@@ -2,8 +2,10 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
 import {
-  buildCommand, cellLink, estimate, formatDuration, heatStep, parseTerms, resultProblem,
-  shellQuote, termsUnfitForRelations, termsWithStrayQuotes, toGrid,
+  browserEstimate, buildCommand, cellLink, classifyPart, estimate, formatDuration, heatStep,
+  intersectionSize, linkQuery, normalizeName, parseTerms, relationKey, remainingSeconds,
+  resultProblem, shardIndex, shellQuote, sortedUnion, spellGreek, splitParts, termsUnfitForRelations,
+  termsWithStrayQuotes, toCsv, toGrid,
 } from '../../docs/core.js';
 
 test('parseTerms drops blanks, comments, and repeats', () => {
@@ -96,4 +98,89 @@ test('toGrid reads cells row by row and ignores blanks and zeros for the range',
   assert.deepEqual(grid.colLabels, ['c']);
   assert.equal(grid.cell(1, 0).error, 'why');
   assert.deepEqual([grid.low, grid.high], [3, 3]);
+});
+
+test('normalizeName lowers ASCII only, as the names table was built', () => {
+  assert.equal(normalizeName('  BRCA1 '), 'brca1');
+  assert.equal(normalizeName('17Β-Estradiol'), '17Β-estradiol');
+});
+
+test('shardIndex finds the last shard starting at or before a value', () => {
+  const starts = ['a', 'f', 'm'];
+  assert.equal(shardIndex(starts, 'a'), 0);
+  assert.equal(shardIndex(starts, 'e'), 0);
+  assert.equal(shardIndex(starts, 'f'), 1);
+  assert.equal(shardIndex(starts, 'z'), 2);
+  assert.equal(shardIndex(starts, '0'), 0);
+});
+
+test('classifyPart reads names and IDs', () => {
+  assert.deepEqual(classifyPart('Tamoxifen', 'chemical'), { name: 'tamoxifen', type: 'chemical' });
+  assert.deepEqual(classifyPart('672', 'gene'), { id: '672', type: 'gene' });
+  assert.deepEqual(classifyPart('MESH:D001943', 'disease'), { id: 'MESH:D001943', type: 'disease' });
+  assert.deepEqual(classifyPart('672', ''), { name: '672', type: '' });
+});
+
+test('classifyPart explains what cannot be searched here', () => {
+  assert.match(classifyPart('"comet assay"', '').problem, /phrases/);
+  assert.match(classifyPart('@GENE_BRCA1', '').problem, /type a name/);
+  assert.match(classifyPart('MESH:D001943', '').problem, /Look up as/);
+  assert.match(classifyPart('V600E', 'variant').problem, /command line/);
+});
+
+test('splitParts reads alternatives', () => {
+  assert.deepEqual(splitParts('a | b  |  c'), ['a', 'b', 'c']);
+  assert.deepEqual(splitParts('a|b'), ['a|b']);
+});
+
+test('sortedUnion merges and removes repeats', () => {
+  const merged = sortedUnion([Int32Array.of(1, 3, 5), Int32Array.of(3, 4)]);
+  assert.deepEqual([...merged], [1, 3, 4, 5]);
+  const one = Int32Array.of(2, 9);
+  assert.equal(sortedUnion([one]), one);
+});
+
+test('intersectionSize counts shared documents', () => {
+  assert.equal(intersectionSize(Int32Array.of(1, 3, 5, 7), Int32Array.of(3, 4, 7, 9)), 2);
+  assert.equal(intersectionSize(Int32Array.of(), Int32Array.of(1)), 0);
+});
+
+test('relationKey matches the bulk file format', () => {
+  assert.equal(relationKey({ type: 'gene', concept: '672' }), 'Gene|672');
+  assert.equal(relationKey({ type: 'disease', concept: 'MESH:D1' }), 'Disease|MESH:D1');
+});
+
+test('linkQuery builds words for a PubTator3 search', () => {
+  assert.equal(linkQuery('tamoxifen'), '"tamoxifen"');
+  assert.equal(linkQuery('a | b'), '("a" OR "b")');
+});
+
+test('browserEstimate grows with terms, and relations read one file', () => {
+  const small = browserEstimate(10, 5, '');
+  const large = browserEstimate(1000, 8, '');
+  assert.ok(large.search > small.search);
+  assert.equal(browserEstimate(10, 5, 'treat').search, browserEstimate(1000, 8, 'treat').search);
+});
+
+test('remainingSeconds uses the pace so far', () => {
+  assert.equal(remainingSeconds(0, 10, 5), null);
+  assert.equal(remainingSeconds(5, 10, 20), 20);
+  assert.equal(remainingSeconds(10, 10, 20), 0);
+});
+
+test('toCsv leaves unknown cells blank and quotes as needed', () => {
+  const csv = toCsv({
+    rows: [{ input: 'a' }],
+    columns: [{ input: 'b' }, { input: 'c' }],
+    cells: [
+      { row: 'x, y', column: 'b', count: 3, query: 'q' },
+      { row: 'x, y', column: 'c', count: null, query: 'q' },
+    ],
+  });
+  assert.equal(csv, 'term,b,c\n"x, y",3,\n');
+});
+
+test('spellGreek spells letters out', () => {
+  assert.equal(spellGreek('17β-estradiol'), '17beta-estradiol');
+  assert.equal(spellGreek('tamoxifen'), 'tamoxifen');
 });

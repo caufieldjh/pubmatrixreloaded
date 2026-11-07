@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'wasm-unsafe-eval' blob:; worker-src blob:; style-src 'self'; connect-src 'self' https://cdn.jsdelivr.net https://extensions.duckdb.org https://huggingface.co https://*.huggingface.co https://*.hf.co; base-uri 'none'; form-action 'none'">
 <title>PubMatrix Reloaded</title>
-<meta name="description" content="Plan a pairwise literature search over PubTator3 and view its results.">
+<meta name="description" content="Count the literature for every pair of terms from two lists, in your browser, using PubTator3 data.">
 <link rel="stylesheet" href="style.css">
 <script type="module" src="app.js"></script>
 </head>
@@ -16,40 +16,10 @@
   <p>Count the literature for every pair of terms from two lists, using
     <a href="https://www.ncbi.nlm.nih.gov/research/pubtator3/">PubTator3</a>.
     A rebuild of <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC317283/">PubMatrix</a>.</p>
-  <p class="callout">This page does not run searches. PubTator3 does not accept requests from web pages,
-    so searches run on your computer: <a href="#plan-title">plan one here</a>, run the command, then bring the results back to view.</p>
 </header>
 
-<section aria-labelledby="view-title">
-  <h2 id="view-title">See it working</h2>
-  <p>Real searches, run on 2026-11-06. Select one to explore it.</p>
-  <div id="examples" class="cards"></div>
-  <div id="drop" class="drop">
-    <label for="file">Or open your own: choose a <code>.json</code> results file, or drop one here.</label>
-    <input id="file" type="file" accept=".json,application/json">
-  </div>
-  <p class="fine">The file stays in your browser. Nothing is uploaded.</p>
-  <p id="load-error" class="error" role="alert" hidden></p>
-
-  <div id="results" hidden>
-    <h3 id="summary" tabindex="-1"></h3>
-    <p id="reading" class="callout" hidden></p>
-    <p id="partial" class="callout" hidden></p>
-    <label class="check"><input id="hide-empty" type="checkbox"> Hide terms with no hits</label>
-    <div class="scroll"><table id="matrix"></table></div>
-    <div class="legend" id="legend"></div>
-    <p class="fine">Select a count to open those documents in PubTator3. Select a heading to sort.
-      — means no value is known; the reason is in its tooltip. Counts are PubTator3 documents
-      (PubMed abstracts and PMC full text), not PubMed hits.</p>
-    <h3>How each term was read</h3>
-    <div class="scroll"><table id="terms-read" class="plain"></table></div>
-    <h3>How this was made</h3>
-    <div class="scroll"><table id="run-info" class="plain"></table></div>
-  </div>
-</section>
-
-<section aria-labelledby="plan-title">
-  <h2 id="plan-title">Plan your own search</h2>
+<section aria-labelledby="search-title">
+  <h2 id="search-title">Search</h2>
   <form id="plan">
     <div class="lists">
       <div>
@@ -60,7 +30,7 @@
       </div>
       <div>
         <label for="modifiers">Modifiers <span>(columns), one per line</span></label>
-        <textarea id="modifiers" rows="9" spellcheck="false" placeholder="Ames test | Ames assay&#10;comet assay&#10;micronucleus assay"></textarea>
+        <textarea id="modifiers" rows="9" spellcheck="false" placeholder="breast cancer&#10;melanoma&#10;asthma"></textarea>
         <label class="inline" for="modifiers-type">Look up as</label>
         <select id="modifiers-type"></select>
       </div>
@@ -68,25 +38,84 @@
     <details>
       <summary>How terms are read</summary>
       <table class="plain">
-        <tr><td><code>@GENE_BRCA1</code></td><td>That entity ID, as written</td></tr>
-        <tr><td><code>"DNA repair"</code></td><td>That exact phrase</td></tr>
-        <tr><td><code>p53</code></td><td>The entity with that exact name or synonym, otherwise a phrase</td></tr>
-        <tr><td><code>Ames test | Ames assay</code></td><td>Documents with either</td></tr>
+        <tr><td><code>tamoxifen</code></td><td>The entity most often written that way in the literature</td></tr>
+        <tr><td><code>PFOA | perfluorooctanoic acid</code></td><td>Documents with either</td></tr>
+        <tr><td><code>672</code> as a gene, <code>MESH:D001943</code> as a disease or chemical</td><td>That exact ID</td></tr>
       </table>
-      <p>Set "Look up as" for a list of one kind. A chemical list needs it: <code>PFOA</code> alone is also the gene <i>pfoA</i>.</p>
+      <p>Set "Look up as" for a list of one kind. A chemical list needs it: <code>PFOA</code> is also the gene <i>pfoA</i>.</p>
     </details>
     <div class="options">
       <div>
         <label for="relation">Count</label>
         <select id="relation"></select>
       </div>
+    </div>
+  </form>
+
+  <div class="expect">
+    <h3>Before you start</h3>
+    <dl>
+      <dt>Where the data comes from</dt>
+      <dd>A copy of PubTator3's bulk annotations, release <span id="data-release"></span>, kept on
+        <a id="dataset-link" href="#">Hugging Face</a>. It is not the live PubTator3 service and it is not updated
+        automatically, so counts differ from PubTator3's own by a few percent, and from PubMed's by much more.
+        PubTator3 covers PubMed abstracts and PMC full text.</dd>
+      <dt>What can be searched</dt>
+      <dd>Genes, diseases, and chemicals, by name. Assays, methods, and other phrases cannot be searched here:
+        they have no bulk data. The <a href="#command-line">command line tool</a> can search them.</dd>
+      <dt>Where it runs</dt>
+      <dd>In this browser tab, on your computer. There is no server of ours and nothing is kept. Your browser
+        fetches its search engine from jsDelivr and duckdb.org and the data from Hugging Face. Hugging Face can see
+        which pieces of the data are read, which reveals roughly what you searched.</dd>
+      <dt id="time-title">How long it takes</dt>
+      <dd id="time-estimate" aria-live="polite"></dd>
+    </dl>
+  </div>
+
+  <div class="buttons">
+    <button type="button" id="check" class="primary">Check terms</button>
+  </div>
+  <p id="check-status" class="status" role="status"></p>
+
+  <div id="checked" hidden>
+    <h3>How your terms were read</h3>
+    <p id="check-summary"></p>
+    <p class="fine">These readings come from text mining and can be wrong: <code>apoptosis</code> reads as a disease, for
+      example, because that is how it was tagged. Follow a link if you are unsure of an entity.</p>
+    <div class="scroll tall"><table id="check-table" class="plain"></table></div>
+    <div class="callout">
+      <p><b id="run-estimate"></b></p>
+      <p><b>Keep this tab open until it finishes.</b> Closing or reloading it loses the search, because nothing is
+        saved until you download the results. You can use other tabs and windows meanwhile, though browsers may
+        slow a tab you are not looking at. Your computer must stay awake and online.</p>
+    </div>
+    <div class="buttons">
+      <button type="button" id="start" class="primary">Start search</button>
+    </div>
+  </div>
+
+  <div id="running" hidden>
+    <h3 id="run-title">Searching</h3>
+    <progress id="progress" max="1" value="0"></progress>
+    <p id="run-status" class="status" role="status"></p>
+    <p><b>Keep this tab open.</b> Stopping keeps what is finished so far.</p>
+    <div class="buttons">
+      <button type="button" id="stop">Stop and keep results so far</button>
+    </div>
+  </div>
+  <p id="search-error" class="error" role="alert" hidden></p>
+
+  <details id="command-line">
+    <summary>Or run the command line tool, for phrases, the live PubTator3 service, and Excel files</summary>
+    <p>The tool searches PubTator3 itself, so it can use any phrase and has the newest data. It is limited to about
+      two requests a second, so large searches take hours. It uses the same lists as above.</p>
+    <div class="options">
       <div>
         <label for="output">Results name</label>
         <input id="output" type="text" value="pubmatrix" spellcheck="false">
       </div>
       <label class="check"><input id="quiet" type="checkbox"> Wait for quiet hours (weekends, 9 PM to 5 AM US Eastern)</label>
     </div>
-  </form>
   <p id="estimate" aria-live="polite"></p>
   <ul id="warnings" class="warnings" aria-live="polite"></ul>
   <ol class="steps">
@@ -104,8 +133,46 @@
         <button type="button" id="copy">Copy</button>
       </div>
     </li>
-    <li><span>Open the <code>.xlsx</code> it writes, or open the <code>.json</code> <a href="#view-title">at the top of this page</a>.</span></li>
+    <li><span>Open the <code>.xlsx</code> it writes, or open the <code>.json</code> <a href="#view-title">on this page</a>.</span></li>
   </ol>
+  </details>
+</section>
+
+<section aria-labelledby="view-title">
+  <h2 id="view-title">Examples and saved results</h2>
+  <p>Real searches, run on 2026-11-06. Select one to explore it.</p>
+  <div id="examples" class="cards"></div>
+  <div id="drop" class="drop">
+    <label for="file">Or open your own: choose a <code>.json</code> results file, or drop one here.</label>
+    <input id="file" type="file" accept=".json,application/json">
+  </div>
+  <p class="fine">The file stays in your browser. Nothing is uploaded.</p>
+  <p id="load-error" class="error" role="alert" hidden></p>
+
+</section>
+
+<section id="results-section" aria-labelledby="results-title">
+  <div id="results" hidden>
+    <h2 id="results-title">Results</h2>
+    <h3 id="summary" tabindex="-1"></h3>
+    <p id="reading" class="callout" hidden></p>
+    <p id="partial" class="callout" hidden></p>
+    <div class="buttons">
+      <button type="button" id="save-json">Download results (.json)</button>
+      <button type="button" id="save-csv">Download table (.csv)</button>
+    </div>
+    <label class="check"><input id="hide-empty" type="checkbox"> Hide terms with no hits</label>
+    <div class="scroll"><table id="matrix"></table></div>
+    <div class="legend" id="legend"></div>
+    <p class="fine">Select a count to open a PubTator3 search for that pair. Select a heading to sort.
+      — means no value is known; the reason is in its tooltip. Counts are PubTator3 documents
+      (PubMed abstracts and PMC full text), not PubMed hits. For searches run on this page, the link searches
+      PubTator3 for the words you typed, so the count there may differ.</p>
+    <h3>How each term was read</h3>
+    <div class="scroll"><table id="terms-read" class="plain"></table></div>
+    <h3>How this was made</h3>
+    <div class="scroll"><table id="run-info" class="plain"></table></div>
+  </div>
 </section>
 
 <footer>

@@ -1,7 +1,8 @@
 import {
-  CONCEPTS, EXAMPLES, HEAT_STEPS, LARGE_RUN_REQUESTS, MODIFIERS_FILE, RELATION_TYPES, TERMS_FILE,
-  buildCommand, cellLink, estimate, formatDuration, heatStep, parseTerms, resultProblem,
-  termsUnfitForRelations, termsWithStrayQuotes, toGrid,
+  CONCEPTS, DATASET, DATASET_REVISION, DATA_RELEASE, EXAMPLES, HEAT_STEPS, LARGE_RUN_REQUESTS,
+  MODIFIERS_FILE, RELATION_TYPES, TERMS_FILE, browserEstimate, buildCommand, cellLink, estimate,
+  formatDuration, formatWait, heatStep, intersectionSize, linkQuery, parseTerms, relationKey,
+  remainingSeconds, resultProblem, splitParts, termsUnfitForRelations, termsWithStrayQuotes, toCsv, toGrid,
 } from './core.js';
 
 const $ = (id) => document.getElementById(id);
@@ -71,12 +72,14 @@ function updatePlan() {
     : 'Enter at least one term and one modifier.';
   $('warnings').replaceChildren(...(ready ? planWarnings(plan, requests) : []).map((text) => element('li', text)));
   $('command').textContent = buildCommand(plan.options);
+  updateTimeEstimate(plan, ready);
+  resetCheck();
   $('save-terms').disabled = plan.terms.length === 0;
   $('save-modifiers').disabled = plan.modifiers.length === 0;
 }
 
-function download(name, lines) {
-  const url = URL.createObjectURL(new Blob([`${lines.join('\n')}\n`], { type: 'text/plain' }));
+function download(name, text, type = 'text/plain') {
+  const url = URL.createObjectURL(new Blob([text], { type }));
   const link = element('a');
   link.href = url;
   link.download = name;
@@ -96,10 +99,327 @@ async function copyCommand() {
   setTimeout(() => { button.textContent = 'Copy'; }, 2000);
 }
 
+// Searching in this browser.
+
+let engine = null;
+let checked = null;
+let shown = null;
+let running = false;
+
+function updateTimeEstimate(plan, ready) {
+  if (!ready) {
+    $('time-estimate').textContent = 'Enter your terms for an estimate. Expect a few seconds to start, then about a '
+      + 'tenth of a second per term, so 1000 terms take a few minutes.';
+    return;
+  }
+  const { check, search } = browserEstimate(plan.terms.length, plan.modifiers.length, plan.options.relation);
+  $('time-estimate').textContent = `Expect ${formatWait(check)} to check your terms, then ${formatWait(search)} `
+    + 'to search. This depends on your connection, and the page shows the time left '
+    + 'as it goes.';
+}
+
+function resetCheck() {
+  if (running) return;
+  checked = null;
+  $('checked').hidden = true;
+  $('check-status').textContent = '';
+  $('search-error').hidden = true;
+}
+
+function showSearchError(message) {
+  $('search-error').textContent = message;
+  $('search-error').hidden = false;
+}
+
+function setBusy(busy) {
+  $('check').disabled = busy;
+  for (const id of ['terms', 'modifiers', 'terms-type', 'modifiers-type', 'relation']) $(id).disabled = busy;
+}
+
+function describeTerm(term) {
+  if (term.problem) return { read: term.unchecked ? 'Could not check' : 'Not found', note: term.problem };
+  const read = term.parts.map((part) => `${part.type} ${part.concept}`).join(' or ');
+  const others = term.parts.flatMap((part) => part.alternatives.map(
+    (other) => `${other.type} ${other.concept} (${number(other.mentions)})`,
+  ));
+  return { read, note: others.length ? `Can also mean: ${others.slice(0, 3).join(', ')}` : '' };
+}
+
+function conceptLink(part) {
+  const link = element('a', `${part.type} ${part.concept}`);
+  link.href = part.type === 'gene'
+    ? `https://www.ncbi.nlm.nih.gov/gene/${part.concept}`
+    : `https://meshb.nlm.nih.gov/record/ui?ui=${part.concept.replace('MESH:', '')}`;
+  link.target = '_blank';
+  link.rel = 'noopener';
+  return link;
+}
+
+function renderCheck(terms) {
+  const head = element('tr');
+  for (const title of ['Term', 'Read as', 'Note']) head.append(element('th', title));
+  const rows = terms.map((term) => {
+    const { read: label, note } = describeTerm(term);
+    const row = element('tr');
+    const read = element('td', term.problem ? label : null, term.problem ? 'notfound' : null);
+    term.parts.forEach((part, i) => {
+      if (i) read.append(' or ');
+      read.append(conceptLink(part));
+    });
+    row.append(element('td', term.raw), read, element('td', note));
+    return row;
+  });
+  rows.sort((a, b) => b.children[1].classList.contains('notfound') - a.children[1].classList.contains('notfound'));
+  $('check-table').replaceChildren(head, ...rows);
+}
+
+async function checkTerms() {
+  const plan = currentPlan();
+  if (plan.terms.length === 0 || plan.modifiers.length === 0) {
+    showSearchError('Enter at least one term and one modifier.');
+    return;
+  }
+  resetCheck();
+  setBusy(true);
+  try {
+    if (!engine) {
+      $('check-status').textContent = 'Loading the search engine, about 37 MB, once per visit.';
+      const { Engine } = await import('./search.js');
+      engine = await Engine.start();
+    }
+    engine.stopped = false;
+    const items = [
+      ...plan.terms.map((raw) => ({ raw, type: plan.options.termsType })),
+      ...plan.modifiers.map((raw) => ({ raw, type: plan.options.modifiersType })),
+    ];
+    $('check-status').textContent = 'Checking terms.';
+    const fixed = await engine.resolveAll(items, (done, total) => {
+      $('check-status').textContent = `Checking terms: part ${done} of ${total}.`;
+    });
+    const rows = fixed.slice(0, plan.terms.length);
+    const cols = fixed.slice(plan.terms.length);
+    checked = { rows, cols, relation: plan.options.relation };
+    finishCheck(fixed, rows, cols, plan);
+  } catch (error) {
+    showSearchError(`The search engine could not start: ${error.message ?? error}. Check your connection and try again.`);
+    engine = null;
+    $('check-status').textContent = '';
+  } finally {
+    setBusy(false);
+  }
+}
+
+function finishCheck(all, rows, cols, plan) {
+  renderCheck(all);
+  const missing = all.filter((term) => term.problem).length;
+  const unchecked = all.filter((term) => term.unchecked).length;
+  $('check-status').textContent = '';
+  $('check-summary').textContent = missing
+    ? `${number(all.length - missing)} of ${number(all.length)} terms found. Terms not found will come back blank, `
+      + 'not zero. Check how each one reads below.'
+    : `All ${number(all.length)} terms found. Check that each one reads as you meant.`;
+  if (unchecked) {
+    $('check-summary').textContent += ` ${number(unchecked)} could not be checked because of a connection problem: `
+      + 'select Check terms to try again.';
+  }
+  const usable = (list) => list.filter((term) => !term.problem).length;
+  const { search } = browserEstimate(usable(rows), usable(cols), plan.options.relation);
+  const possible = usable(rows) > 0 && usable(cols) > 0;
+  $('run-estimate').textContent = possible
+    ? `This search should take ${formatWait(search)}.`
+    : 'Nothing can be searched yet: each list needs at least one term that was found.';
+  $('start').disabled = !possible;
+  $('checked').hidden = false;
+}
+
+function reportProgress(done, total, startedAt) {
+  const elapsed = (performance.now() - startedAt) / 1000;
+  const left = remainingSeconds(done, total, elapsed);
+  $('progress').value = done / total;
+  $('run-status').textContent = `${number(done)} of ${number(total)} done. `
+    + (left === null ? 'Working out the time left.' : `Time left: ${formatWait(left)}.`);
+  document.title = `${Math.round((100 * done) / total)}% PubMatrix Reloaded`;
+}
+
+function termRecord(term, type, total) {
+  return {
+    input: term.raw,
+    kind: term.problem ? 'not found' : 'entity',
+    query: term.parts.map((part) => part.concept).join(' OR '),
+    name: null,
+    biotype: term.parts[0]?.type ?? null,
+    suggestion: null,
+    total: total ?? null,
+    note: term.problem ?? describeTerm(term).note,
+  };
+}
+
+function buildResult(search) {
+  const { rows, cols, relation, totals, counts, errors, startedAt, stopped } = search;
+  const label = (term) => splitParts(term.raw)[0];
+  const cells = [];
+  rows.forEach((row, i) => cols.forEach((col, j) => {
+    const count = counts[i]?.[j] ?? null;
+    const blocked = row.problem || col.problem;
+    let error = null;
+    if (count === null) {
+      error = blocked ? 'A term in this pair was not found.' : errors[i]?.[j] ?? 'The search stopped before reaching this cell.';
+    }
+    cells.push({
+      row: label(row),
+      column: label(col),
+      count,
+      query: `${linkQuery(row.raw)} AND ${linkQuery(col.raw)}`,
+      retrieved: null,
+      error,
+      note: null,
+    });
+  }));
+  const blanks = cells.filter((cell) => cell.count === null).length;
+  return {
+    run: {
+      tool: 'PubMatrix Reloaded web page',
+      command: null,
+      source: `PubTator3 bulk annotations, release ${DATA_RELEASE}, from ${DATASET} at ${DATASET_REVISION}`,
+      mode: relation ? 'relation' : 'co-occurrence',
+      relation: relation || null,
+      started: startedAt,
+      finished: new Date().toISOString(),
+      status: stopped ? 'partial: stopped' : 'complete',
+      cells: cells.length,
+      cells_without_value: blanks,
+    },
+    rows: rows.map((term, i) => termRecord(term, 'row', totals.rows[i])),
+    columns: cols.map((term, j) => termRecord(term, 'column', totals.cols[j])),
+    cells,
+  };
+}
+
+async function searchOverlaps(search, tick) {
+  const { rows, cols, totals, counts, errors } = search;
+  const usableCols = cols.map((col, j) => ({ col, j })).filter((item) => !item.col.problem);
+  const usableRows = rows.map((row, i) => ({ row, i })).filter((item) => !item.row.problem);
+  const total = usableCols.length + usableRows.length;
+  let done = 0;
+  const step = () => { done += 1; tick(done, total); };
+  // Column lists stay in memory. Row lists are counted and dropped as they arrive.
+  const lists = await engine.map(usableCols, (slot, { col }) => engine.documentsOf(slot, col), {
+    keyOf: ({ col }) => engine.shardKey(col),
+    onDone: step,
+  });
+  const ready = [];
+  usableCols.forEach((item, k) => {
+    const list = lists[k];
+    if (list === undefined || list.failed) {
+      for (const { i } of usableRows) (errors[i] ??= {})[item.j] = list?.failed ?? 'The search stopped first.';
+      return;
+    }
+    totals.cols[item.j] = list.length;
+    ready.push({ j: item.j, list });
+  });
+  // Rows cannot fill any cell without a column, so do not spend the time reading them.
+  if (ready.length === 0) {
+    if (!engine.stopped) throw new Error(lists.find((list) => list?.failed)?.failed ?? 'no modifier could be read');
+    return;
+  }
+  const finished = await engine.map(usableRows, async (slot, { row, i }) => {
+    const list = await engine.documentsOf(slot, row);
+    totals.rows[i] = list.length;
+    counts[i] ??= {};
+    for (const { j, list: other } of ready) counts[i][j] = intersectionSize(list, other);
+    return true;
+  }, { keyOf: ({ row }) => engine.shardKey(row), onDone: step });
+  usableRows.forEach(({ i }, k) => {
+    if (!finished[k]?.failed) return;
+    errors[i] ??= {};
+    for (const { j } of ready) errors[i][j] = finished[k].failed;
+  });
+}
+
+async function searchRelations(search, tick) {
+  const { rows, cols, relation, counts, errors } = search;
+  const pairs = [];
+  rows.forEach((row, i) => cols.forEach((col, j) => {
+    if (row.problem || col.problem) return;
+    if (row.parts.length > 1 || col.parts.length > 1) {
+      (errors[i] ??= {})[j] = 'Relation counts need one entity per side, not a list of alternatives.';
+      return;
+    }
+    pairs.push({ row, col, i, j });
+  }));
+  const keys = [...new Set(pairs.flatMap(({ row, col }) => [relationKey(row.parts[0]), relationKey(col.parts[0])]))];
+  tick(0, 1);
+  $('run-status').textContent = 'Reading the relations file, about 50 MB. The bar moves when it is done.';
+  const found = await engine.relationCounts(keys, relation);
+  for (const { row, col, i, j } of pairs) {
+    const [a, b] = [relationKey(row.parts[0]), relationKey(col.parts[0])].sort();
+    (counts[i] ??= {})[j] = found.get(`${a}\n${b}`) ?? 0;
+  }
+  tick(1, 1);
+}
+
+function warnBeforeLeaving(event) {
+  event.preventDefault();
+  event.returnValue = '';
+}
+
+async function startSearch() {
+  const search = {
+    ...checked,
+    totals: { rows: {}, cols: {} },
+    counts: {},
+    errors: {},
+    startedAt: new Date().toISOString(),
+    stopped: false,
+  };
+  running = true;
+  setBusy(true);
+  engine.stopped = false;
+  $('checked').hidden = true;
+  $('running').hidden = false;
+  $('stop').disabled = false;
+  $('run-status').textContent = 'Starting.';
+  window.addEventListener('beforeunload', warnBeforeLeaving);
+  const began = performance.now();
+  const tick = (done, total) => reportProgress(done, total, began);
+  const work = () => (search.relation ? searchRelations(search, tick) : searchOverlaps(search, tick));
+  try {
+    // Holding a lock asks the browser not to freeze this tab while it is in the background.
+    if (navigator.locks) await navigator.locks.request('pubmatrix-search', work);
+    else await work();
+  } catch (error) {
+    showSearchError(`The search failed: ${error.message ?? error}. Results so far are shown below.`);
+    engine.stop();
+  }
+  search.stopped = engine.stopped;
+  window.removeEventListener('beforeunload', warnBeforeLeaving);
+  running = false;
+  setBusy(false);
+  $('running').hidden = true;
+  document.title = 'PubMatrix Reloaded';
+  const result = buildResult(search);
+  const unread = Object.values(search.errors).flatMap((row) => Object.values(row))
+    .filter((reason) => !reason.startsWith('Relation counts')).length;
+  if (unread > 0) {
+    showSearchError(`${number(unread)} cells could not be read, most likely because of a connection problem. `
+      + 'They are blank in the results, not zero. Running the search again may fill them.');
+  }
+  markExample(null);
+  showResults(result, 'Your search');
+  $('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function stopSearch() {
+  engine.stop();
+  $('stop').disabled = true;
+  $('run-status').textContent = 'Stopping after the current terms finish.';
+}
+
 // Viewing. Everything from a results file goes in as text, and links are rebuilt.
 
 function headerContent(button, label, total) {
-  button.append(label, element('small', total === null || total === undefined ? '? docs' : `${number(total)} docs`));
+  button.append(label);
+  if (total !== null && total !== undefined) button.append(element('small', `${number(total)} docs`));
 }
 
 function renderCell(grid, i, j) {
@@ -248,8 +568,9 @@ function showResults(data, name, reading = '') {
   $('reading').hidden = !reading;
   const partial = String(data.run?.status ?? '').startsWith('partial');
   $('partial').hidden = !partial && blanks === 0;
+  const again = data.run?.command ? ' Run the same command again to continue.' : '';
   $('partial').textContent = partial
-    ? `Partial result: ${number(blanks)} of ${number(data.cells.length)} cells have no value. Run the same command again to continue.`
+    ? `Partial result: ${number(blanks)} of ${number(data.cells.length)} cells have no value.${again}`
     : `${number(blanks)} of ${number(data.cells.length)} cells have no value. A blank is not a zero; hover for the reason.`;
   renderMatrix(data, grid);
   renderLegend(grid);
@@ -257,6 +578,7 @@ function showResults(data, name, reading = '') {
   renderRunInfo(data.run);
   $('hide-empty').checked = false;
   $('results').hidden = false;
+  shown = data;
 }
 
 function showLoadError(message) {
@@ -322,6 +644,7 @@ function watchDrops() {
 
 function start() {
   const types = [['', 'Any type'], ...CONCEPTS.map((concept) => [concept, concept])];
+  // Options are added before the first update, since it reads them.
   addOptions($('terms-type'), types);
   addOptions($('modifiers-type'), types);
   addOptions($('relation'), [
@@ -329,9 +652,20 @@ function start() {
     ...RELATION_TYPES.map((type) => [type, type === 'ANY' ? 'Any extracted relation' : `Relation: ${type}`]),
   ]);
   $('plan').addEventListener('input', updatePlan);
+  $('command-line').addEventListener('input', updatePlan);
   $('plan').addEventListener('submit', (event) => event.preventDefault());
-  $('save-terms').addEventListener('click', () => download(TERMS_FILE, currentPlan().terms));
-  $('save-modifiers').addEventListener('click', () => download(MODIFIERS_FILE, currentPlan().modifiers));
+  const saveList = (name, terms) => download(name, `${terms.join('\n')}\n`);
+  $('save-terms').addEventListener('click', () => saveList(TERMS_FILE, currentPlan().terms));
+  $('save-modifiers').addEventListener('click', () => saveList(MODIFIERS_FILE, currentPlan().modifiers));
+  $('check').addEventListener('click', checkTerms);
+  $('start').addEventListener('click', startSearch);
+  $('stop').addEventListener('click', stopSearch);
+  $('save-json').addEventListener('click', () => {
+    download('pubmatrix.json', `${JSON.stringify(shown, null, 2)}\n`, 'application/json');
+  });
+  $('save-csv').addEventListener('click', () => download('pubmatrix.csv', toCsv(shown), 'text/csv'));
+  $('data-release').textContent = DATA_RELEASE;
+  $('dataset-link').href = `https://huggingface.co/datasets/${DATASET}`;
   $('copy').addEventListener('click', copyCommand);
   $('file').addEventListener('change', (event) => openFile(event.target.files[0]));
   $('hide-empty').addEventListener('change', applyHideEmpty);

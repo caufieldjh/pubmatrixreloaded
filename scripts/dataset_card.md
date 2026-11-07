@@ -29,16 +29,17 @@ A reformatting of [PubTator3](https://www.ncbi.nlm.nih.gov/research/pubtator3/)'
 | `gene/NNN.parquet` | `concept` (NCBI Gene ID), `pmid` |
 | `disease/NNN.parquet` | `concept` (for example `MESH:D001943`), `pmid` |
 | `chemical/NNN.parquet` | `concept` (for example `MESH:D013629`), `pmid` |
+| `names/NNN.parquet` | `name`, `type`, `concept`, `n`: how often a lowercased name was used for a concept |
 | `relations.parquet` | `a`, `b`, `type`, `n`: documents with that relation between entities `a` and `b` |
-| `shards.json` | For each entity type, the first concept in each shard |
+| `shards.json` | For each table, the first value in each shard |
 
-Rows are sorted by `concept`, then `pmid`, and each (concept, pmid) pair appears once. Concepts sort as bytes. To find a concept, take the last shard whose first concept is not greater than it. In `relations.parquet`, each pair is stored with `a` before `b`, because PubTator3 treats relations as undirected in search.
+Entity rows are sorted by `concept`, then `pmid`, and each (concept, pmid) pair appears once. The names table is built from the bulk files' mentions: names are lowercased in ASCII only, names seen once are dropped, and each name keeps its five most common concepts per type. Concepts sort as bytes. To find a concept, take the last shard whose first concept is not greater than it. In `relations.parquet`, each pair is stored with `a` before `b`, because PubTator3 treats relations as undirected in search.
 
 The data is sharded because DuckDB WASM walks a file's whole row group list for each query, which takes about a second in a large file.
 
 ## Reading it in a browser
 
-Pass `filesystem: { reliableHeadRequests: true, allowFullHTTPReads: false, forceFullHTTPReads: false }` to `db.open`, or DuckDB WASM may download whole files. Query one concept at a time: `WHERE concept IN (...)` can read far more data.
+Pass `filesystem: { reliableHeadRequests: true, allowFullHTTPReads: false, forceFullHTTPReads: false }` to `db.open`, or DuckDB WASM may download whole files. Query one concept at a time: `WHERE concept IN (...)` can read far more data. Do not read one file from several workers at once: concurrent range requests for the same URL returned bad bytes in Chromium, seen as `ZSTD Decompression failure`.
 
 ## Limits
 

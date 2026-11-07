@@ -39,6 +39,20 @@ SHARDS = 64
 SPLIT_CONCEPTS = r"""BEGIN { FS = OFS = "\t" }
 $3 != "" && $3 != "-" { n = split($3, ids, /[;,]/); for (i = 1; i <= n; i++) print ids[i], $1 }"""
 
+# One line per mention of a concept: name, type, concept. Names are lowercased in ASCII
+# only, and a reader must do the same. The bulk files' type column gives Gene, Disease,
+# or Chemical.
+SPLIT_NAMES = r"""BEGIN { FS = OFS = "\t" }
+$3 != "" && $3 != "-" {
+  k = split($3, ids, /[;,]/); n = split($4, names, "|")
+  for (i = 1; i <= n; i++) if (names[i] != "") for (j = 1; j <= k; j++)
+    print tolower(names[i]), $2, ids[j]
+}"""
+
+# Names seen once are mostly noise, and more than this many meanings help nobody.
+MIN_NAME_COUNT = 2
+MAX_MEANINGS = 5
+
 # Relations are undirected in PubTator3 search, so put each pair in one order.
 ORDER_PAIRS = r"""BEGIN { FS = OFS = "\t" }
 { if ($3 < $4) print $3, $4, $2; else print $4, $3, $2 }"""
@@ -76,15 +90,50 @@ def build_entities(name: str, bulk: Path, out: Path, work: Path) -> None:
     sorted_rows.unlink()
 
 
-def shard_entities(name: str, out: Path, work: Path) -> list[str]:
-    """Split one sorted file into shards, returning the first concept of each."""
+def quoted(value: str) -> str:
+    return "'" + value.replace("'", "''") + "'"
+
+
+def build_names(bulk: Path, out: Path, work: Path) -> None:
+    """Build a table from each name to the concepts it most often means.
+
+    The browser has no autocomplete, so this is how it reads what people type.
+    """
+    sources = " ".join(shlex.quote(str(bulk / f"{n}2pubtator3.gz")) for n in ENTITY_FILES)
+    rows = work / "names.tsv"
+    count_rows = (
+        "awk -v OFS='\\t' '{ n = $1; sub(/^ *[0-9]+ /, \"\"); "
+        f"if (n >= {MIN_NAME_COUNT}) print $0 \"\\t\" n }}'"
+    )
+    keep_top = (
+        "awk -F'\\t' -v OFS='\\t' '{ key = $1 FS $2; "
+        f"seen = (key == last) ? seen + 1 : 1; last = key; if (seen <= {MAX_MEANINGS}) print }}'"
+    )
+    order = "-t $'\\t' -k1,1 -k2,2 -k4,4nr"
+    run_shell(
+        f"gzip -dc {sources} | awk {shlex.quote(SPLIT_NAMES)} | {sort_command(work, '')} | uniq -c"
+        f" | {count_rows} | {sort_command(work, order)} | {keep_top} > {shlex.quote(str(rows))}"
+    )
+    connect(work).execute(
+        f"""COPY (SELECT * FROM read_csv('{rows}', delim = '\t', header = false,
+                  columns = {{'name': 'VARCHAR', 'type': 'VARCHAR', 'concept': 'VARCHAR',
+                              'n': 'INTEGER'}},
+                  quote = '', escape = '', parallel = false))
+            TO '{out / "names.parquet"}'
+            (FORMAT parquet, COMPRESSION zstd, ROW_GROUP_SIZE {ROW_GROUP_SIZE})"""
+    )
+    rows.unlink()
+
+
+def shard_file(name: str, out: Path, work: Path, column: str = "concept") -> list[str]:
+    """Split one sorted file into shards, returning the first value of each."""
     con = connect(work)
     source = out / f"{name}.parquet"
     starts = [
         row[0]
         for row in con.execute(
             f"""SELECT DISTINCT stats_min_value FROM parquet_metadata('{source}')
-                WHERE path_in_schema = 'concept'
+                WHERE path_in_schema = '{column}'
                   AND row_group_id % (SELECT ceil(num_row_groups / {SHARDS})::INT
                                       FROM parquet_file_metadata('{source}')) = 0
                 ORDER BY 1"""
@@ -93,9 +142,9 @@ def shard_entities(name: str, out: Path, work: Path) -> list[str]:
     folder = out / name
     folder.mkdir(exist_ok=True)
     for index, first in enumerate(starts):
-        test = f"concept >= '{first}'"
+        test = f"{column} >= {quoted(first)}"
         if index + 1 < len(starts):
-            test += f" AND concept < '{starts[index + 1]}'"
+            test += f" AND {column} < {quoted(starts[index + 1])}"
         con.execute(
             f"""COPY (SELECT * FROM '{source}' WHERE {test})
                 TO '{folder / f"{index:03d}.parquet"}'
@@ -132,10 +181,16 @@ def main() -> None:
         start = time.monotonic()
         if not (out / f"{name}.parquet").exists():
             build_entities(name, bulk, out, work)
-        manifest[name] = shard_entities(name, out, work)
+        manifest[name] = shard_file(name, out, work)
         size = sum(path.stat().st_size for path in (out / name).glob("*.parquet"))
         count = len(manifest[name])
         print(f"{name}: {count} shards, {size / 1e6:.0f} MB in {time.monotonic() - start:.0f}s")
+    start = time.monotonic()
+    if not (out / "names.parquet").exists():
+        build_names(bulk, out, work)
+    manifest["names"] = shard_file("names", out, work, column="name")
+    size = sum(path.stat().st_size for path in (out / "names").glob("*.parquet"))
+    print(f"names: {size / 1e6:.0f} MB in {time.monotonic() - start:.0f}s", flush=True)
     (out / "shards.json").write_text(json.dumps(manifest))
     if not (out / "relations.parquet").exists():
         start = time.monotonic()
