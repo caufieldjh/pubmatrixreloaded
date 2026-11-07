@@ -49,6 +49,20 @@ export const EXAMPLES = [
   },
 ];
 export const TERMS_FILE = 'terms.txt';
+
+// Searching in the browser. Results name the data release and dataset revision.
+export const DATASET = 'caufieldjh/pubmatrix-pubtator3';
+export const DATASET_REVISION = '12df2b69e5546e787e5e4abc2ee373deaa00a186';
+export const DATA_RELEASE = '2026-10-06';
+export const DUCKDB_VERSION = '1.33.1-dev57.0';
+export const SEARCH_WORKERS = 4;
+export const BROWSER_TYPES = ['chemical', 'disease', 'gene'];
+
+// Measured against Hugging Face on one home connection, rounded up. Real runs vary.
+export const STARTUP_SECONDS = 10;
+export const SECONDS_PER_LOOKUP = 0.05;
+export const SECONDS_PER_TERM = 0.1;
+export const RELATIONS_SECONDS = 15;
 export const MODIFIERS_FILE = 'modifiers.txt';
 
 /** One term per line, without blanks, # comments, or repeats. */
@@ -86,6 +100,11 @@ export function formatDuration(seconds) {
   return `${(seconds / 3600).toFixed(1)} hours`;
 }
 
+/** Like formatDuration, for promises to a person: short waits are not worth counting. */
+export function formatWait(seconds) {
+  return seconds < 10 ? 'a few seconds' : `about ${formatDuration(seconds)}`;
+}
+
 export function shellQuote(value) {
   if (/^[A-Za-z0-9_\/.:=@%+-]+$/.test(value)) return value;
   return `'${value.replace(/'/g, `'\\''`)}'`;
@@ -99,6 +118,133 @@ export function buildCommand({ output, relation, termsType, modifiersType, quiet
   if (quietHours) parts.push('--quiet-hours');
   parts.push('-o', shellQuote(output || 'pubmatrix'));
   return parts.join(' ');
+}
+
+/** Lowercases ASCII only, as the names table was built. */
+export function normalizeName(text) {
+  return text.trim().replace(/[A-Z]/g, (letter) => letter.toLowerCase());
+}
+
+const GREEK = {
+  α: 'alpha', β: 'beta', γ: 'gamma', δ: 'delta', ε: 'epsilon', κ: 'kappa', λ: 'lambda', μ: 'mu', µ: 'mu', ω: 'omega',
+};
+
+/** The literature mostly spells Greek letters out: "17beta-estradiol", not "17β-estradiol". */
+export function spellGreek(text) {
+  return text.replace(/[αβγδεκλμµω]/g, (letter) => GREEK[letter]);
+}
+
+/** The shard holding a value, given the first value of each sorted shard. */
+export function shardIndex(starts, value) {
+  let low = 0;
+  let high = starts.length - 1;
+  while (low < high) {
+    const middle = Math.ceil((low + high) / 2);
+    if (starts[middle] <= value) low = middle;
+    else high = middle - 1;
+  }
+  return low;
+}
+
+/** How to look up one part of a term, or why it cannot be searched here. */
+export function classifyPart(part, type) {
+  const text = part.trim();
+  if (type === 'variant') {
+    return { problem: 'Variants can only be searched with the command line tool.' };
+  }
+  if (text.startsWith('@')) {
+    return { problem: 'IDs like this work in the command line tool. Here, type a name.' };
+  }
+  if (text.includes('"')) {
+    return { problem: 'Exact phrases cannot be searched here, only named entities. The command line tool can search phrases.' };
+  }
+  if (/^MESH:[CD]\d+$/.test(text)) {
+    if (type === 'disease' || type === 'chemical') return { id: text, type };
+    return { problem: 'To use a MESH ID, set "Look up as" to chemical or disease.' };
+  }
+  if (type === 'gene' && /^\d+$/.test(text)) return { id: text, type };
+  return { name: normalizeName(text), type };
+}
+
+export function splitParts(term) {
+  return term.split(SYNONYM_SEPARATOR).map((part) => part.trim()).filter(Boolean);
+}
+
+/** Merge sorted lists of document IDs, dropping repeats. */
+export function sortedUnion(lists) {
+  if (lists.length === 1) return lists[0];
+  const all = new Int32Array(lists.reduce((total, list) => total + list.length, 0));
+  let offset = 0;
+  for (const list of lists) {
+    all.set(list, offset);
+    offset += list.length;
+  }
+  all.sort();
+  let kept = 0;
+  for (let i = 0; i < all.length; i += 1) {
+    if (i === 0 || all[i] !== all[i - 1]) {
+      all[kept] = all[i];
+      kept += 1;
+    }
+  }
+  return all.subarray(0, kept);
+}
+
+/** Count the IDs two sorted lists share. */
+export function intersectionSize(a, b) {
+  let i = 0;
+  let j = 0;
+  let shared = 0;
+  while (i < a.length && j < b.length) {
+    if (a[i] === b[j]) {
+      shared += 1;
+      i += 1;
+      j += 1;
+    } else if (a[i] < b[j]) i += 1;
+    else j += 1;
+  }
+  return shared;
+}
+
+/** Key of an entity in relations.parquet. */
+export function relationKey({ type, concept }) {
+  return `${type[0].toUpperCase()}${type.slice(1)}|${concept}`;
+}
+
+/** Search words for a term, used to link a cell to PubTator3. */
+export function linkQuery(term) {
+  const parts = splitParts(term).map((part) => `"${part.replaceAll('"', '')}"`);
+  return parts.length > 1 ? `(${parts.join(' OR ')})` : parts[0];
+}
+
+/** Expected seconds to check terms, and then to search. */
+export function browserEstimate(rows, cols, relation) {
+  const terms = rows + cols;
+  const check = STARTUP_SECONDS + terms * SECONDS_PER_LOOKUP;
+  const search = relation ? RELATIONS_SECONDS : terms * SECONDS_PER_TERM;
+  return { check, search };
+}
+
+/** Seconds left, from the pace so far. */
+export function remainingSeconds(done, total, elapsedSeconds) {
+  if (done === 0) return null;
+  return (elapsedSeconds / done) * (total - done);
+}
+
+function csvField(value) {
+  const text = value === null || value === undefined ? '' : String(value);
+  return /[",\n]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
+}
+
+/** The same plain grid the command line tool writes. Blank means unknown. */
+export function toCsv(data) {
+  const grid = toGrid(data);
+  const lines = [['term', ...grid.colLabels].map(csvField).join(',')];
+  grid.rowLabels.forEach((label, i) => {
+    const counts = grid.colLabels.map((_, j) => grid.cell(i, j).count);
+    lines.push([label, ...counts].map(csvField).join(','));
+  });
+  return `${lines.join('\n')}\n`;
 }
 
 /** Same scale as pubmatrix.matrix.heat_step. */
@@ -133,6 +279,7 @@ export function resultProblem(data) {
 export function toGrid(data) {
   const width = data.columns.length;
   const counts = data.cells.map((cell) => cell.count).filter((count) => count > 0);
+  // Reduce rather than spread: a large matrix has more cells than a call has arguments.
   return {
     rowLabels: data.rows.map((_, i) => String(data.cells[i * width].row ?? data.rows[i].input)),
     colLabels: data.columns.map((_, j) => String(data.cells[j].column ?? data.columns[j].input)),

@@ -78,3 +78,11 @@ def test_generated_command_is_accepted_by_the_tool():
     assert parsed.relation == "treat"
     assert parsed.quiet_hours is True
     assert parsed.output == "my run"
+
+
+def test_page_policy_allows_what_the_search_needs():
+    """The Parquet reader is fetched at run time, and blocking it crashes every query."""
+    page = (ROOT / "docs" / "index.html").read_text(encoding="utf-8")
+    policy = re.search(r"connect-src ([^;]+);", page).group(1)
+    for host in ("cdn.jsdelivr.net", "extensions.duckdb.org", "huggingface.co", "*.hf.co"):
+        assert f"https://{host}" in policy

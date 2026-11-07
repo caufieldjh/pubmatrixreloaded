@@ -18,14 +18,26 @@ This is an early prototype: a command line tool that writes files.
 ## Web page
 
 [caufieldjh.github.io/pubmatrixreloaded](https://caufieldjh.github.io/pubmatrixreloaded/)
-shows real example searches, plans your own, and displays results. It helps you
-write the term lists, estimates the run, and gives you the command to paste.
-Afterward, it displays the `.json` file as a sortable heatmap, without uploading it
-anywhere.
+runs searches in your browser, with no install and no server. It also shows real
+examples and displays `.json` results from the command line tool.
 
-The page cannot run searches itself. PubTator3 sends no CORS headers, so browsers
-refuse its answers on any site, and GitHub Pages has no server to ask on the page's
-behalf. The searching stays on your computer.
+PubTator3's API refuses requests from browsers, so the page does not use it. It reads
+[a copy of PubTator3's bulk annotations](https://huggingface.co/datasets/caufieldjh/pubmatrix-pubtator3)
+on Hugging Face, with [DuckDB WASM](https://duckdb.org/docs/api/wasm/overview), fetching
+only the pieces each search needs. Issue 3 has the measurements and reasoning.
+
+| | Web page | Command line tool |
+|---|---|---|
+| Install | None | `uv` |
+| Data | Bulk copy of one release | Live PubTator3 service |
+| Terms | Genes, diseases, and chemicals, by name | Anything, including phrases |
+| 1000 terms by 8 | About 2 minutes | About 1.4 hours |
+| Output | `.json`, `.csv` | `.xlsx`, `.html`, `.csv`, `.json` |
+
+Counts differ between the two by a few percent. The tab must stay open during a search.
+
+The dataset is built by `scripts/build_parquet.py` and pinned by `DATASET_REVISION` in
+`docs/core.js`, so a new data release needs a new upload and that value updated.
 
 The page lives in `docs/` and has no build step. To serve it from GitHub, set
 Settings > Pages to deploy from the `main` branch, `/docs` folder.
@@ -204,10 +216,10 @@ cached.
 | Output | Linked HTML table; Excel in later use | Excel, linked HTML, CSV, JSON |
 | Traceability | Stored searches | Exact query and retrieval time for every cell |
 | Saved searches | Shared server archive | Local cache and output files only |
-| Interface | Web form | Command line, with a web page to plan and view |
+| Interface | Web form | Web form in your browser, and a command line |
 
-Not rebuilt yet: a web form that runs searches, the server that runs jobs for you,
-and the shared archive of searches and term lists.
+Not rebuilt yet: phrases on the web page, the server that runs jobs for you, and the
+shared archive of searches and term lists.
 
 ## Development
 
