@@ -7,6 +7,7 @@ must already be serving it on PORT. Needs duckdb and playwright.
 """
 
 import json
+import os
 import random
 import subprocess
 import sys
@@ -22,6 +23,14 @@ IDS = Path(sys.argv[5])  # JSON map from PubTator3 entity names to database IDs
 LOG = Path(sys.argv[6])  # the output of range_server.py
 LOG_OFFSET = 0
 BASE = f"http://127.0.0.1:{PORT}"
+
+# Set DATA_URL to read from a real host. The server log then shows only the page's own
+# files, so the request and byte counts no longer cover the data.
+DATA_URL = os.environ.get("DATA_URL", "/data/")
+PAGE = (
+    f"{BASE}/proof/index.html?duckdb=/node_modules/@duckdb/duckdb-wasm/dist/"
+    f"&bundle=/bundle/duckdb.mjs&data={DATA_URL}"
+)
 
 GENES = ["351", "5663", "5664", "348", "54209", "4137", "6622", "120892", "11315", "65018",
          "5071", "3064", "6647", "203228", "23435", "2521"]  # fmt: skip
@@ -86,7 +95,7 @@ def measure_relations(browser, con):
             pairs.append(sorted([key(row["query"]), key(col["query"])]))
             api.append(example["cells"][i * width + j]["count"])
     page = browser.new_context().new_page()
-    page.goto(f"{BASE}/proof/index.html?duckdb=/node_modules/@duckdb/duckdb-wasm/dist/&data=/data/&bundle=/bundle/duckdb.mjs")
+    page.goto(PAGE)
     page.wait_for_function("window.proof !== undefined", timeout=90_000)
     stats()
     start = time.monotonic()
@@ -135,7 +144,7 @@ def main():
             )
             stats()
             start = time.monotonic()
-            page.goto(f"{BASE}/proof/index.html?duckdb=/node_modules/@duckdb/duckdb-wasm/dist/&data=/data/&bundle=/bundle/duckdb.mjs")
+            page.goto(PAGE)
             page.wait_for_function("window.proof !== undefined", timeout=90_000)
             first = stats()
             ready = time.monotonic() - start
