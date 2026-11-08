@@ -14,6 +14,7 @@ from openpyxl.styles import Alignment, Font, PatternFill
 from openpyxl.utils import get_column_letter
 from openpyxl.worksheet.worksheet import Worksheet
 
+from .colors import heat_scale
 from .matrix import Matrix, heat_step
 from .terms import Term
 
@@ -25,8 +26,7 @@ MAX_URL_LENGTH = 2_079
 LEADING_COLUMNS = 3  # term, documents alone, modifiers with hits
 
 HEAT = ("CDE2FB", "9EC5F4", "6DA7EC", "256ABF", "184F95", "0D366B")
-FILLS = [PatternFill("solid", fgColor=color) for color in HEAT]
-DARK_FROM = 3  # index of the first fill that needs light text
+DARK_FROM = 3  # index of the first default fill that needs light text
 LIGHT_INK = Font(color="FFFFFF")
 MUTED_INK = Font(color="5B6472")
 BOLD = Font(bold=True)
@@ -70,8 +70,24 @@ def _widths(sheet: Worksheet, widths: list[int]) -> None:
         sheet.column_dimensions[get_column_letter(col)].width = width
 
 
-def _matrix_sheet(sheet: Worksheet, matrix: Matrix) -> bool:
+def _shades(scheme: tuple[str, str, str] | None) -> list[tuple[PatternFill, Font | None]]:
+    """Give a fill and a font for each step; the default blue is the HTML page in light mode."""
+    if scheme is None:
+        return [
+            (PatternFill("solid", fgColor=color), LIGHT_INK if n >= DARK_FROM else None)
+            for n, color in enumerate(HEAT)
+        ]
+    return [
+        (PatternFill("solid", fgColor=background[1:].upper()), Font(color=ink[1:].upper()))
+        for background, ink in heat_scale(scheme)
+    ]
+
+
+def _matrix_sheet(
+    sheet: Worksheet, matrix: Matrix, scheme: tuple[str, str, str] | None = None
+) -> bool:
     """Fill the grid. Returns whether counts were given hyperlinks."""
+    shades = _shades(scheme)
     sheet.title = "Matrix"
     _header_row(
         sheet,
@@ -94,10 +110,10 @@ def _matrix_sheet(sheet: Worksheet, matrix: Matrix) -> bool:
                 cell.font = MUTED_INK
             else:
                 hits += 1
-                index = heat_step(source.count, low, high) - 1
-                cell.fill = FILLS[index]
-                if index >= DARK_FROM:
-                    cell.font = LIGHT_INK
+                fill, ink = shades[heat_step(source.count, low, high) - 1]
+                cell.fill = fill
+                if ink:
+                    cell.font = ink
             if linked and len(source.link) <= MAX_URL_LENGTH:
                 cell.hyperlink = source.link
         sheet.cell(row, 3, hits)
@@ -188,9 +204,11 @@ def _run_sheet(sheet: Worksheet, info: dict, linked: bool) -> None:
     _widths(sheet, [22, 100])
 
 
-def write_excel(matrix: Matrix, path: Path, info: dict) -> None:
+def write_excel(
+    matrix: Matrix, path: Path, info: dict, scheme: tuple[str, str, str] | None = None
+) -> None:
     workbook = Workbook()
-    linked = _matrix_sheet(workbook.active, matrix)
+    linked = _matrix_sheet(workbook.active, matrix, scheme)
     _terms_sheet(workbook.create_sheet("Terms"), matrix)
     _cells_sheet(workbook.create_sheet("Cells"), matrix)
     _run_sheet(workbook.create_sheet("Run"), info, linked)

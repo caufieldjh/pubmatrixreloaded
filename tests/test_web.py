@@ -9,6 +9,7 @@ from pathlib import Path
 import pytest
 
 from pubmatrix.cli import LARGE_RUN_REQUESTS, TYPICAL_REQUESTS_PER_SECOND, _parser
+from pubmatrix.colors import PRESETS, heat_scale
 from pubmatrix.matrix import HEAT_STEPS, RELATION_TYPES, WEB_SEARCH
 from pubmatrix.terms import CONCEPTS, SYNONYM_SEPARATOR
 
@@ -87,3 +88,36 @@ def test_page_policy_allows_what_the_search_needs():
     hosts = ("cdn.jsdelivr.net", "extensions.duckdb.org", "huggingface.co", "*.hf.co")
     for host in (*hosts, "www.ebi.ac.uk"):
         assert f"https://{host}" in policy
+
+
+@pytest.mark.skipif(not shutil.which("node"), reason="node is not installed")
+def test_color_schemes_match():
+    """The page and the files shade a scheme the same way."""
+    script = """
+    import { COLOR_PRESETS, heatScale } from './docs/core.js';
+    const out = {};
+    for (const [name, preset] of Object.entries(COLOR_PRESETS)) {
+      if (preset.colors) out[name] = { colors: preset.colors, scale: heatScale(preset.colors) };
+    }
+    const odd = ['#00ff00', '#ff00ff', '#000080'];
+    out.odd = { colors: odd, scale: heatScale(odd) };
+    console.log(JSON.stringify(out));
+    """
+    done = subprocess.run(
+        ["node", "--input-type=module", "-e", script],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    page = json.loads(done.stdout)
+    assert {name: tuple(v["colors"]) for name, v in page.items() if name != "odd"} == PRESETS
+    for name, value in page.items():
+        expected = [(step["background"], step["ink"]) for step in value["scale"]]
+        assert heat_scale(tuple(value["colors"])) == expected, name
+
+
+def test_generated_colors_are_accepted_by_the_tool():
+    parsed = _parser().parse_args(["run", "-t", "a", "-m", "b", "--colors", "fde0dc,dc4b35,6e0d0d"])
+    assert parsed.colors == ("#fde0dc", "#dc4b35", "#6e0d0d")
+    assert _parser().parse_args(["run", "--colors", "Red"]).colors == PRESETS["red"]

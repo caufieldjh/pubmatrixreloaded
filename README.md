@@ -122,6 +122,12 @@ PubTator3 updates, and a resumed run can span days, so each cell keeps its own
 retrieval time. Above 65,530 cells, Excel's hyperlink limit applies, so the links
 stay on the Cells sheet as text.
 
+The shading is blue by default. `--colors` changes it in the workbook and the HTML
+page: a preset (`blue`, `red`, `green`, `black`, `white`) or three hex colors for
+the fewest, middle, and most documents, such as `--colors fde0dc,dc4b35,6e0d0d`.
+The web page offers the same choices under Results and puts the one you pick into
+its command. With fixed colors the HTML page no longer switches for dark mode.
+
 ## Co-occurrence and relations
 
 By default a cell counts documents mentioning both terms (`A AND B`), as
