@@ -18,6 +18,7 @@ from .client import (
     PubTatorError,
     default_cache_path,
 )
+from .colors import PRESETS, parse_scheme
 from .matrix import INTERRUPTED, RELATION_TYPES, build_matrix, unique
 from .output import write_all
 from .schedule import QuietHours
@@ -75,6 +76,14 @@ def _parser() -> argparse.ArgumentParser:
         help="only send requests on weekends and 9 PM to 5 AM US Eastern, waiting otherwise",
     )
     run.add_argument("-o", "--output", default="pubmatrix", help="output path prefix")
+    run.add_argument(
+        "--colors",
+        type=parse_scheme,
+        metavar="SCHEME",
+        help=f"shading for the Excel and HTML files: {', '.join(PRESETS)}, or three hex colors "
+        "for fewest, middle, and most documents, such as fde0dc,dc4b35,6e0d0d "
+        "(default: blue, which in HTML follows light or dark mode)",
+    )
     run.add_argument("--workers", type=int, default=8, help="concurrent requests in flight")
 
     resolve = commands.add_parser("resolve", help="show how terms would be read")
@@ -187,7 +196,7 @@ def _run(args: argparse.Namespace, client: PubTatorClient) -> int:
 
     # Not argv[0]: that is a local path, and these files are made to be shared.
     command = shlex.join(["pubmatrix", *sys.argv[1:]])
-    for path in write_all(matrix, args.output, command):
+    for path in write_all(matrix, args.output, command, args.colors):
         print(path)
     failed = matrix.failed
     if matrix.stopped:

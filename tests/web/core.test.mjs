@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
 import {
-  COLOR_PRESETS, HEAT_STEPS, PHRASE_DOCS_PER_SECOND, browserEstimate, buildCommand, cellLink, classifyPart, estimate,
+  COLOR_PRESETS, HEAT_STEPS, colorsArgument, PHRASE_DOCS_PER_SECOND, browserEstimate, buildCommand, cellLink, classifyPart, estimate,
   formatDuration, heatScale, heatStep, inkFor, intersectionSize, luminance, linkQuery, normalizeName, parseTerms, phraseQuery,
   parseHex, relationKey, remainingSeconds,
   resultProblem, shardIndex, shellQuote, sortedUnion, spellGreek, splitParts, termsUnfitForRelations,
@@ -249,4 +249,14 @@ test('ink is black on light colors and white on dark ones', () => {
   assert.equal(inkFor('#fde0dc'), '#000000');
   assert.equal(inkFor('#0d366b'), '#ffffff');
   assert.equal(inkFor('#111111'), '#ffffff');
+});
+
+test('the chosen colors reach the command line', () => {
+  const base = { output: 'x', relation: '', termsType: '', modifiersType: '', quietHours: false };
+  assert.equal(colorsArgument({ preset: 'auto' }), null);
+  assert.equal(colorsArgument({ preset: 'red' }), 'red');
+  const custom = colorsArgument({ preset: 'custom', colors: ['#fde0dc', '#dc4b35', '#6e0d0d'] });
+  assert.equal(custom, 'fde0dc,dc4b35,6e0d0d');
+  assert.ok(buildCommand({ ...base, colors: custom }).includes('--colors fde0dc,dc4b35,6e0d0d'));
+  assert.ok(!buildCommand({ ...base, colors: null }).includes('--colors'));
 });

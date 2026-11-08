@@ -120,7 +120,8 @@
   <details id="command-line">
     <summary>Or run the command line tool, for the live PubTator3 service, very common phrases, and Excel files</summary>
     <p>The tool searches PubTator3 itself, so it uses one source for everything and has the newest data. It is limited to about
-      two requests a second, so large searches take hours. It uses the same lists as above.</p>
+      two requests a second, so large searches take hours. It uses the same lists as above, and the colors chosen
+      under Results.</p>
     <div class="options">
       <div>
         <label for="output">Results name</label>
@@ -187,7 +188,8 @@
       </div>
       <p class="fine">Type a hex value such as <code>#0d366b</code>, or pick one. The six shades blend from the first color
         through the middle one to the last, and each count is printed in black or white, whichever reads better.
-        This browser remembers your choice. It changes only this page, not the downloaded files.</p>
+        This browser remembers your choice. It does not change the downloaded .json and .csv files, but the
+        <a href="#command-line">command line tool</a> uses it for its Excel and HTML files.</p>
       <p id="color-error" class="error" hidden></p>
     </details>
     <p class="fine">Select a count to open a PubTator3 search for that pair. Select a heading to sort.

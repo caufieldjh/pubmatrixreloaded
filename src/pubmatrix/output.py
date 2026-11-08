@@ -11,6 +11,7 @@ from pathlib import Path
 
 from . import __version__
 from .client import API_BASE
+from .colors import heat_scale
 from .excel import fits_in_excel, write_excel
 from .matrix import HEAT_STEPS, Matrix, heat_step
 from .terms import Term
@@ -39,9 +40,12 @@ def _term_dict(term: Term) -> dict:
     }
 
 
-def run_info(matrix: Matrix, command: str | None = None) -> dict:
+Scheme = tuple[str, str, str]
+
+
+def run_info(matrix: Matrix, command: str | None = None, scheme: Scheme | None = None) -> dict:
     """Record what it takes to trace a result back to how it was made."""
-    return {
+    info = {
         "tool": f"pubmatrix-reloaded {__version__}",
         "command": command,
         "source": f"PubTator3 ({API_BASE})",
@@ -53,11 +57,14 @@ def run_info(matrix: Matrix, command: str | None = None) -> dict:
         "cells": len(matrix.cells),
         "cells_without_value": len(matrix.failed),
     }
+    if scheme:
+        info["colors"] = ", ".join(scheme)
+    return info
 
 
-def to_dict(matrix: Matrix, command: str | None = None) -> dict:
+def to_dict(matrix: Matrix, command: str | None = None, scheme: Scheme | None = None) -> dict:
     return {
-        "run": run_info(matrix, command),
+        "run": run_info(matrix, command, scheme),
         "rows": [_term_dict(t) for t in matrix.rows],
         "columns": [_term_dict(t) for t in matrix.cols],
         "cells": [
@@ -76,8 +83,10 @@ def to_dict(matrix: Matrix, command: str | None = None) -> dict:
     }
 
 
-def write_json(matrix: Matrix, path: Path, command: str | None = None) -> None:
-    text = json.dumps(to_dict(matrix, command), indent=2, ensure_ascii=False)
+def write_json(
+    matrix: Matrix, path: Path, command: str | None = None, scheme: Scheme | None = None
+) -> None:
+    text = json.dumps(to_dict(matrix, command, scheme), indent=2, ensure_ascii=False)
     path.write_text(text + "\n", encoding="utf-8")
 
 
@@ -152,12 +161,12 @@ tbody th { position: sticky; left: 0; background: var(--surface); }
 #matrix td a:hover { text-decoration: underline; }
 #matrix td a:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
 td.h0 { color: var(--muted); }
-td.h1 { background: var(--h1); color: var(--ink-low); }
-td.h2 { background: var(--h2); color: var(--ink-low); }
-td.h3 { background: var(--h3); color: var(--ink-low); }
-td.h4 { background: var(--h4); color: var(--ink-high); }
-td.h5 { background: var(--h5); color: var(--ink-high); }
-td.h6 { background: var(--h6); color: var(--ink-high); }
+td.h1 { background: var(--h1); color: var(--ink-h1, var(--ink-low)); }
+td.h2 { background: var(--h2); color: var(--ink-h2, var(--ink-low)); }
+td.h3 { background: var(--h3); color: var(--ink-h3, var(--ink-low)); }
+td.h4 { background: var(--h4); color: var(--ink-h4, var(--ink-high)); }
+td.h5 { background: var(--h5); color: var(--ink-h5, var(--ink-high)); }
+td.h6 { background: var(--h6); color: var(--ink-h6, var(--ink-high)); }
 #matrix td.none { padding: 8px 10px; color: var(--muted); cursor: help;
   outline: 1px dashed var(--line); outline-offset: -1px; }
 .legend { display: flex; align-items: center; gap: 2px; margin-top: 12px;
@@ -198,7 +207,18 @@ table.querySelectorAll('thead button').forEach((button) => {
 """
 
 
-def render_html(matrix: Matrix) -> str:
+def _scheme_style(scheme: Scheme | None) -> str:
+    """Set fixed colors after the defaults, so they win in light and dark mode alike."""
+    if scheme is None:
+        return ""
+    shades = "".join(
+        f" --h{n}: {background}; --ink-h{n}: {ink};"
+        for n, (background, ink) in enumerate(heat_scale(scheme), start=1)
+    )
+    return f"\n:root {{{shades} }}\n"
+
+
+def render_html(matrix: Matrix, scheme: Scheme | None = None) -> str:
     low, high = matrix.count_range()
     head = "".join(
         f'<th scope="col"><button type="button">{_header(col)}</button></th>' for col in matrix.cols
@@ -228,7 +248,7 @@ def render_html(matrix: Matrix) -> str:
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PubMatrix Reloaded</title>
-<style>{_STYLE}</style>
+<style>{_STYLE}{_scheme_style(scheme)}</style>
 </head>
 <body>
 <main>
@@ -266,22 +286,24 @@ Generated {generated}.</p>
 """
 
 
-def write_html(matrix: Matrix, path: Path) -> None:
-    path.write_text(render_html(matrix), encoding="utf-8")
+def write_html(matrix: Matrix, path: Path, scheme: Scheme | None = None) -> None:
+    path.write_text(render_html(matrix, scheme), encoding="utf-8")
 
 
-def write_all(matrix: Matrix, prefix: str, command: str | None = None) -> list[Path]:
+def write_all(
+    matrix: Matrix, prefix: str, command: str | None = None, scheme: Scheme | None = None
+) -> list[Path]:
     base = Path(prefix)
     base.parent.mkdir(parents=True, exist_ok=True)
     csv_path, json_path, html_path, xlsx_path = (
         base.with_name(base.name + ext) for ext in (".csv", ".json", ".html", ".xlsx")
     )
     write_csv(matrix, csv_path)
-    write_json(matrix, json_path, command)
-    write_html(matrix, html_path)
+    write_json(matrix, json_path, command, scheme)
+    write_html(matrix, html_path, scheme)
     paths = [csv_path, json_path, html_path]
     if fits_in_excel(matrix):
-        write_excel(matrix, xlsx_path, run_info(matrix, command))
+        write_excel(matrix, xlsx_path, run_info(matrix, command, scheme), scheme)
         paths.append(xlsx_path)
     else:
         print("This matrix is too large for Excel; skipping the .xlsx file.", file=sys.stderr)
