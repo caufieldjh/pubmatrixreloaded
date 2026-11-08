@@ -322,3 +322,79 @@ export function toGrid(data) {
     high: counts.length ? counts.reduce((a, b) => Math.max(a, b)) : 0,
   };
 }
+
+/**
+ * Color schemes for the matrix: three colors, for the fewest documents, the middle, and the most.
+ * 'auto' keeps the page's own blue, which follows the light or dark theme.
+ */
+export const COLOR_PRESETS = {
+  auto: { label: 'Blue, following light or dark mode (default)' },
+  blue: { label: 'Blue', colors: ['#cde2fb', '#4a89d6', '#0d366b'] },
+  red: { label: 'Red', colors: ['#fde0dc', '#dc4b35', '#6e0d0d'] },
+  green: { label: 'Green', colors: ['#dcf2dc', '#3f9b4f', '#0d4a1c'] },
+  black: { label: 'Black (light gray to black)', colors: ['#eeeeee', '#888888', '#111111'] },
+  white: { label: 'White (dark gray to white)', colors: ['#222222', '#888888', '#ffffff'] },
+};
+
+/** '#abc', 'abc', '#aabbcc' or 'aabbcc' as '#aabbcc', or null if it is not a hex color. */
+export function parseHex(text) {
+  const match = /^#?([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(String(text).trim());
+  if (!match) return null;
+  const digits = match[1].length === 3 ? [...match[1]].map((d) => d + d).join('') : match[1];
+  return `#${digits.toLowerCase()}`;
+}
+
+const channels = (hex) => [1, 3, 5].map((at) => parseInt(hex.slice(at, at + 2), 16) / 255);
+const toLinear = (c) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
+const fromLinear = (c) => (c <= 0.0031308 ? 12.92 * c : 1.055 * c ** (1 / 2.4) - 0.055);
+
+function toOklab(hex) {
+  const [r, g, b] = channels(hex).map(toLinear);
+  const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b);
+  const m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b);
+  const s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
+  return [
+    0.2104542553 * l + 0.793617785 * m - 0.0040720468 * s,
+    1.9779984951 * l - 2.428592205 * m + 0.4505937099 * s,
+    0.0259040371 * l + 0.7827717662 * m - 0.808675766 * s,
+  ];
+}
+
+function fromOklab([L, A, B]) {
+  const l = (L + 0.3963377774 * A + 0.2158037573 * B) ** 3;
+  const m = (L - 0.1055613458 * A - 0.0638541728 * B) ** 3;
+  const s = (L - 0.0894841775 * A - 1.291485548 * B) ** 3;
+  const rgb = [
+    4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
+    -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
+    -0.0041960863 * l - 0.7034186147 * m + 1.707614701 * s,
+  ];
+  const byte = (c) => Math.round(255 * Math.min(1, Math.max(0, fromLinear(c))));
+  return `#${rgb.map((c) => byte(c).toString(16).padStart(2, '0')).join('')}`;
+}
+
+/** Relative luminance, as WCAG defines it. */
+export function luminance(hex) {
+  const [r, g, b] = channels(hex).map(toLinear);
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+/** Black or white, whichever reads better on this background. */
+export function inkFor(hex) {
+  const light = luminance(hex);
+  return (1.05) / (light + 0.05) > (light + 0.05) / 0.05 ? '#ffffff' : '#000000';
+}
+
+/**
+ * HEAT_STEPS colors from low through middle to high, blended in OKLab so the steps look even.
+ * Each step comes with the ink color that reads best on it.
+ */
+export function heatScale([low, middle, high]) {
+  const ends = [low, middle, high].map(toOklab);
+  return Array.from({ length: HEAT_STEPS }, (_, n) => {
+    const t = n / (HEAT_STEPS - 1);
+    const [from, to, f] = t <= 0.5 ? [ends[0], ends[1], t * 2] : [ends[1], ends[2], t * 2 - 1];
+    const background = fromOklab(from.map((value, k) => value + (to[k] - value) * f));
+    return { background, ink: inkFor(background) };
+  });
+}

@@ -176,6 +176,20 @@
     <label class="check"><input id="hide-empty" type="checkbox"> Hide terms with no hits</label>
     <div class="scroll"><table id="matrix"></table></div>
     <div class="legend" id="legend"></div>
+    <details id="colors">
+      <summary>Colors</summary>
+      <label for="color-preset">Color scheme</label>
+      <select id="color-preset"></select>
+      <div class="color-picks">
+        <label>Fewest documents <span class="pick"><input type="color" id="color-low" aria-label="Fewest documents, color picker"><input type="text" id="color-low-hex" spellcheck="false" maxlength="7" aria-label="Fewest documents, hex value"></span></label>
+        <label>Middle <span class="pick"><input type="color" id="color-middle" aria-label="Middle, color picker"><input type="text" id="color-middle-hex" spellcheck="false" maxlength="7" aria-label="Middle, hex value"></span></label>
+        <label>Most documents <span class="pick"><input type="color" id="color-high" aria-label="Most documents, color picker"><input type="text" id="color-high-hex" spellcheck="false" maxlength="7" aria-label="Most documents, hex value"></span></label>
+      </div>
+      <p class="fine">Type a hex value such as <code>#0d366b</code>, or pick one. The six shades blend from the first color
+        through the middle one to the last, and each count is printed in black or white, whichever reads better.
+        This browser remembers your choice. It changes only this page, not the downloaded files.</p>
+      <p id="color-error" class="error" hidden></p>
+    </details>
     <p class="fine">Select a count to open a PubTator3 search for that pair. Select a heading to sort.
       — means no value is known; the reason is in its tooltip. Counts are PubTator3 documents
       (PubMed abstracts and PMC full text), not PubMed hits. For searches run on this page, the link searches

@@ -1,7 +1,7 @@
 import {
-  CONCEPTS, DATASET, DATASET_REVISION, DATA_RELEASE, EXAMPLES, HEAT_STEPS, LARGE_RUN_REQUESTS,
+  COLOR_PRESETS, CONCEPTS, DATASET, DATASET_REVISION, DATA_RELEASE, EXAMPLES, HEAT_STEPS, LARGE_RUN_REQUESTS,
   MODIFIERS_FILE, PHRASE_DOCS_PER_SECOND, RELATION_TYPES, SECONDS_PER_TERM, TERMS_FILE, browserEstimate, buildCommand, cellLink, estimate,
-  formatDuration, formatWait, heatStep, intersectionSize, linkQuery, parseTerms, relationKey,
+  formatDuration, formatWait, heatScale, heatStep, parseHex, intersectionSize, linkQuery, parseTerms, relationKey,
   remainingSeconds, resultProblem, splitParts, termsUnfitForRelations, termsWithStrayQuotes, toCsv, toGrid,
 } from './core.js';
 
@@ -599,6 +599,100 @@ function renderLegend(grid) {
   );
 }
 
+const COLOR_KEY = 'pubmatrix-colors';
+const COLOR_ENDS = ['low', 'middle', 'high'];
+
+function remembered() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(COLOR_KEY));
+    if (saved && COLOR_PRESETS[saved.preset]) return { preset: saved.preset };
+    const colors = saved?.preset === 'custom' && Array.isArray(saved.colors) ? saved.colors.map(parseHex) : [];
+    if (colors.length === 3 && !colors.includes(null)) return { preset: 'custom', colors };
+  } catch {
+    // Storage can be missing or blocked; the default is fine.
+  }
+  return { preset: 'auto' };
+}
+
+function remember(choice) {
+  try {
+    localStorage.setItem(COLOR_KEY, JSON.stringify(choice));
+  } catch {
+    // Not remembered, but still shown.
+  }
+}
+
+/** Set the shades as properties on the results, so the table and the legend both follow. */
+function paint(colors) {
+  const style = $('results').style;
+  if (!colors) {
+    for (let n = 1; n <= HEAT_STEPS; n += 1) {
+      style.removeProperty(`--h${n}`);
+      style.removeProperty(`--ink-h${n}`);
+    }
+    return;
+  }
+  heatScale(colors).forEach(({ background, ink }, n) => {
+    style.setProperty(`--h${n + 1}`, background);
+    style.setProperty(`--ink-h${n + 1}`, ink);
+  });
+}
+
+function showColors(colors) {
+  COLOR_ENDS.forEach((end, n) => {
+    $(`color-${end}`).value = colors[n];
+    $(`color-${end}-hex`).value = colors[n];
+    $(`color-${end}-hex`).removeAttribute('aria-invalid');
+  });
+  $('color-error').hidden = true;
+}
+
+/** The three colors now shown, read from the page's own blue when the scheme is automatic. */
+function autoColors() {
+  const style = getComputedStyle($('results'));
+  return [1, 4, HEAT_STEPS].map((step) => parseHex(style.getPropertyValue(`--h${step}`)) ?? '#888888');
+}
+
+function chooseColors(choice) {
+  const preset = COLOR_PRESETS[choice.preset];
+  const colors = choice.preset === 'custom' ? choice.colors : preset.colors;
+  $('color-preset').value = choice.preset;
+  paint(colors ?? null);
+  showColors(colors ?? autoColors());
+  remember(choice.preset === 'custom' ? choice : { preset: choice.preset });
+}
+
+function editColor(end, text) {
+  const hex = parseHex(text);
+  const field = $(`color-${end}-hex`);
+  if (!hex) {
+    field.setAttribute('aria-invalid', 'true');
+    $('color-error').textContent = `"${text}" is not a hex color. Use six digits such as #0d366b, or three such as #abc.`;
+    $('color-error').hidden = false;
+    return;
+  }
+  const colors = COLOR_ENDS.map((other) => (other === end ? hex : parseHex($(`color-${other}-hex`).value)));
+  if (colors.includes(null)) return;
+  chooseColors({ preset: 'custom', colors });
+}
+
+function setupColors() {
+  addOptions($('color-preset'), [
+    ...Object.entries(COLOR_PRESETS).map(([key, preset]) => [key, preset.label]),
+    ['custom', 'Custom (your own colors)'],
+  ]);
+  $('color-preset').addEventListener('change', (event) => {
+    const preset = event.target.value;
+    if (preset !== 'custom') chooseColors({ preset });
+    else $('color-low-hex').focus();
+  });
+  for (const end of COLOR_ENDS) {
+    $(`color-${end}`).addEventListener('input', (event) => editColor(end, event.target.value));
+    $(`color-${end}-hex`).addEventListener('change', (event) => editColor(end, event.target.value));
+  }
+  chooseColors(remembered());
+}
+
 function showResults(data, name, reading = '') {
   const problem = resultProblem(data);
   $('load-error').hidden = !problem;
@@ -719,6 +813,7 @@ function start() {
   $('copy').addEventListener('click', copyCommand);
   $('file').addEventListener('change', (event) => openFile(event.target.files[0]));
   $('hide-empty').addEventListener('change', applyHideEmpty);
+  setupColors();
   renderExamples();
   watchDrops();
   updatePlan();
