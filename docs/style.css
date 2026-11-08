@@ -93,12 +93,12 @@ table { border-collapse: separate; border-spacing: 2px; }
 #matrix td.h0 { color: var(--muted); }
 #matrix td.none { padding: 8px 10px; color: var(--muted); cursor: help;
   outline: 1px dashed var(--line); outline-offset: -1px; }
-.h1 { background: var(--h1); color: var(--ink-low); }
-.h2 { background: var(--h2); color: var(--ink-low); }
-.h3 { background: var(--h3); color: var(--ink-low); }
-.h4 { background: var(--h4); color: var(--ink-high); }
-.h5 { background: var(--h5); color: var(--ink-high); }
-.h6 { background: var(--h6); color: var(--ink-high); }
+.h1 { background: var(--h1); color: var(--ink-h1, var(--ink-low)); }
+.h2 { background: var(--h2); color: var(--ink-h2, var(--ink-low)); }
+.h3 { background: var(--h3); color: var(--ink-h3, var(--ink-low)); }
+.h4 { background: var(--h4); color: var(--ink-h4, var(--ink-high)); }
+.h5 { background: var(--h5); color: var(--ink-h5, var(--ink-high)); }
+.h6 { background: var(--h6); color: var(--ink-h6, var(--ink-high)); }
 .legend { display: flex; align-items: center; gap: 2px; margin-top: 12px; font-size: 13px; color: var(--muted); }
 .legend i { width: 28px; height: 12px; border-radius: 2px; }
 .legend span { margin: 0 6px; }
@@ -110,3 +110,9 @@ table.plain code { overflow-wrap: anywhere; }
 #run-info th { white-space: nowrap; }
 table.plain .num { text-align: right; font-variant-numeric: tabular-nums; }
 footer { margin-top: 48px; font-size: 14px; color: var(--muted); }
+.color-picks { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 8px; }
+.color-picks label { font-weight: 400; }
+.pick { display: flex; gap: 6px; align-items: center; margin-top: 4px; }
+.pick input[type="color"] { width: 44px; height: 36px; padding: 2px; }
+.pick input[type="text"] { width: 7.5em; font-family: ui-monospace, monospace; }
+.pick input[aria-invalid="true"] { border-color: var(--warn); }

@@ -2,9 +2,9 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
 import {
-  PHRASE_DOCS_PER_SECOND, browserEstimate, buildCommand, cellLink, classifyPart, estimate,
-  formatDuration, heatStep, intersectionSize, linkQuery, normalizeName, parseTerms, phraseQuery,
-  relationKey, remainingSeconds,
+  COLOR_PRESETS, HEAT_STEPS, PHRASE_DOCS_PER_SECOND, browserEstimate, buildCommand, cellLink, classifyPart, estimate,
+  formatDuration, heatScale, heatStep, inkFor, intersectionSize, luminance, linkQuery, normalizeName, parseTerms, phraseQuery,
+  parseHex, relationKey, remainingSeconds,
   resultProblem, shardIndex, shellQuote, sortedUnion, spellGreek, splitParts, termsUnfitForRelations,
   termsWithStrayQuotes, toCsv, toGrid, yearSlices,
 } from '../../docs/core.js';
@@ -222,4 +222,31 @@ test('buildCommand leaves out the browser-only phrase type', () => {
   const command = buildCommand({ output: '', relation: '', termsType: 'chemical', modifiersType: 'phrase', quietHours: false });
   assert.match(command, /--terms-type chemical -o/);
   assert.doesNotMatch(command, /phrase/);
+});
+
+test('hex colors are read in their usual spellings and nothing else', () => {
+  assert.equal(parseHex('#ABC'), '#aabbcc');
+  assert.equal(parseHex(' 0d366b '), '#0d366b');
+  for (const bad of ['', '#abcd', 'blue', '#ggg', '##abc']) assert.equal(parseHex(bad), null);
+});
+
+test('a scale runs from low through middle to high', () => {
+  for (const [name, preset] of Object.entries(COLOR_PRESETS)) {
+    if (!preset.colors) continue;
+    const scale = heatScale(preset.colors);
+    assert.equal(scale.length, HEAT_STEPS, name);
+    assert.equal(scale[0].background, preset.colors[0], name);
+    assert.equal(scale.at(-1).background, preset.colors[2], name);
+    const light = scale.map((step) => luminance(step.background));
+    const falling = light.every((value, n) => n === 0 || value < light[n - 1]);
+    const rising = light.every((value, n) => n === 0 || value > light[n - 1]);
+    assert.ok(falling || rising, `${name} brightness should change in one direction`);
+  }
+});
+
+test('ink is black on light colors and white on dark ones', () => {
+  assert.equal(inkFor('#ffffff'), '#000000');
+  assert.equal(inkFor('#fde0dc'), '#000000');
+  assert.equal(inkFor('#0d366b'), '#ffffff');
+  assert.equal(inkFor('#111111'), '#ffffff');
 });
