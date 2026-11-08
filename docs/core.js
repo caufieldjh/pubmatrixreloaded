@@ -63,6 +63,15 @@ export const STARTUP_SECONDS = 10;
 export const SECONDS_PER_LOOKUP = 0.05;
 export const SECONDS_PER_TERM = 0.1;
 export const RELATIONS_SECONDS = 15;
+
+// Phrases come from Europe PMC, one list of documents each. Its pages often fail with
+// HTTP 503, so lists arrive at about 65 documents a second with four requests running.
+export const PHRASE_API = 'https://www.ebi.ac.uk/europepmc/webservices/rest/search';
+export const PHRASE_PAGE_SIZE = 200;
+export const PHRASE_REQUESTS = 4;
+export const PHRASE_DOCS_PER_SECOND = 50;
+export const PHRASE_MAX_DOCS = 100000;
+export const PHRASE_SLICE_ABOVE = 2000;
 export const MODIFIERS_FILE = 'modifiers.txt';
 
 /** One term per line, without blanks, # comments, or repeats. */
@@ -112,8 +121,9 @@ export function shellQuote(value) {
 
 export function buildCommand({ output, relation, termsType, modifiersType, quietHours }) {
   const parts = [INSTALL, 'run', '-T', TERMS_FILE, '-M', MODIFIERS_FILE];
-  if (termsType) parts.push('--terms-type', termsType);
-  if (modifiersType) parts.push('--modifiers-type', modifiersType);
+  // The command line tool reads anything without an exact entity match as a phrase.
+  if (CONCEPTS.includes(termsType)) parts.push('--terms-type', termsType);
+  if (CONCEPTS.includes(modifiersType)) parts.push('--modifiers-type', modifiersType);
   if (relation) parts.push('--relation', relation);
   if (quietHours) parts.push('--quiet-hours');
   parts.push('-o', shellQuote(output || 'pubmatrix'));
@@ -149,21 +159,45 @@ export function shardIndex(starts, value) {
 /** How to look up one part of a term, or why it cannot be searched here. */
 export function classifyPart(part, type) {
   const text = part.trim();
+  if (type === 'phrase') {
+    if (text.slice(1, -1).includes('"')) return { problem: 'Stray quote mark. Write alternatives as a | b.' };
+    return { phrase: text.replace(/^"(.*)"$/, '$1') };
+  }
   if (type === 'variant') {
     return { problem: 'Variants can only be searched with the command line tool.' };
   }
   if (text.startsWith('@')) {
     return { problem: 'IDs like this work in the command line tool. Here, type a name.' };
   }
-  if (text.includes('"')) {
-    return { problem: 'Exact phrases cannot be searched here, only named entities. The command line tool can search phrases.' };
+  const quoted = text.length > 1 && text.startsWith('"') && text.endsWith('"');
+  if ((quoted ? text.slice(1, -1) : text).includes('"')) {
+    return { problem: 'Stray quote mark. Write alternatives as a | b.' };
   }
+  if (quoted) return { phrase: text.slice(1, -1) };
   if (/^MESH:[CD]\d+$/.test(text)) {
     if (type === 'disease' || type === 'chemical') return { id: text, type };
     return { problem: 'To use a MESH ID, set "Look up as" to chemical or disease.' };
   }
   if (type === 'gene' && /^\d+$/.test(text)) return { id: text, type };
   return { name: normalizeName(text), type };
+}
+
+/** Europe PMC search for documents with a PubMed ID, optionally in a span of years. */
+export function phraseQuery(phrase, years) {
+  const words = spellGreek(phrase).replaceAll('"', '');
+  const span = years ? ` AND (FIRST_PDATE:[${years[0]}-01-01 TO ${years[1]}-12-31])` : '';
+  return `"${words}" AND SRC:MED${span}`;
+}
+
+/**
+ * Spans of years to fetch side by side. One list reads page after page, so a long list
+ * is split up. Most of the literature is recent, so recent years get a span each.
+ */
+export function yearSlices(hits, thisYear) {
+  if (hits <= PHRASE_SLICE_ABOVE) return [null];
+  const slices = [[1800, 2005]];
+  for (let year = 2006; year <= thisYear; year += 1) slices.push([year, year]);
+  return slices;
 }
 
 export function splitParts(term) {
@@ -218,10 +252,10 @@ export function linkQuery(term) {
 }
 
 /** Expected seconds to check terms, and then to search. */
-export function browserEstimate(rows, cols, relation) {
+export function browserEstimate(rows, cols, relation, phraseDocuments = 0) {
   const terms = rows + cols;
   const check = STARTUP_SECONDS + terms * SECONDS_PER_LOOKUP;
-  const search = relation ? RELATIONS_SECONDS : terms * SECONDS_PER_TERM;
+  const search = relation ? RELATIONS_SECONDS : terms * SECONDS_PER_TERM + phraseDocuments / PHRASE_DOCS_PER_SECOND;
   return { check, search };
 }
 

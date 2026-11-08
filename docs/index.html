@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'wasm-unsafe-eval' blob:; worker-src blob:; style-src 'self'; connect-src 'self' https://cdn.jsdelivr.net https://extensions.duckdb.org https://huggingface.co https://*.huggingface.co https://*.hf.co; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'wasm-unsafe-eval' blob:; worker-src blob:; style-src 'self'; connect-src 'self' https://cdn.jsdelivr.net https://extensions.duckdb.org https://www.ebi.ac.uk https://huggingface.co https://*.huggingface.co https://*.hf.co; base-uri 'none'; form-action 'none'">
 <title>PubMatrix Reloaded</title>
 <meta name="description" content="Count the literature for every pair of terms from two lists, in your browser, using PubTator3 data.">
 <link rel="stylesheet" href="style.css">
@@ -30,7 +30,7 @@
       </div>
       <div>
         <label for="modifiers">Modifiers <span>(columns), one per line</span></label>
-        <textarea id="modifiers" rows="9" spellcheck="false" placeholder="breast cancer&#10;melanoma&#10;asthma"></textarea>
+        <textarea id="modifiers" rows="9" spellcheck="false" placeholder="comet assay&#10;Ames test | Ames assay&#10;micronucleus assay"></textarea>
         <label class="inline" for="modifiers-type">Look up as</label>
         <select id="modifiers-type"></select>
       </div>
@@ -39,10 +39,16 @@
       <summary>How terms are read</summary>
       <table class="plain">
         <tr><td><code>tamoxifen</code></td><td>The entity most often written that way in the literature</td></tr>
+        <tr><td><code>comet assay</code></td><td>Not an entity, so a phrase, searched at Europe PMC</td></tr>
+        <tr><td><code>"cell line"</code></td><td>Always a phrase, even if it could be an entity</td></tr>
+        <tr><td>Any term, with "Look up as" set to phrases only</td><td>A phrase</td></tr>
         <tr><td><code>PFOA | perfluorooctanoic acid</code></td><td>Documents with either</td></tr>
         <tr><td><code>672</code> as a gene, <code>MESH:D001943</code> as a disease or chemical</td><td>That exact ID</td></tr>
       </table>
-      <p>Set "Look up as" for a list of one kind. A chemical list needs it: <code>PFOA</code> is also the gene <i>pfoA</i>.</p>
+      <p>Set "Look up as" for a list of one kind. A chemical list needs it: <code>PFOA</code> is also the gene <i>pfoA</i>.
+        A list of assays or methods needs "phrases only": otherwise <code>LLNA</code> reads as a disease.</p>
+      <p>Europe PMC matches a phrase's exact words, while PubTator3 also matches variants such as plurals. List the
+        variants you mean: <code>chromosomal aberration | chromosomal aberrations</code>.</p>
     </details>
     <div class="options">
       <div>
@@ -56,17 +62,22 @@
     <h3>Before you start</h3>
     <dl>
       <dt>Where the data comes from</dt>
-      <dd>A copy of PubTator3's bulk annotations, release <span id="data-release"></span>, kept on
-        <a id="dataset-link" href="#">Hugging Face</a>. It is not the live PubTator3 service and it is not updated
-        automatically, so counts differ from PubTator3's own by a few percent, and from PubMed's by much more.
-        PubTator3 covers PubMed abstracts and PMC full text.</dd>
+      <dd><b>Genes, diseases, and chemicals:</b> a copy of PubTator3's bulk annotations, release
+        <span id="data-release"></span>, kept on <a id="dataset-link" href="#">Hugging Face</a>. It is not the live
+        PubTator3 service and it is not updated automatically. <b>Phrases</b>, such as assays and methods:
+        <a href="https://europepmc.org/">Europe PMC</a>, live. Both cover abstracts and open full text, but they are
+        different sources, so a cell that uses a phrase is an estimate. Entity counts differ from PubTator3's own by a
+        few percent. In one test of toxicity assays, phrase counts had a median within 1% of PubTator3's, but single
+        phrases ranged from less than half to a quarter more, mostly because of exact wording. Counts from PubMed
+        differ much more.</dd>
       <dt>What can be searched</dt>
-      <dd>Genes, diseases, and chemicals, by name. Assays, methods, and other phrases cannot be searched here:
-        they have no bulk data. The <a href="#command-line">command line tool</a> can search them.</dd>
+      <dd>Any named gene, disease, or chemical, and phrases of up to 100,000 documents. Relation counts need
+        entities on both sides. The <a href="#command-line">command line tool</a> has no such limits.</dd>
       <dt>Where it runs</dt>
       <dd>In this browser tab, on your computer. There is no server of ours and nothing is kept. Your browser
-        fetches its search engine from jsDelivr and duckdb.org and the data from Hugging Face. Hugging Face can see
-        which pieces of the data are read, which reveals roughly what you searched.</dd>
+        fetches its search engine from jsDelivr and duckdb.org, data from Hugging Face, and phrases from Europe PMC.
+        Europe PMC sees your phrases, and Hugging Face can see which pieces of the data are read, which reveals
+        roughly what you searched.</dd>
       <dt id="time-title">How long it takes</dt>
       <dd id="time-estimate" aria-live="polite"></dd>
     </dl>
@@ -98,7 +109,8 @@
     <h3 id="run-title">Searching</h3>
     <progress id="progress" max="1" value="0"></progress>
     <p id="run-status" class="status" role="status"></p>
-    <p><b>Keep this tab open.</b> Stopping keeps what is finished so far.</p>
+    <p><b>Keep this tab open.</b> Stopping keeps what is finished so far. Phrases are fetched first and a cell needs
+      its whole phrase, so stopping during that part keeps nothing.</p>
     <div class="buttons">
       <button type="button" id="stop">Stop and keep results so far</button>
     </div>
@@ -106,8 +118,8 @@
   <p id="search-error" class="error" role="alert" hidden></p>
 
   <details id="command-line">
-    <summary>Or run the command line tool, for phrases, the live PubTator3 service, and Excel files</summary>
-    <p>The tool searches PubTator3 itself, so it can use any phrase and has the newest data. It is limited to about
+    <summary>Or run the command line tool, for the live PubTator3 service, very common phrases, and Excel files</summary>
+    <p>The tool searches PubTator3 itself, so it uses one source for everything and has the newest data. It is limited to about
       two requests a second, so large searches take hours. It uses the same lists as above.</p>
     <div class="options">
       <div>
@@ -167,7 +179,8 @@
     <p class="fine">Select a count to open a PubTator3 search for that pair. Select a heading to sort.
       — means no value is known; the reason is in its tooltip. Counts are PubTator3 documents
       (PubMed abstracts and PMC full text), not PubMed hits. For searches run on this page, the link searches
-      PubTator3 for the words you typed, so the count there may differ.</p>
+      PubTator3 for the words you typed, so the count there may differ. A cell with a phrase counts documents PubTator3
+      tagged with the entity that Europe PMC finds for the phrase.</p>
     <h3>How each term was read</h3>
     <div class="scroll"><table id="terms-read" class="plain"></table></div>
     <h3>How this was made</h3>

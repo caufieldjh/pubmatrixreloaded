@@ -2,10 +2,11 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
 import {
-  browserEstimate, buildCommand, cellLink, classifyPart, estimate, formatDuration, heatStep,
-  intersectionSize, linkQuery, normalizeName, parseTerms, relationKey, remainingSeconds,
+  PHRASE_DOCS_PER_SECOND, browserEstimate, buildCommand, cellLink, classifyPart, estimate,
+  formatDuration, heatStep, intersectionSize, linkQuery, normalizeName, parseTerms, phraseQuery,
+  relationKey, remainingSeconds,
   resultProblem, shardIndex, shellQuote, sortedUnion, spellGreek, splitParts, termsUnfitForRelations,
-  termsWithStrayQuotes, toCsv, toGrid,
+  termsWithStrayQuotes, toCsv, toGrid, yearSlices,
 } from '../../docs/core.js';
 
 test('parseTerms drops blanks, comments, and repeats', () => {
@@ -122,7 +123,8 @@ test('classifyPart reads names and IDs', () => {
 });
 
 test('classifyPart explains what cannot be searched here', () => {
-  assert.match(classifyPart('"comet assay"', '').problem, /phrases/);
+  assert.deepEqual(classifyPart('"comet assay"', ''), { phrase: 'comet assay' });
+  assert.match(classifyPart('a"b', '').problem, /Stray/);
   assert.match(classifyPart('@GENE_BRCA1', '').problem, /type a name/);
   assert.match(classifyPart('MESH:D001943', '').problem, /Look up as/);
   assert.match(classifyPart('V600E', 'variant').problem, /command line/);
@@ -183,4 +185,41 @@ test('toCsv leaves unknown cells blank and quotes as needed', () => {
 test('spellGreek spells letters out', () => {
   assert.equal(spellGreek('17β-estradiol'), '17beta-estradiol');
   assert.equal(spellGreek('tamoxifen'), 'tamoxifen');
+});
+
+test('phraseQuery keeps to documents with PubMed IDs', () => {
+  assert.equal(phraseQuery('comet assay'), '"comet assay" AND SRC:MED');
+  assert.equal(
+    phraseQuery('17β-estradiol', [2010, 2010]),
+    '"17beta-estradiol" AND SRC:MED AND (FIRST_PDATE:[2010-01-01 TO 2010-12-31])',
+  );
+});
+
+test('yearSlices covers every year without overlap', () => {
+  assert.deepEqual(yearSlices(500, 2026), [null]);
+  const slices = yearSlices(30000, 2026);
+  assert.deepEqual(slices[0], [1800, 2005]);
+  assert.deepEqual(slices[1], [2006, 2006]);
+  assert.deepEqual(slices.at(-1), [2026, 2026]);
+  slices.slice(1).forEach(([from, to], i) => {
+    assert.equal(from, to);
+    assert.equal(from, slices[i][1] + 1);
+  });
+});
+
+test('browserEstimate counts phrase documents', () => {
+  const entities = browserEstimate(10, 5, '').search;
+  assert.equal(browserEstimate(10, 5, '', PHRASE_DOCS_PER_SECOND * 60).search, entities + 60);
+  assert.equal(browserEstimate(10, 5, 'treat', 1000000).search, browserEstimate(10, 5, 'treat').search);
+});
+
+test('phrases only reads everything as wording', () => {
+  assert.deepEqual(classifyPart('LLNA', 'phrase'), { phrase: 'LLNA' });
+  assert.deepEqual(classifyPart('"comet assay"', 'phrase'), { phrase: 'comet assay' });
+});
+
+test('buildCommand leaves out the browser-only phrase type', () => {
+  const command = buildCommand({ output: '', relation: '', termsType: 'chemical', modifiersType: 'phrase', quietHours: false });
+  assert.match(command, /--terms-type chemical -o/);
+  assert.doesNotMatch(command, /phrase/);
 });
