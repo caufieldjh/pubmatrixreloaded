@@ -119,13 +119,14 @@ export function shellQuote(value) {
   return `'${value.replace(/'/g, `'\\''`)}'`;
 }
 
-export function buildCommand({ output, relation, termsType, modifiersType, quietHours }) {
+export function buildCommand({ output, relation, termsType, modifiersType, quietHours, colors }) {
   const parts = [INSTALL, 'run', '-T', TERMS_FILE, '-M', MODIFIERS_FILE];
   // The command line tool reads anything without an exact entity match as a phrase.
   if (CONCEPTS.includes(termsType)) parts.push('--terms-type', termsType);
   if (CONCEPTS.includes(modifiersType)) parts.push('--modifiers-type', modifiersType);
   if (relation) parts.push('--relation', relation);
   if (quietHours) parts.push('--quiet-hours');
+  if (colors) parts.push('--colors', colors);
   parts.push('-o', shellQuote(output || 'pubmatrix'));
   return parts.join(' ');
 }
@@ -335,6 +336,12 @@ export const COLOR_PRESETS = {
   black: { label: 'Black (light gray to black)', colors: ['#eeeeee', '#888888', '#111111'] },
   white: { label: 'White (dark gray to white)', colors: ['#222222', '#888888', '#ffffff'] },
 };
+
+/** The --colors value for a choice from the page, or null for the default. */
+export function colorsArgument(choice) {
+  if (choice.preset === 'custom') return choice.colors.map((hex) => hex.slice(1)).join(',');
+  return COLOR_PRESETS[choice.preset]?.colors ? choice.preset : null;
+}
 
 /** '#abc', 'abc', '#aabbcc' or 'aabbcc' as '#aabbcc', or null if it is not a hex color. */
 export function parseHex(text) {

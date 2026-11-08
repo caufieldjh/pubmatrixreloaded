@@ -8,6 +8,7 @@ from openpyxl import load_workbook
 
 import pubmatrix.excel
 from pubmatrix.cli import main
+from pubmatrix.colors import PRESETS, heat_scale
 from pubmatrix.matrix import build_matrix
 from pubmatrix.output import HEAT_STEPS, heat_step, render_html, write_all
 
@@ -172,3 +173,33 @@ def test_recorded_command_does_not_include_the_local_install_path(
     main(args, client=make_client(api))
     data = json.loads((tmp_path / "m.json").read_text())
     assert data["run"]["command"].startswith("pubmatrix run -t @A")
+
+
+def test_colors_reach_excel_and_html(make_client, tmp_path):
+    api = FakeApi({"@A": 5, "@B": 5, "@C": 5, "@A AND @B": 3, "@A AND @C": 300})
+    matrix = build_matrix(make_client(api), ["@A"], ["@B", "@C"])
+    scheme = PRESETS["red"]
+    paths = write_all(matrix, str(tmp_path / "m"), "pubmatrix run", scheme)
+    shades = heat_scale(scheme)
+    sheet = load_workbook(paths[-1])["Matrix"]
+    low, high = sheet["D2"], sheet["E2"]
+    assert low.fill.fgColor.rgb.endswith(shades[0][0][1:].upper())
+    assert high.fill.fgColor.rgb.endswith(shades[-1][0][1:].upper())
+    assert high.font.color.rgb.endswith("FFFFFF")
+    html = paths[2].read_text(encoding="utf-8")
+    assert f"--h1: {shades[0][0]}" in html and f"--ink-h6: {shades[-1][1]}" in html
+    assert json.loads(paths[1].read_text())["run"]["colors"] == ", ".join(scheme)
+
+
+def test_default_colors_are_unchanged(make_client, tmp_path):
+    paths = write_all(sample(make_client), str(tmp_path / "m"))
+    assert "--ink-h1:" not in paths[2].read_text(encoding="utf-8")
+    assert "colors" not in json.loads(paths[1].read_text())["run"]
+
+
+def test_cli_rejects_a_bad_scheme(make_client, capsys):
+    try:
+        main(["run", "-t", "a", "-m", "b", "--colors", "teal"], client=make_client(FakeApi({})))
+    except SystemExit as stop:
+        assert stop.code == 2
+    assert "not a color scheme" in capsys.readouterr().err

@@ -1,5 +1,5 @@
 import {
-  COLOR_PRESETS, CONCEPTS, DATASET, DATASET_REVISION, DATA_RELEASE, EXAMPLES, HEAT_STEPS, LARGE_RUN_REQUESTS,
+  COLOR_PRESETS, CONCEPTS, colorsArgument, DATASET, DATASET_REVISION, DATA_RELEASE, EXAMPLES, HEAT_STEPS, LARGE_RUN_REQUESTS,
   MODIFIERS_FILE, PHRASE_DOCS_PER_SECOND, RELATION_TYPES, SECONDS_PER_TERM, TERMS_FILE, browserEstimate, buildCommand, cellLink, estimate,
   formatDuration, formatWait, heatScale, heatStep, parseHex, intersectionSize, linkQuery, parseTerms, relationKey,
   remainingSeconds, resultProblem, splitParts, termsUnfitForRelations, termsWithStrayQuotes, toCsv, toGrid,
@@ -35,6 +35,7 @@ function currentPlan() {
       termsType: $('terms-type').value,
       modifiersType: $('modifiers-type').value,
       quietHours: $('quiet').checked,
+      colors: colorsArgument(colorChoice),
     },
   };
 }
@@ -601,6 +602,7 @@ function renderLegend(grid) {
 
 const COLOR_KEY = 'pubmatrix-colors';
 const COLOR_ENDS = ['low', 'middle', 'high'];
+let colorChoice = { preset: 'auto' };
 
 function remembered() {
   try {
@@ -659,7 +661,10 @@ function chooseColors(choice) {
   $('color-preset').value = choice.preset;
   paint(colors ?? null);
   showColors(colors ?? autoColors());
-  remember(choice.preset === 'custom' ? choice : { preset: choice.preset });
+  colorChoice = choice.preset === 'custom' ? choice : { preset: choice.preset };
+  remember(colorChoice);
+  // Only the command: a new color must not undo a finished check of the terms.
+  $('command').textContent = buildCommand(currentPlan().options);
 }
 
 function editColor(end, text) {
